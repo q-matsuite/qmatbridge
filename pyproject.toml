@@ -1,0 +1,82 @@
+[build-system]
+requires = ["setuptools>=61", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "qmatbridge"
+version = "0.1.0-dev"
+description = "Bridge from classical materials databases to first-quantized Hamiltonians for quantum simulation"
+readme = "README.md"
+license = { file = "LICENSE" }
+authors = [{ name = "Roberto Reis", email = "robertomsreis@gmail.com" }]
+keywords = [
+    "quantum computing",
+    "quantum simulation",
+    "materials science",
+    "Hamiltonian simulation",
+    "block encoding",
+    "fault tolerant",
+    "resource estimation",
+]
+classifiers = [
+    "Development Status :: 2 - Pre-Alpha",
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Scientific/Engineering :: Physics",
+    "Topic :: Scientific/Engineering :: Chemistry",
+]
+requires-python = ">=3.10"
+dependencies = []
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.4",
+    "pytest-cov>=4.1",
+    "ruff>=0.4",
+    "mypy>=1.8",
+]
+mp = [
+    "mp-api>=0.41",
+    "pymatgen>=2024.1",
+]
+ase = [
+    "ase>=3.22",
+]
+oqmd = [
+    "qmpy-rester>=0.3",
+]
+openfermion = [
+    "openfermion>=1.6",
+]
+
+[project.urls]
+Homepage = "https://github.com/rmsreis/qmatbridge"
+Repository = "https://github.com/rmsreis/qmatbridge"
+Issues = "https://github.com/rmsreis/qmatbridge/issues"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["qmatbridge*"]
+
+[tool.ruff]
+line-length = 88
+target-version = "py310"
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I"]
+
+[tool.mypy]
+python_version = "3.10"
+strict = true
+ignore_missing_imports = true
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "--tb=short -m 'not integration'"
+markers = [
+    "integration: tests that call external APIs; require env vars (skip in CI unless set)",
+]

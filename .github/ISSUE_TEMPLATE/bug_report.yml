@@ -1,0 +1,51 @@
+name: Bug report
+description: Report incorrect behaviour, unexpected errors, or schema inconsistencies
+labels: ["bug"]
+body:
+  - type: input
+    id: version
+    attributes:
+      label: QMatBridge version
+      description: Output of `python -c "import qmatbridge; print(qmatbridge.__version__)"`
+      placeholder: "0.1.0-dev"
+    validations:
+      required: true
+
+  - type: input
+    id: environment
+    attributes:
+      label: Python version and OS
+      placeholder: "Python 3.11.4, macOS 14.2"
+    validations:
+      required: true
+
+  - type: textarea
+    id: description
+    attributes:
+      label: Description
+      description: What happened? What did you expect to happen?
+    validations:
+      required: true
+
+  - type: textarea
+    id: repro
+    attributes:
+      label: Minimal reproducible example
+      description: The shortest code that triggers the issue.
+      render: python
+    validations:
+      required: true
+
+  - type: textarea
+    id: traceback
+    attributes:
+      label: Full traceback (if applicable)
+      render: text
+
+  - type: textarea
+    id: context
+    attributes:
+      label: Additional context
+      description: >
+        Relevant schema fields, adapter used, database source, or anything
+        else that might help isolate the issue.
