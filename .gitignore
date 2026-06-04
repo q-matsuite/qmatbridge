@@ -45,6 +45,12 @@ htmlcov/
 # Generated example artifacts
 examples/silicon_entry.json
 examples/reproducibility_entry.json
+examples/material_ranking.csv
+examples/material_ranking.json
+examples/material_ranking.png
+examples/pareto_candidates.csv
+examples/pareto_candidates.json
+examples/pareto_frontier.png
 
 # Secrets / API keys
 .env
