@@ -13,9 +13,9 @@ Breaking changes to `QMatEntry` or its nested schema classes are marked
 
 ---
 
-## [0.1.0-dev] — 2026-06-03
+## [0.1.0] — 2026-06-03
 
-Initial repository scaffold and schema definition.  No PyPI release yet.
+Initial repository scaffold and schema definition.  First release prepared for PyPI.
 
 ### Added
 
@@ -77,5 +77,5 @@ Initial repository scaffold and schema definition.  No PyPI release yet.
 **Planning**
 - `planning/initial_issues.md` — ten scoped GitHub issues for v0.1–v0.4
 
-[Unreleased]: https://github.com/rmsreis/qmatbridge/compare/v0.1.0-dev...HEAD
-[0.1.0-dev]: https://github.com/rmsreis/qmatbridge/releases/tag/v0.1.0-dev
+[Unreleased]: https://github.com/rmsreis/qmatbridge/compare/v0.1.0...HEAD
+[0.1.0]: https://github.com/rmsreis/qmatbridge/releases/tag/v0.1.0

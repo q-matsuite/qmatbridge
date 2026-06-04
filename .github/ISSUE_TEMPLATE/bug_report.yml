@@ -7,7 +7,7 @@ body:
     attributes:
       label: QMatBridge version
       description: Output of `python -c "import qmatbridge; print(qmatbridge.__version__)"`
-      placeholder: "0.1.0-dev"
+      placeholder: "0.1.0"
     validations:
       required: true
 
