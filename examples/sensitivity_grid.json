@@ -1,0 +1,164 @@
+{
+  "schema_version": "0.1",
+  "example": "sensitivity_analysis",
+  "baseline": {
+    "lambda_total_base": 315.8,
+    "delta_e": 0.001,
+    "num_bands": 16,
+    "cutoff_ev": 520.0,
+    "num_plane_waves_base": 1849
+  },
+  "baseline_proxies": {
+    "num_plane_waves": 1849.0,
+    "num_bits_state": 11,
+    "num_bits_rot": 20,
+    "lambda_total": 315.8,
+    "t_gate_proxy": 315800.0,
+    "qubits_proxy": 31,
+    "score": 413698.0
+  },
+  "assumptions": {
+    "plane_wave_scaling": "num_plane_waves = num_plane_waves_base \u00d7 (cutoff_ev / cutoff_ev_base)^1.5 [3D free-electron scaling; N \u221d E_cut^(3/2) in reciprocal space volume]",
+    "num_bits_state": "num_bits_state = ceil(log2(num_plane_waves)) [minimum qubit register to address all plane-wave basis states]",
+    "num_bits_rot": "num_bits_rot = ceil(-log2(delta_e)) + 10 [rotation-synthesis register sized for target precision; +10 is a fixed overhead representative of standard Solovay-Kitaev circuits]",
+    "lambda_scaling": "lambda_total = lambda_total_base \u00d7 (cutoff_ev / cutoff_ev_base)^0.5 \u00d7 (num_bands / num_bands_base)^0.25 [placeholder power-law scaling; exponents are planning estimates, not derived from first principles for this material]",
+    "t_gate_proxy": "t_gate_proxy = lambda_total / delta_e [dominant scaling from qubitized QPE Toffoli count: O(\u03bb/\u03b5)]",
+    "qubits_proxy": "qubits_proxy = num_bits_state + num_bits_rot [sum of two dominant qubit registers; ancilla and control qubits omitted]",
+    "score": "score = t_gate_proxy \u00d7 (1 + qubits_proxy / 100) [scalar aggregate weighting T-gates by qubit overhead; weights are arbitrary and for ranking only]",
+    "model_status": "All proxy formulas are planning tools for benchmark selection. They do not constitute a validated resource estimate for any specific material. Final estimates require material-specific \u03bb calculations (e.g., Babbush et al. 2019; Lee et al. 2021)."
+  },
+  "records": [
+    {
+      "parameter_name": "cutoff_ev",
+      "parameter_value": 400.0,
+      "cutoff_ev": 400.0,
+      "delta_e": 0.001,
+      "num_bands": 16,
+      "lambda_total": 276.9749,
+      "t_gate_proxy": 276974.92,
+      "qubits_proxy": 31,
+      "score": 362837.15
+    },
+    {
+      "parameter_name": "cutoff_ev",
+      "parameter_value": 450.0,
+      "cutoff_ev": 450.0,
+      "delta_e": 0.001,
+      "num_bands": 16,
+      "lambda_total": 293.7763,
+      "t_gate_proxy": 293776.27,
+      "qubits_proxy": 31,
+      "score": 384846.91
+    },
+    {
+      "parameter_name": "cutoff_ev",
+      "parameter_value": 500.0,
+      "cutoff_ev": 500.0,
+      "delta_e": 0.001,
+      "num_bands": 16,
+      "lambda_total": 309.6674,
+      "t_gate_proxy": 309667.38,
+      "qubits_proxy": 31,
+      "score": 405664.26
+    },
+    {
+      "parameter_name": "cutoff_ev",
+      "parameter_value": 550.0,
+      "cutoff_ev": 550.0,
+      "delta_e": 0.001,
+      "num_bands": 16,
+      "lambda_total": 324.7819,
+      "t_gate_proxy": 324781.89,
+      "qubits_proxy": 31,
+      "score": 425464.27
+    },
+    {
+      "parameter_name": "cutoff_ev",
+      "parameter_value": 600.0,
+      "cutoff_ev": 600.0,
+      "delta_e": 0.001,
+      "num_bands": 16,
+      "lambda_total": 339.2236,
+      "t_gate_proxy": 339223.62,
+      "qubits_proxy": 32,
+      "score": 447775.17
+    },
+    {
+      "parameter_name": "delta_e",
+      "parameter_value": 0.0005,
+      "cutoff_ev": 520.0,
+      "delta_e": 0.0005,
+      "num_bands": 16,
+      "lambda_total": 315.8,
+      "t_gate_proxy": 631600.0,
+      "qubits_proxy": 32,
+      "score": 833712.0
+    },
+    {
+      "parameter_name": "delta_e",
+      "parameter_value": 0.001,
+      "cutoff_ev": 520.0,
+      "delta_e": 0.001,
+      "num_bands": 16,
+      "lambda_total": 315.8,
+      "t_gate_proxy": 315800.0,
+      "qubits_proxy": 31,
+      "score": 413698.0
+    },
+    {
+      "parameter_name": "delta_e",
+      "parameter_value": 0.002,
+      "cutoff_ev": 520.0,
+      "delta_e": 0.002,
+      "num_bands": 16,
+      "lambda_total": 315.8,
+      "t_gate_proxy": 157900.0,
+      "qubits_proxy": 30,
+      "score": 205270.0
+    },
+    {
+      "parameter_name": "num_bands",
+      "parameter_value": 12.0,
+      "cutoff_ev": 520.0,
+      "delta_e": 0.001,
+      "num_bands": 12.0,
+      "lambda_total": 293.885,
+      "t_gate_proxy": 293885.01,
+      "qubits_proxy": 31,
+      "score": 384989.37
+    },
+    {
+      "parameter_name": "num_bands",
+      "parameter_value": 16.0,
+      "cutoff_ev": 520.0,
+      "delta_e": 0.001,
+      "num_bands": 16.0,
+      "lambda_total": 315.8,
+      "t_gate_proxy": 315800.0,
+      "qubits_proxy": 31,
+      "score": 413698.0
+    },
+    {
+      "parameter_name": "num_bands",
+      "parameter_value": 20.0,
+      "cutoff_ev": 520.0,
+      "delta_e": 0.001,
+      "num_bands": 20.0,
+      "lambda_total": 333.9178,
+      "t_gate_proxy": 333917.84,
+      "qubits_proxy": 31,
+      "score": 437432.38
+    },
+    {
+      "parameter_name": "num_bands",
+      "parameter_value": 24.0,
+      "cutoff_ev": 520.0,
+      "delta_e": 0.001,
+      "num_bands": 24.0,
+      "lambda_total": 349.4902,
+      "t_gate_proxy": 349490.15,
+      "qubits_proxy": 31,
+      "score": 457832.1
+    }
+  ]
+}

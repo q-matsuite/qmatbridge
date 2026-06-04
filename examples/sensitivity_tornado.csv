@@ -1,0 +1,4 @@
+parameter_name,low_setting,high_setting,score_low,score_high,absolute_impact,relative_impact_percent
+delta_e,0.002,0.0005,205270.0,833712.0,628442.0,151.9084
+cutoff_ev,400.0,600.0,362837.15,447775.17,84938.02,20.5314
+num_bands,12.0,24.0,384989.37,457832.1,72842.73,17.6077
