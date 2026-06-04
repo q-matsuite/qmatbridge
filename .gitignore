@@ -44,6 +44,7 @@ htmlcov/
 
 # Generated example artifacts
 examples/silicon_entry.json
+examples/reproducibility_entry.json
 
 # Secrets / API keys
 .env
