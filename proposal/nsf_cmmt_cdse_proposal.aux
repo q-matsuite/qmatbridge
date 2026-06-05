@@ -1,0 +1,155 @@
+\relax 
+\providecommand\zref@newlabel[2]{}
+\providecommand\hyper@newdestlabel[2]{}
+\providecommand\HyperFirstAtBeginDocument{\AtBeginDocument}
+\HyperFirstAtBeginDocument{\ifx\hyper@anchor\@undefined
+\global\let\oldcontentsline\contentsline
+\gdef\contentsline#1#2#3#4{\oldcontentsline{#1}{#2}{#3}}
+\global\let\oldnewlabel\newlabel
+\gdef\newlabel#1#2{\newlabelxx{#1}#2}
+\gdef\newlabelxx#1#2#3#4#5#6{\oldnewlabel{#1}{{#2}{#3}}}
+\AtEndDocument{\ifx\hyper@anchor\@undefined
+\let\contentsline\oldcontentsline
+\let\newlabel\oldnewlabel
+\fi}
+\fi}
+\global\let\hyper@last\relax 
+\gdef\HyperFirstAtBeginDocument#1{#1}
+\providecommand\HyField@AuxAddToFields[1]{}
+\providecommand\HyField@AuxAddToCoFields[2]{}
+\citation{Jain2013}
+\citation{Kirklin2015}
+\citation{McClean2020}
+\citation{Qualtran2023}
+\citation{pyLIQTR2023}
+\citation{Lejaeghere2016}
+\citation{Wilkinson2016}
+\citation{Reiher2017,vonBurg2021,Goings2022}
+\citation{Babbush2019,Su2021,Lee2021}
+\citation{Jain2013}
+\citation{Lejaeghere2016}
+\@writefile{toc}{\contentsline {section}{\numberline {1}Introduction and Motivation}{1}{section.1}\protected@file@percent }
+\citation{Clark2026}
+\citation{QREChem2023}
+\citation{ArQTiC2022}
+\citation{vonBurg2021,Yoshioka2022}
+\citation{Babbush2019,Su2021}
+\citation{Low2019}
+\citation{Babbush2019}
+\@writefile{lof}{\contentsline {figure}{\numberline {1}{\ignorespaces QMatBridge architecture. Adapters (Aim\nobreakspace  {}1) translate upstream database records into a versioned, hash-addressed \texttt  {QMatEntry} neutral intermediate representation (NIR). Exporters (Aim\nobreakspace  {}4) translate the NIR into formats consumed by downstream quantum compilers and resource estimators. The \texttt  {qmatbridge.analysis} module (Aim\nobreakspace  {}3) operates on libraries of \texttt  {QMatEntry} records to produce sensitivity analyses and Pareto frontier rankings. All components are dependency-free at the core schema level.}}{2}{figure.1}\protected@file@percent }
+\newlabel{fig:arch}{{1}{2}{QMatBridge architecture. Adapters (Aim~1) translate upstream database records into a versioned, hash-addressed \texttt {QMatEntry} neutral intermediate representation (NIR). Exporters (Aim~4) translate the NIR into formats consumed by downstream quantum compilers and resource estimators. The \texttt {qmatbridge.analysis} module (Aim~3) operates on libraries of \texttt {QMatEntry} records to produce sensitivity analyses and Pareto frontier rankings. All components are dependency-free at the core schema level}{figure.1}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {2}Background}{2}{section.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.1}First-Quantized Hamiltonian Simulation}{2}{subsection.2.1}\protected@file@percent }
+\citation{Reiher2017,vonBurg2021,Goings2022,Yoshioka2022}
+\citation{Lejaeghere2016}
+\citation{ArQTiC2022}
+\citation{QREChem2023}
+\citation{Clark2026}
+\citation{ArQTiC2022}
+\citation{QREChem2023}
+\citation{Clark2026}
+\citation{vonBurg2021,Yoshioka2022,Beverland2022}
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.2}The Reproducibility Gap}{3}{subsection.2.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.3}Existing Software Landscape and Innovation Gap}{3}{subsection.2.3}\protected@file@percent }
+\citation{QMatBridge2026}
+\citation{Babbush2019}
+\citation{Babbush2019}
+\@writefile{lot}{\contentsline {table}{\numberline {1}{\ignorespaces Comparison of QMatBridge with existing software at the DFT--quantum algorithm interface. \text  {$\mathsurround \z@ \mathchar "458$}= supported; \textemdash {} = not supported; $\sim $ = partial.}}{4}{table.1}\protected@file@percent }
+\newlabel{tab:landscape}{{1}{4}{Comparison of QMatBridge with existing software at the DFT--quantum algorithm interface. \checkmark = supported; \textemdash {} = not supported; $\sim $ = partial}{table.1}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {3}Preliminary Results}{4}{section.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.1}Schema and Canonical Hash (v0.1)}{4}{subsection.3.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.2}Sensitivity Analysis of Resource Estimates}{4}{subsection.3.2}\protected@file@percent }
+\newlabel{eq:qubits}{{1}{4}{Sensitivity Analysis of Resource Estimates}{equation.3.1}{}}
+\newlabel{eq:lambda}{{2}{4}{Sensitivity Analysis of Resource Estimates}{equation.3.2}{}}
+\newlabel{eq:score}{{3}{4}{Sensitivity Analysis of Resource Estimates}{equation.3.3}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {2}{\ignorespaces Tornado impact summary from one-factor-at-a-time sensitivity analysis. Baseline composite score $\mathcal  {S}_0 = 413{,}698$. All outputs are machine-readable in \texttt  {sensitivity\_tornado.csv} and \texttt  {sensitivity\_grid.json}.}}{5}{table.2}\protected@file@percent }
+\newlabel{tab:tornado}{{2}{5}{Tornado impact summary from one-factor-at-a-time sensitivity analysis. Baseline composite score $\score _0 = 413{,}698$. All outputs are machine-readable in \texttt {sensitivity\_tornado.csv} and \texttt {sensitivity\_grid.json}}{table.2}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.3}Multi-Objective Pareto Analysis}{5}{subsection.3.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.4}Reproducibility Infrastructure}{5}{subsection.3.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {4}Research Plan}{5}{section.4}\protected@file@percent }
+\citation{Jain2013}
+\citation{Kresse1996}
+\citation{Andersen2021}
+\citation{Draxl2019}
+\citation{Schmidt2022}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.1}Aim 1: Database Adapter Layer}{6}{subsection.4.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {4.1.1}Materials Project Adapter (v0.2)}{6}{subsubsection.4.1.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {4.1.2}OPTIMADE and Alexandria Adapters (v0.3)}{6}{subsubsection.4.1.2}\protected@file@percent }
+\citation{Babbush2019}
+\citation{Ong2013}
+\citation{Perdew1996}
+\citation{Jain2013}
+\citation{Yoshioka2022}
+\citation{WangDFTU2006}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.2}Aim 2: Tier-1 Benchmark Fixture Set}{7}{subsection.4.2}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {3}{\ignorespaces Proposed Tier-1 benchmark material set. MP IDs are Materials Project identifiers. $N_e$ denotes the number of valence electrons in the simulation cell.}}{7}{table.3}\protected@file@percent }
+\newlabel{tab:tier1}{{3}{7}{Proposed Tier-1 benchmark material set. MP IDs are Materials Project identifiers. $N_e$ denotes the number of valence electrons in the simulation cell}{table.3}{}}
+\citation{Saltelli2008}
+\citation{Saltelli2008}
+\citation{McClean2020}
+\citation{Kivlichan2018}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.3}Aim 3: Sensitivity Analysis and Resource Estimation Framework}{8}{subsection.4.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.4}Aim 4: Downstream Exporters}{8}{subsection.4.4}\protected@file@percent }
+\citation{Qualtran2023}
+\citation{Babbush2019}
+\citation{pyLIQTR2023}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {4.4.1}OpenFermion Exporter (v0.4)}{9}{subsubsection.4.4.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {4.4.2}Qualtran Exporter (v0.4)}{9}{subsubsection.4.4.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {4.4.3}pyLIQTR Exporter (v0.4)}{9}{subsubsection.4.4.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.5}Aim 5: Community Benchmark Standard}{9}{subsection.4.5}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {4.5.1}Governance and Documentation}{9}{subsubsection.4.5.1}\protected@file@percent }
+\citation{Ong2013}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {4.5.2}JOSS Publication}{10}{subsubsection.4.5.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {4.5.3}Community Workshop}{10}{subsubsection.4.5.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {5}Broader Impacts}{10}{section.5}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Community research infrastructure.}{10}{paragraph*.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Broadening participation through MSI partnership.}{10}{paragraph*.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{REU supplement and undergraduate research.}{10}{paragraph*.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Workforce development at the quantum--materials interface.}{11}{paragraph*.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Curriculum integration and open educational resources.}{11}{paragraph*.5}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Industry advisory panel and open science metrics.}{11}{paragraph*.6}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Community workshop.}{11}{paragraph*.7}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {6}Team, Qualifications, and Resources}{11}{section.6}\protected@file@percent }
+\citation{Wilkinson2016}
+\citation{Huber2020}
+\@writefile{toc}{\contentsline {paragraph}{Data Management.}{12}{paragraph*.8}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {7}Timeline and Milestones}{12}{section.7}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {2}{\ignorespaces Three-year milestone timeline (FY1--FY3, quarter resolution). Color encodes aim: Aim 1 = blue, Aim 2 = navy, Aim 3 = purple, Aim 4 = teal, Aim 5 = orange, CI/testing = gray. Dashed vertical lines mark federal fiscal year boundaries.}}{12}{figure.2}\protected@file@percent }
+\newlabel{fig:gantt}{{2}{12}{Three-year milestone timeline (FY1--FY3, quarter resolution). Color encodes aim: Aim 1 = blue, Aim 2 = navy, Aim 3 = purple, Aim 4 = teal, Aim 5 = orange, CI/testing = gray. Dashed vertical lines mark federal fiscal year boundaries}{figure.2}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {8}Conclusion}{12}{section.8}\protected@file@percent }
+\bibstyle{unsrtnat}
+\bibdata{references}
+\bibcite{Jain2013}{{1}{2013}{{Jain et~al.}}{{Jain, Ong, Hautier, Chen, Richards, Dacek, Cholia, Gunter, Skinner, Ceder, and Persson}}}
+\bibcite{Kirklin2015}{{2}{2015}{{Kirklin et~al.}}{{Kirklin, Saal, Meredig, Thompson, Doak, Aykol, R{\"u}hl, and Wolverton}}}
+\bibcite{McClean2020}{{3}{2020}{{McClean et~al.}}{{McClean, Rubin, Sung, Kivlichan, Bonet-Monroig, Cao, et~al.}}}
+\bibcite{Qualtran2023}{{4}{2023}{{Google Quantum AI}}{{}}}
+\bibcite{pyLIQTR2023}{{5}{2023}{{{DARPA} and {Sandia National Laboratories}}}{{}}}
+\bibcite{Lejaeghere2016}{{6}{2016}{{Lejaeghere et~al.}}{{Lejaeghere, Bihlmayer, Bj{\"o}rkman, Blaha, Bl{\"u}gel, Blum, et~al.}}}
+\bibcite{Wilkinson2016}{{7}{2016}{{Wilkinson et~al.}}{{Wilkinson, Dumontier, Aalbersberg, Appleton, Axton, Baak, et~al.}}}
+\bibcite{Reiher2017}{{8}{2017}{{Reiher et~al.}}{{Reiher, Wiebe, Svore, Wecker, and Troyer}}}
+\bibcite{vonBurg2021}{{9}{2021}{{von Burg et~al.}}{{von Burg, Low, H{\"a}ner, Steiger, Reiher, Roetteler, and Troyer}}}
+\bibcite{Goings2022}{{10}{2022}{{Goings et~al.}}{{Goings, White, Lee, Tautermann, Degroote, Gidney, et~al.}}}
+\bibcite{Babbush2019}{{11}{2019}{{Babbush et~al.}}{{Babbush, Su, Berry, Kivlichan, Sherer, et~al.}}}
+\bibcite{Su2021}{{12}{2021}{{Su et~al.}}{{Su, Berry, Babbush, et~al.}}}
+\bibcite{Lee2021}{{13}{2021}{{Lee et~al.}}{{Lee, Berry, Gidney, Huggins, McClean, Wiebe, and Babbush}}}
+\bibcite{Clark2026}{{14}{2026}{{Clark}}{{}}}
+\bibcite{QREChem2023}{{15}{2023}{{Meister et~al.}}{{Meister, Sherborn, Sherborn, et~al.}}}
+\bibcite{ArQTiC2022}{{16}{2023}{{Lykov et~al.}}{{Lykov, Shaydulin, Sun, Alexeev, and Pistoia}}}
+\bibcite{Yoshioka2022}{{17}{2024}{{Yoshioka et~al.}}{{Yoshioka, Takagi, Endo, et~al.}}}
+\bibcite{Low2019}{{18}{2019}{{Low and Chuang}}{{}}}
+\bibcite{Beverland2022}{{19}{2022}{{Beverland et~al.}}{{Beverland, Murali, Troyer, Svore, Granade, et~al.}}}
+\bibcite{QMatBridge2026}{{20}{2026}{{Reis}}{{}}}
+\bibcite{Kresse1996}{{21}{1996}{{Kresse and Furthm{\"u}ller}}{{}}}
+\bibcite{Andersen2021}{{22}{2021}{{Andersen et~al.}}{{Andersen, Armiento, Blokhin, Conduit, Dwaraknath, Evans, et~al.}}}
+\bibcite{Draxl2019}{{23}{2018}{{Draxl and Scheffler}}{{}}}
+\bibcite{Schmidt2022}{{24}{2017}{{Schmidt et~al.}}{{Schmidt, Shi, Borlido, Chen, Botti, and Marques}}}
+\bibcite{Ong2013}{{25}{2013}{{Ong et~al.}}{{Ong, Richards, Jain, Hautier, Kocher, Cholia, Gunter, Chevrier, Persson, and Ceder}}}
+\bibcite{Perdew1996}{{26}{1996}{{Perdew et~al.}}{{Perdew, Burke, and Ernzerhof}}}
+\bibcite{WangDFTU2006}{{27}{2006}{{Wang et~al.}}{{Wang, Maxisch, and Ceder}}}
+\bibcite{Saltelli2008}{{28}{2008}{{Saltelli et~al.}}{{Saltelli, Ratto, Andres, Campolongo, Cariboni, Gatelli, Saisana, and Tarantola}}}
+\bibcite{Kivlichan2018}{{29}{2018}{{Kivlichan et~al.}}{{Kivlichan, McClean, Wiebe, Gidney, Aspuru-Guzik, Chan, and Babbush}}}
+\bibcite{Huber2020}{{30}{2020}{{Huber et~al.}}{{Huber, Zoupanos, Uhrin, Talirz, Kahle, H{\"a}uselmann, et~al.}}}
+\newlabel{LastPage}{{}{16}{}{page.16}{}}
+\xdef\lastpage@lastpage{16}
+\xdef\lastpage@lastpageHy{16}
+\gdef \@abspage@last{18}

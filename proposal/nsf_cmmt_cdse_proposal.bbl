@@ -1,0 +1,251 @@
+\begin{thebibliography}{30}
+\providecommand{\natexlab}[1]{#1}
+\providecommand{\url}[1]{\texttt{#1}}
+\expandafter\ifx\csname urlstyle\endcsname\relax
+  \providecommand{\doi}[1]{doi: #1}\else
+  \providecommand{\doi}{doi: \begingroup \urlstyle{rm}\Url}\fi
+
+\bibitem[Jain et~al.(2013)Jain, Ong, Hautier, Chen, Richards, Dacek, Cholia,
+  Gunter, Skinner, Ceder, and Persson]{Jain2013}
+Anubhav Jain, Shyue~Ping Ong, Geoffroy Hautier, Wei Chen, William~Davidson
+  Richards, Stephen Dacek, Shreyas Cholia, Dan Gunter, David Skinner, Gerbrand
+  Ceder, and Kristin~A. Persson.
+\newblock Commentary: {The Materials Project}: A materials genome approach to
+  accelerating materials innovation.
+\newblock \emph{APL Materials}, 1:\penalty0 011002, 2013.
+\newblock \doi{10.1063/1.4812323}.
+
+\bibitem[Kirklin et~al.(2015)Kirklin, Saal, Meredig, Thompson, Doak, Aykol,
+  R{\"u}hl, and Wolverton]{Kirklin2015}
+Scott Kirklin, James~E. Saal, Bryce Meredig, Alex Thompson, Jeff~W. Doak,
+  Muratahan Aykol, S.~R{\"u}hl, and Chris Wolverton.
+\newblock The {Open Quantum Materials Database (OQMD)}: Assessing the accuracy
+  of {DFT} formation energies.
+\newblock \emph{npj Computational Materials}, 1:\penalty0 15010, 2015.
+\newblock \doi{10.1038/npjcompumats.2015.10}.
+
+\bibitem[McClean et~al.(2020)McClean, Rubin, Sung, Kivlichan, Bonet-Monroig,
+  Cao, et~al.]{McClean2020}
+Jarrod~R. McClean, Nicholas~C. Rubin, Kevin~J. Sung, Ian~D. Kivlichan, Xavier
+  Bonet-Monroig, Yudong Cao, et~al.
+\newblock {OpenFermion}: The electronic structure package for quantum
+  computers.
+\newblock \emph{Quantum Science and Technology}, 5:\penalty0 034014, 2020.
+\newblock \doi{10.1088/2058-9565/ab8ebc}.
+
+\bibitem[{Google Quantum AI}(2023)]{Qualtran2023}
+{Google Quantum AI}.
+\newblock Qualtran: Quantum algorithms translator, 2023.
+\newblock URL \url{https://github.com/quantumlib/Qualtran}.
+
+\bibitem[{DARPA} and {Sandia National Laboratories}(2023)]{pyLIQTR2023}
+{DARPA} and {Sandia National Laboratories}.
+\newblock {pyLIQTR}: Quantum resource estimation for chemistry, 2023.
+\newblock URL \url{https://github.com/isi-usc-edu/pyLIQTR}.
+
+\bibitem[Lejaeghere et~al.(2016)Lejaeghere, Bihlmayer, Bj{\"o}rkman, Blaha,
+  Bl{\"u}gel, Blum, et~al.]{Lejaeghere2016}
+Kurt Lejaeghere, Gustav Bihlmayer, Torbj{\"o}rn Bj{\"o}rkman, Peter Blaha,
+  Stefan Bl{\"u}gel, Volker Blum, et~al.
+\newblock Reproducibility in density functional theory calculations of solids.
+\newblock \emph{Science}, 351\penalty0 (6280):\penalty0 aad3000, 2016.
+\newblock \doi{10.1126/science.aad3000}.
+
+\bibitem[Wilkinson et~al.(2016)Wilkinson, Dumontier, Aalbersberg, Appleton,
+  Axton, Baak, et~al.]{Wilkinson2016}
+Mark~D. Wilkinson, Michel Dumontier, IJsbrand~Jan Aalbersberg, Gabrielle
+  Appleton, Myles Axton, Arie Baak, et~al.
+\newblock The {FAIR} guiding principles for scientific data management and
+  stewardship.
+\newblock \emph{Scientific Data}, 3:\penalty0 160018, 2016.
+\newblock \doi{10.1038/sdata.2016.18}.
+
+\bibitem[Reiher et~al.(2017)Reiher, Wiebe, Svore, Wecker, and
+  Troyer]{Reiher2017}
+Markus Reiher, Nathan Wiebe, Krysta~M. Svore, Dave Wecker, and Matthias Troyer.
+\newblock Elucidating reaction mechanisms on quantum computers.
+\newblock \emph{Proceedings of the National Academy of Sciences}, 114\penalty0
+  (29):\penalty0 7555--7560, 2017.
+\newblock \doi{10.1073/pnas.1619152114}.
+
+\bibitem[von Burg et~al.(2021)von Burg, Low, H{\"a}ner, Steiger, Reiher,
+  Roetteler, and Troyer]{vonBurg2021}
+Vera von Burg, Guang~Hao Low, Thomas H{\"a}ner, Damian~S. Steiger, Markus
+  Reiher, Martin Roetteler, and Matthias Troyer.
+\newblock Quantum computing enhanced computational catalysis.
+\newblock \emph{Physical Review Research}, 3:\penalty0 033055, 2021.
+\newblock \doi{10.1103/PhysRevResearch.3.033055}.
+
+\bibitem[Goings et~al.(2022)Goings, White, Lee, Tautermann, Degroote, Gidney,
+  et~al.]{Goings2022}
+Joshua~J. Goings, Alec White, Joonho Lee, Christofer~S. Tautermann, Matthias
+  Degroote, Craig Gidney, et~al.
+\newblock Reliably assessing the electronic structure of cytochrome {P450} on
+  today's classical computers and tomorrow's quantum computers.
+\newblock \emph{Proceedings of the National Academy of Sciences}, 119\penalty0
+  (38):\penalty0 e2203533119, 2022.
+\newblock \doi{10.1073/pnas.2203533119}.
+
+\bibitem[Babbush et~al.(2019)Babbush, Su, Berry, Kivlichan, Sherer,
+  et~al.]{Babbush2019}
+Ryan Babbush, Yuan Su, Dominic~W. Berry, Ian~D. Kivlichan, Andrew Sherer,
+  et~al.
+\newblock Quantum simulation of chemistry with sublinear scaling in basis size.
+\newblock \emph{npj Quantum Information}, 5:\penalty0 92, 2019.
+\newblock \doi{10.1038/s41534-019-0199-y}.
+
+\bibitem[Su et~al.(2021)Su, Berry, Babbush, et~al.]{Su2021}
+Yuan Su, Dominic~W. Berry, Ryan Babbush, et~al.
+\newblock Fault-tolerant quantum simulations of chemistry in first
+  quantization.
+\newblock \emph{PRX Quantum}, 2:\penalty0 040332, 2021.
+\newblock \doi{10.1103/PRXQuantum.2.040332}.
+
+\bibitem[Lee et~al.(2021)Lee, Berry, Gidney, Huggins, McClean, Wiebe, and
+  Babbush]{Lee2021}
+Joonho Lee, Dominic~W. Berry, Craig Gidney, William~J. Huggins, Jarrod~R.
+  McClean, Nathan Wiebe, and Ryan Babbush.
+\newblock Even more efficient quantum computations of chemistry through tensor
+  hypercontraction.
+\newblock \emph{PRX Quantum}, 2:\penalty0 030305, 2021.
+\newblock \doi{10.1103/PRXQuantum.2.030305}.
+
+\bibitem[Clark(2026)]{Clark2026}
+Bryan~K. Clark.
+\newblock Open, reproducible benchmarks for quantum simulation of molecular
+  systems.
+\newblock National Quantum Algorithm Center (NQAC) Grand Challenge Award,
+  Discovery Partners Institute, University of Illinois Urbana-Champaign, 2026.
+\newblock URL \url{https://dpi.illinois.edu/news/82848}.
+\newblock Collaboration with BP and qBraid; targets near-term quantum chemistry
+  algorithms on molecular (second-quantized) systems.
+
+\bibitem[Meister et~al.(2023)Meister, Sherborn, Sherborn, et~al.]{QREChem2023}
+Robert Meister, Nathan Sherborn, Nathan Sherborn, et~al.
+\newblock {QREChem}: Quantum resource estimation software for chemistry
+  applications.
+\newblock \emph{Frontiers in Quantum Science and Technology}, 2:\penalty0
+  1232624, 2023.
+\newblock \doi{10.3389/frqst.2023.1232624}.
+\newblock Logical resource estimation for molecular ground-state energy
+  (Trotter-based QPE, second-quantized); HRL Laboratories and Argonne National
+  Laboratory.
+
+\bibitem[Lykov et~al.(2023)Lykov, Shaydulin, Sun, Alexeev, and
+  Pistoia]{ArQTiC2022}
+Danylo Lykov, Ruslan Shaydulin, Yuchen Sun, Yuri Alexeev, and Marco Pistoia.
+\newblock {ArQTiC}: A full-stack software package for simulating materials on
+  quantum computers.
+\newblock \emph{ACM Transactions on Quantum Computing}, 4\penalty0
+  (1):\penalty0 1--25, 2023.
+\newblock \doi{10.1145/3511715}.
+\newblock Near-term simulation of 1D Heisenberg-type Hamiltonians; Argonne
+  National Laboratory.
+
+\bibitem[Yoshioka et~al.(2024)Yoshioka, Takagi, Endo, et~al.]{Yoshioka2022}
+Nobuyuki Yoshioka, Ryuji Takagi, Suguru Endo, et~al.
+\newblock Hunting for quantum-classical crossover in condensed matter problems.
+\newblock \emph{npj Quantum Information}, 10:\penalty0 45, 2024.
+\newblock \doi{10.1038/s41534-024-00839-4}.
+
+\bibitem[Low and Chuang(2019)]{Low2019}
+Guang~Hao Low and Isaac~L. Chuang.
+\newblock Hamiltonian simulation by qubitization.
+\newblock \emph{Quantum}, 3:\penalty0 163, 2019.
+\newblock \doi{10.22331/q-2019-07-12-163}.
+
+\bibitem[Beverland et~al.(2022)Beverland, Murali, Troyer, Svore, Granade,
+  et~al.]{Beverland2022}
+Michael~E. Beverland, Prakash Murali, Matthias Troyer, Krysta~M. Svore,
+  Christopher Granade, et~al.
+\newblock Assessing requirements to scale to practical quantum advantage.
+\newblock \emph{arXiv preprint arXiv:2211.07629}, 2022.
+\newblock URL \url{https://arxiv.org/abs/2211.07629}.
+
+\bibitem[Reis(2026)]{QMatBridge2026}
+Roberto Reis.
+\newblock {QMatBridge}: A bridge from classical materials databases to
+  first-quantized {Hamiltonians} for quantum simulation, 2026.
+\newblock URL \url{https://github.com/rmsreis/qmatbridge}.
+
+\bibitem[Kresse and Furthm{\"u}ller(1996)]{Kresse1996}
+G.~Kresse and J.~Furthm{\"u}ller.
+\newblock Efficient iterative schemes for \emph{Ab Initio} total-energy
+  calculations using a plane-wave basis set.
+\newblock \emph{Physical Review B}, 54:\penalty0 11169--11186, 1996.
+\newblock \doi{10.1103/PhysRevB.54.11169}.
+
+\bibitem[Andersen et~al.(2021)Andersen, Armiento, Blokhin, Conduit, Dwaraknath,
+  Evans, et~al.]{Andersen2021}
+Casper~W. Andersen, Rickard Armiento, Evgeny Blokhin, Gareth~J. Conduit, Shyam
+  Dwaraknath, Matthew~L. Evans, et~al.
+\newblock {OPTIMADE}, an {API} for exchanging materials data.
+\newblock \emph{Scientific Data}, 8:\penalty0 217, 2021.
+\newblock \doi{10.1038/s41597-021-00974-z}.
+
+\bibitem[Draxl and Scheffler(2018)]{Draxl2019}
+Claudia Draxl and Matthias Scheffler.
+\newblock {NOMAD}: The {FAIR} concept for big data-driven materials science.
+\newblock \emph{MRS Bulletin}, 43:\penalty0 676--682, 2018.
+\newblock \doi{10.1557/mrs.2018.208}.
+
+\bibitem[Schmidt et~al.(2017)Schmidt, Shi, Borlido, Chen, Botti, and
+  Marques]{Schmidt2022}
+Jonathan Schmidt, Jinhu Shi, Pedro Borlido, Liming Chen, Silvana Botti, and
+  Miguel A.~L. Marques.
+\newblock Predicting the thermodynamic stability of solids combining density
+  and chemical intuition.
+\newblock \emph{Chemistry of Materials}, 29\penalty0 (12):\penalty0 5090--5103,
+  2017.
+\newblock \doi{10.1021/acs.chemmater.7b00156}.
+\newblock Alexandria database: \url{https://alexandria.icams.rub.de/}.
+
+\bibitem[Ong et~al.(2013)Ong, Richards, Jain, Hautier, Kocher, Cholia, Gunter,
+  Chevrier, Persson, and Ceder]{Ong2013}
+Shyue~Ping Ong, William~Davidson Richards, Anubhav Jain, Geoffroy Hautier,
+  Michael Kocher, Shreyas Cholia, Dan Gunter, Vincent~L. Chevrier, Kristin~A.
+  Persson, and Gerbrand Ceder.
+\newblock Python materials genomics (pymatgen): A robust, open-source python
+  library for materials analysis.
+\newblock \emph{Computational Materials Science}, 68:\penalty0 314--319, 2013.
+\newblock \doi{10.1016/j.commatsci.2012.10.028}.
+
+\bibitem[Perdew et~al.(1996)Perdew, Burke, and Ernzerhof]{Perdew1996}
+John~P. Perdew, Kieron Burke, and Matthias Ernzerhof.
+\newblock Generalized gradient approximation made simple.
+\newblock \emph{Physical Review Letters}, 77:\penalty0 3865--3868, 1996.
+\newblock \doi{10.1103/PhysRevLett.77.3865}.
+
+\bibitem[Wang et~al.(2006)Wang, Maxisch, and Ceder]{WangDFTU2006}
+Lei Wang, Thomas Maxisch, and Gerbrand Ceder.
+\newblock Oxidation energies of transition metal oxides within the {GGA+U}
+  framework.
+\newblock \emph{Physical Review B}, 73:\penalty0 195107, 2006.
+\newblock \doi{10.1103/PhysRevB.73.195107}.
+
+\bibitem[Saltelli et~al.(2008)Saltelli, Ratto, Andres, Campolongo, Cariboni,
+  Gatelli, Saisana, and Tarantola]{Saltelli2008}
+Andrea Saltelli, Marco Ratto, Terry Andres, Francesca Campolongo, Jessica
+  Cariboni, Debora Gatelli, Michaela Saisana, and Stefano Tarantola.
+\newblock \emph{Global Sensitivity Analysis: The Primer}.
+\newblock Wiley, 2008.
+
+\bibitem[Kivlichan et~al.(2018)Kivlichan, McClean, Wiebe, Gidney, Aspuru-Guzik,
+  Chan, and Babbush]{Kivlichan2018}
+Ian~D. Kivlichan, Jarrod McClean, Nathan Wiebe, Craig Gidney, Al{\'a}n
+  Aspuru-Guzik, Garnet Kin-Lic Chan, and Ryan Babbush.
+\newblock Quantum simulation of electronic structure with linear depth and
+  connectivity.
+\newblock \emph{Physical Review Letters}, 120:\penalty0 110501, 2018.
+\newblock \doi{10.1103/PhysRevLett.120.110501}.
+
+\bibitem[Huber et~al.(2020)Huber, Zoupanos, Uhrin, Talirz, Kahle,
+  H{\"a}uselmann, et~al.]{Huber2020}
+Sebastiaan~P. Huber, Spyros Zoupanos, Martin Uhrin, Leopold Talirz, Leonid
+  Kahle, Rico H{\"a}uselmann, et~al.
+\newblock {AiiDA} 1.0, a scalable computational infrastructure for automated
+  reproducible workflows and data provenance.
+\newblock \emph{Scientific Data}, 7:\penalty0 300, 2020.
+\newblock \doi{10.1038/s41597-020-00638-4}.
+
+\end{thebibliography}
