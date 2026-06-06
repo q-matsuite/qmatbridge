@@ -10,6 +10,7 @@ from qmatbridge.schema import (
     HamiltonianMetadata,
     LatticeMetadata,
     MaterialReference,
+    OracleMetadata,
     QMatEntry,
     SourceProvenance,
     StructureMetadata,
@@ -45,6 +46,18 @@ def minimal_entry() -> QMatEntry:
         spin_polarized=False,
         basis=BasisMetadata(type="plane_wave", cutoff_energy_ev=520.0),
         num_bands=16,
+        oracle=OracleMetadata(
+            method="lcu",
+            oracle_type="SELECT_PREPARE",
+            index_encoding="binary",
+            coefficient_sampling="alias_sampling",
+            lambda_total=315.8,
+            num_lcu_terms=3_430_000,
+            eta=1e-3,
+            delta_e=1.6e-3,
+            num_bits_state=11,
+            num_bits_rot=20,
+        ),
     )
     return QMatEntry(
         reference=ref,

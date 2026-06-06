@@ -248,8 +248,8 @@ qmatbridge/
 - [x] Canonical entry hash (`QMatEntry.canonical_hash()`)
 - [x] Adapter stubs: Materials Project, OQMD
 - [x] CI: ruff, mypy, pytest on Python 3.10–3.12
-- [ ] JSON round-trip regression fixtures
-- [ ] Oracle convention vocabulary (`oracle_type`, `index_encoding`)
+- [x] JSON round-trip regression fixtures
+- [x] Oracle convention vocabulary (`oracle_type`, `index_encoding`)
 
 ### v0.2 — Materials Project live integration
 

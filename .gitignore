@@ -32,6 +32,7 @@ htmlcov/
 # Jupyter
 .ipynb_checkpoints/
 *.ipynb
+!examples/notebooks/*.ipynb
 
 # IDE
 .vscode/
@@ -43,7 +44,6 @@ htmlcov/
 .DS_Store
 
 # Generated example artifacts
-examples/silicon_entry.json
 examples/reproducibility_entry.json
 examples/material_ranking.csv
 examples/material_ranking.json

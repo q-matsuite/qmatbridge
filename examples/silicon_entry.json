@@ -1,0 +1,175 @@
+{
+  "reference": {
+    "provenance": {
+      "primary": {
+        "source": "materials_project",
+        "identifier": "mp-149",
+        "url": "https://materialsproject.org/materials/mp-149",
+        "metadata": {
+          "mp_task_id": "mp-1040685",
+          "task_type": "GGA Static"
+        }
+      },
+      "additional_ids": [
+        {
+          "source": "icsd",
+          "identifier": "51688",
+          "url": null,
+          "metadata": {}
+        }
+      ],
+      "functional": "PBE",
+      "pseudopotential": "PAW_PBE",
+      "code": "VASP",
+      "code_version": "6.3.2",
+      "retrieved_at": "2026-06-03T00:00:00Z",
+      "metadata": {
+        "encut_vasp": 520.0,
+        "kpoints_mesh": "8x8x8"
+      }
+    },
+    "structure": {
+      "formula_reduced": "Si",
+      "formula_unit_cell": "Si2",
+      "num_sites": 2,
+      "species": [
+        "Si",
+        "Si"
+      ],
+      "lattice": {
+        "a": 3.867,
+        "b": 3.867,
+        "c": 3.867,
+        "alpha": 60.0,
+        "beta": 60.0,
+        "gamma": 60.0,
+        "spacegroup_number": 227,
+        "spacegroup_symbol": "Fd-3m",
+        "crystal_system": "cubic",
+        "volume_ang3": 45.78,
+        "metadata": {}
+      },
+      "is_periodic": true,
+      "metadata": {
+        "wyckoff_positions": [
+          "8a",
+          "8a"
+        ],
+        "point_group": "m-3m"
+      }
+    }
+  },
+  "hamiltonian": {
+    "num_electrons": 8,
+    "spin_polarized": false,
+    "basis": {
+      "type": "plane_wave",
+      "cutoff_energy_ev": 520.0,
+      "num_plane_waves": 1849,
+      "grid_dimensions": null,
+      "basis_set_name": null,
+      "num_basis_functions": null,
+      "metadata": {
+        "gamma_centered": true,
+        "fft_grid": [
+          36,
+          36,
+          36
+        ]
+      }
+    },
+    "num_bands": 16,
+    "terms": [
+      {
+        "name": "kinetic",
+        "lambda_one_norm": 124.3,
+        "lambda_spectral": 91.7,
+        "num_lcu_terms": 1849,
+        "truncation_threshold": 1e-05,
+        "coefficient_labels": [],
+        "implementation_notes": null,
+        "metadata": {}
+      },
+      {
+        "name": "electron_electron",
+        "lambda_one_norm": 89.4,
+        "lambda_spectral": 64.2,
+        "num_lcu_terms": 1709400,
+        "truncation_threshold": 1e-05,
+        "coefficient_labels": [],
+        "implementation_notes": null,
+        "metadata": {}
+      },
+      {
+        "name": "electron_nuclear",
+        "lambda_one_norm": 102.1,
+        "lambda_spectral": 78.6,
+        "num_lcu_terms": 3698,
+        "truncation_threshold": 1e-05,
+        "coefficient_labels": [],
+        "implementation_notes": null,
+        "metadata": {}
+      }
+    ],
+    "oracle": {
+      "method": "lcu",
+      "lambda_total": 315.8,
+      "num_lcu_terms": 3430000,
+      "eta": 0.001,
+      "delta_e": 0.0016,
+      "num_bits_state": 11,
+      "num_bits_rot": 20,
+      "terms": [
+        {
+          "name": "kinetic",
+          "lambda_one_norm": 124.3,
+          "lambda_spectral": 91.7,
+          "num_lcu_terms": 1849,
+          "truncation_threshold": 1e-05,
+          "coefficient_labels": [],
+          "implementation_notes": null,
+          "metadata": {}
+        },
+        {
+          "name": "electron_electron",
+          "lambda_one_norm": 89.4,
+          "lambda_spectral": 64.2,
+          "num_lcu_terms": 1709400,
+          "truncation_threshold": 1e-05,
+          "coefficient_labels": [],
+          "implementation_notes": null,
+          "metadata": {}
+        },
+        {
+          "name": "electron_nuclear",
+          "lambda_one_norm": 102.1,
+          "lambda_spectral": 78.6,
+          "num_lcu_terms": 3698,
+          "truncation_threshold": 1e-05,
+          "coefficient_labels": [],
+          "implementation_notes": null,
+          "metadata": {}
+        }
+      ],
+      "oracle_type": "SELECT_PREPARE",
+      "index_encoding": "binary",
+      "coefficient_sampling": "alias_sampling",
+      "complexity": {},
+      "metadata": {
+        "reference": "Babbush et al., npj Quantum Information (2019)"
+      }
+    },
+    "metadata": {
+      "total_energy_ev": -10.843,
+      "bandgap_ev": 0.61
+    }
+  },
+  "exports": [],
+  "tags": [
+    "silicon",
+    "plane_wave",
+    "benchmark",
+    "lcu"
+  ],
+  "schema_version": "0.1"
+}

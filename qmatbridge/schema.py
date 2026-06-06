@@ -44,6 +44,9 @@ __all__ = [
     "QMatEntry",
 ]
 
+_ORACLE_TYPES = {"SELECT", "PREPARE", "SELECT_PREPARE", "QROM", "sparse_access"}
+_INDEX_ENCODINGS = {"binary", "unary", "one_hot"}
+
 
 # ---------------------------------------------------------------------------
 # Provenance
@@ -279,10 +282,12 @@ class OracleMetadata:
         oracle_type:          Circuit-level oracle pattern being targeted.
                               Examples: ``"SELECT"``, ``"PREPARE"``,
                               ``"SELECT_PREPARE"``, ``"QROM"``,
-                              ``"sparse_access"``.
+                              ``"sparse_access"``.  Canonical values are
+                              listed in ``_ORACLE_TYPES``.
         index_encoding:       How term indices are encoded in qubits.
                               Examples: ``"binary"``, ``"unary"``,
-                              ``"one_hot"``.  ``None`` when not yet
+                              ``"one_hot"``.  Canonical values are listed
+                              in ``_INDEX_ENCODINGS``. ``None`` when not yet
                               determined.
         coefficient_sampling: Notes on how the PREPARE oracle loads LCU
                               coefficients — e.g. ``"alias_sampling"``,

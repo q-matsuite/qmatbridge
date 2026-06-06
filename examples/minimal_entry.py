@@ -131,6 +131,9 @@ def make_silicon_entry() -> QMatEntry:
     # ------------------------------------------------------------------
     oracle = OracleMetadata(
         method="lcu",
+        oracle_type="SELECT_PREPARE",
+        index_encoding="binary",
+        coefficient_sampling="alias_sampling",
         lambda_total=315.8,         # Ha — sum of physical term norms
         num_lcu_terms=3_430_000,    # approximate for this basis size
         eta=1e-3,                   # 1 mHa target accuracy

@@ -118,6 +118,10 @@ oracle = OracleMetadata(
         "reference": "Babbush et al., npj Quantum Information (2019)",
     },
 )
+
+The controlled vocabularies for `oracle_type` and `index_encoding` are
+defined by the module-level sets `qmatbridge.schema._ORACLE_TYPES` and
+`qmatbridge.schema._INDEX_ENCODINGS`.
 ```
 
 ### oracle_type values

@@ -183,3 +183,16 @@ class TestWriteEntryJson:
         write_entry_json(minimal_entry, out, indent=4)
         content = out.read_text()
         assert '    "reference"' in content
+
+    def test_silicon_fixture_matches_regenerated_json(self, tmp_path: Path) -> None:
+        from examples.minimal_entry import make_silicon_entry
+
+        silicon_entry = make_silicon_entry()
+        fixture_path = Path(__file__).resolve().parents[2] / "examples" / "silicon_entry.json"
+        expected = json.loads(fixture_path.read_text())
+
+        assert expected == silicon_entry.to_dict()
+
+        out = tmp_path / "silicon_entry.json"
+        write_entry_json(silicon_entry, out)
+        assert json.loads(out.read_text()) == expected

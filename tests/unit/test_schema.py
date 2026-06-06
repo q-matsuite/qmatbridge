@@ -13,6 +13,8 @@ from qmatbridge.schema import (
     OracleMetadata,
     QMatEntry,
     TermMetadata,
+    _INDEX_ENCODINGS,
+    _ORACLE_TYPES,
 )
 
 
@@ -88,6 +90,10 @@ class TestOracleMetadata:
         assert o.oracle_type == "SELECT_PREPARE"
         assert o.complexity["toffoli_count"] == 4_200_000
 
+    def test_controlled_vocabularies_present(self) -> None:
+        assert "SELECT_PREPARE" in _ORACLE_TYPES
+        assert "binary" in _INDEX_ENCODINGS
+
 
 class TestExportMetadata:
     def test_status_defaults_to_pending(self) -> None:
@@ -123,6 +129,14 @@ class TestQMatEntry:
 
     def test_repr_contains_source(self, minimal_entry: QMatEntry) -> None:
         assert "test_db" in repr(minimal_entry)
+
+    def test_minimal_entry_uses_recognized_oracle_values(
+        self, minimal_entry: QMatEntry
+    ) -> None:
+        oracle = minimal_entry.hamiltonian.oracle
+        assert oracle is not None
+        assert oracle.oracle_type in _ORACLE_TYPES
+        assert oracle.index_encoding in _INDEX_ENCODINGS
 
 
 class TestCanonicalHash:
