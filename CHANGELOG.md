@@ -11,6 +11,34 @@ Breaking changes to `QMatEntry` or its nested schema classes are marked
 
 ## [Unreleased]
 
+### Added
+- `qmatbridge.basis` — plane-wave counting: `cell_volume`, `cutoff_wavevector`,
+  `num_plane_waves_estimate`, `num_plane_waves_exact`, `num_plane_waves_from_ecut`.
+- Materials Project adapter: `structure_from_mp_doc` and
+  `hamiltonian_from_mp_task_doc` (pure converters), plus live
+  `fetch_structure_metadata_from_mp`, `fetch_hamiltonian_metadata_from_mp` and
+  `fetch_entry_from_mp` (lazy `mp-api` import). Unit-tested with a fake client;
+  **not yet validated against the live API** (`pytest -m integration`).
+- Tier-1 benchmark specification (`benchmarks/tier1.py`) and a fixture builder
+  (`benchmarks/build_tier1_fixtures.py`) that validates live MP data before writing.
+- MkDocs documentation site (`mkdocs.yml`, getting-started, API reference) and a
+  GitHub Pages deploy workflow.
+- `CITATION.cff`; CI jobs for docs build and distribution build; 85 % coverage floor.
+- `docs` optional extra.
+- Landing page (`website/`, `tools/build_site.py`) with an interactive examples
+  explorer; Tier-1 examples are now Si, GaN and LiCoO₂ (battery cathode).
+- `functional_from_mp_task_doc` — records `PBE+U` for GGA+U calculations.
+
+### Changed
+- Repository URLs now point to `github.com/q-matsuite/qmatbridge` (org renamed from
+  `QMatBridge`; GitHub redirects the old URLs). Site moves to `q-matsuite.com/qmatbridge/`.
+- Generated example artifacts moved to `examples/outputs/`.
+- Ruff: long lines allowed in `examples/` and `tests/`.
+
+### Fixed
+- Corrected the Tier-1 benchmark table in `benchmarks/README.md` (electron counts
+  now derived from MP POTCAR valences; cutoff column removed).
+
 ---
 
 ## [0.1.0] — 2026-06-03
@@ -77,5 +105,5 @@ Initial repository scaffold and schema definition.  First release prepared for P
 **Planning**
 - `planning/initial_issues.md` — ten scoped GitHub issues for v0.1–v0.4
 
-[Unreleased]: https://github.com/rmsreis/qmatbridge/compare/v0.1.0...HEAD
-[0.1.0]: https://github.com/rmsreis/qmatbridge/releases/tag/v0.1.0
+[Unreleased]: https://github.com/q-matsuite/qmatbridge/compare/v0.1.0...HEAD
+[0.1.0]: https://github.com/q-matsuite/qmatbridge/releases/tag/v0.1.0

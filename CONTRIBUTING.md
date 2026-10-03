@@ -28,12 +28,12 @@ Before you begin, please read our [Code of Conduct](CODE_OF_CONDUCT.md) and revi
 
 | Contribution type | First step |
 | --- | --- |
-| Bug | Open a [bug report](https://github.com/rmsreis/qmatbridge/issues/new?template=bug_report.yml) |
-| New feature or adapter | Open a [feature request](https://github.com/rmsreis/qmatbridge/issues/new?template=feature_request.yml) first |
+| Bug | Open a [bug report](https://github.com/q-matsuite/qmatbridge/issues/new?template=bug_report.yml) |
+| New feature or adapter | Open a [feature request](https://github.com/q-matsuite/qmatbridge/issues/new?template=feature_request.yml) first |
 | Schema change | Open an issue tagged `schema` and discuss before writing code |
 | Documentation | PR welcome without a prior issue |
 | Benchmark | Add to `benchmarks/` and update `benchmarks/README.md` |
-| Question | Use [GitHub Discussions](https://github.com/rmsreis/qmatbridge/discussions) |
+| Question | Use [GitHub Discussions](https://github.com/q-matsuite/qmatbridge/discussions) |
 
 If you are unsure whether your idea fits the project scope, open a Discussion first —
 it is lower friction than an issue and maintainers check it regularly.
@@ -43,7 +43,7 @@ it is lower friction than an issue and maintainers check it regularly.
 ## Development Setup
 
 ```bash
-git clone https://github.com/rmsreis/qmatbridge.git
+git clone https://github.com/q-matsuite/qmatbridge.git
 cd qmatbridge
 python -m venv .venv && source .venv/bin/activate
 pip install -e ".[dev]"

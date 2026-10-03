@@ -21,13 +21,25 @@ Benchmarks here serve two purposes:
 
 ### Tier 1 — Core materials (open-access, well-studied)
 
-| Material | mp-id | Electrons | Cutoff (eV) | Notes |
-|----------|-------|-----------|-------------|-------|
-| Si (diamond) | mp-149 | 8 | 520 | Canonical test case |
-| LiH | mp-23703 | 4 | 400 | Small system, exact-diag reference |
-| Fe (BCC) | mp-13 | 16 | 520 | Magnetic, spin-polarized |
-| MgO | mp-1265 | 20 | 600 | Ionic, wide gap |
-| TiO₂ (rutile) | mp-2657 | 36 | 520 | d-electron system |
+| Material | mp-id | Cell | Valence electrons | Why |
+|----------|-------|------|-------------------|-----|
+| Si (diamond) | mp-149 | Si₂ | 8 | Canonical test case |
+| GaN (wurtzite) | mp-804 | Ga₂N₂ | 36 | Wide-gap III-V; semicore Ga 3d |
+| LiCoO₂ | mp-22526 | LiCoO₂ | 24 | Li-ion cathode; spin-polarized, GGA+U |
+
+Planned next: LiH, BCC Fe, MgO, rutile TiO₂ (see `PLANNED` in
+[`tier1.py`](tier1.py)).
+
+Electron counts are derived from the default Materials Project VASP POTCAR
+valences (`Si`, `Ga_d`, `N`, `Li_sv`, `Co`, `O`) for the
+primitive cell; see [`tier1.py`](tier1.py).  The plane-wave cutoff is whatever
+the MP static calculation used (520 eV for the standard MP workflow).
+
+**Fixtures.** `python benchmarks/build_tier1_fixtures.py` (needs `MP_API_KEY`
+and the `[mp]` extra) fetches each material, checks it against the spec —
+species, electron count, spin — and writes `benchmarks/fixtures/<key>.json`
+only if everything matches.  MP IDs are verified at that point; any
+mismatch is reported rather than written.
 
 ### Tier 2 — Resource estimation targets
 

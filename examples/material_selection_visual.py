@@ -343,7 +343,7 @@ def main() -> None:
             f"  {winner.formula} ({winner.source_id}) with score {winner.score:,.0f}"
         )
 
-    out_dir = Path(__file__).parent
+    out_dir = Path(__file__).parent / "outputs"
     csv_path, json_path = export_rankings(rows, out_dir)
     png_path = export_png_chart(rows, out_dir)
 

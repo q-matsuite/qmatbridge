@@ -1,0 +1,18 @@
+cff-version: 1.2.0
+message: "If you use QMatBridge, please cite it as below."
+title: "QMatBridge: A bridge from classical materials databases to first-quantized Hamiltonians for quantum simulation"
+type: software
+authors:
+  - family-names: Reis
+    given-names: Roberto
+version: 0.1.0
+date-released: 2026-06-03
+license: MIT
+repository-code: "https://github.com/q-matsuite/qmatbridge"
+url: "https://q-matsuite.com/qmatbridge/"
+keywords:
+  - quantum computing
+  - quantum simulation
+  - materials science
+  - Hamiltonian simulation
+  - fault tolerant

@@ -1,0 +1,646 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>QMatBridge</title>
+<meta name="description" content="QMatBridge turns classical materials-database records into first-quantized Hamiltonian descriptions for fault-tolerant quantum simulation, with provenance and a canonical hash on every entry.">
+<meta name="author" content="Roberto Reis (@rmsreis)">
+<meta name="application-name" content="QMatBridge by q-matsuite">
+<meta name="color-scheme" content="dark">
+<link rel="canonical" href="https://q-matsuite.com/qmatbridge/">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<meta property="og:type" content="website">
+<meta property="og:title" content="QMatBridge">
+<meta property="og:description" content="Materials databases to first-quantized Hamiltonians, with provenance.">
+<meta property="og:url" content="https://q-matsuite.com/qmatbridge/">
+<meta name="twitter:card" content="summary">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: oklch(0.17 0.012 255);
+  --surface: oklch(0.21 0.014 255);
+  --surface-2: oklch(0.25 0.016 255);
+  --border: oklch(0.33 0.018 255);
+  --text: oklch(0.94 0.008 255);
+  --muted: oklch(0.74 0.015 255);
+  --accent: oklch(0.80 0.12 195);
+  --accent-ink: oklch(0.20 0.03 195);
+  --ok: oklch(0.78 0.13 155);
+  --warn: oklch(0.82 0.12 80);
+  --serif: "DM Serif Display", Georgia, "Times New Roman", serif;
+  --sans: Inter, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  --radius: 10px;
+  --gutter: clamp(16px, 4vw, 40px);
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; scroll-padding-top: 76px; }
+body {
+  margin: 0; background: var(--bg); color: var(--text);
+  font: 400 16px/1.65 var(--sans); -webkit-font-smoothing: antialiased;
+}
+a { color: var(--accent); text-underline-offset: 3px; }
+a:hover { color: var(--text); }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 4px; }
+[hidden] { display: none !important; }
+.skip { position: absolute; left: -999px; top: 8px; background: var(--accent); color: var(--accent-ink); padding: 8px 14px; border-radius: 6px; z-index: 100; }
+.skip:focus { left: 8px; }
+.wrap { max-width: 1080px; margin: 0 auto; padding: 0 var(--gutter); }
+h1, h2, h3 { font-family: var(--serif); font-weight: 400; line-height: 1.15; margin: 0; letter-spacing: -0.01em; }
+h1 { font-size: clamp(2.4rem, 6vw, 4rem); }
+h2 { font-size: clamp(1.7rem, 3.4vw, 2.3rem); }
+h3 { font-size: 1.25rem; }
+p { margin: 0 0 1em; }
+code, pre, .mono { font-family: var(--mono); }
+code { font-size: 0.9em; background: var(--surface-2); padding: 0.1em 0.4em; border-radius: 5px; }
+section { padding: clamp(48px, 8vw, 88px) 0; }
+.eyebrow { font: 500 0.78rem/1.5 var(--mono); letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); margin-bottom: 14px; display: block; }
+.lede { color: var(--muted); font-size: clamp(1.05rem, 2vw, 1.25rem); max-width: 62ch; }
+.section-head { margin-bottom: 32px; max-width: 70ch; }
+.section-head p { color: var(--muted); margin: 12px 0 0; }
+
+/* header */
+header.site { position: sticky; top: 0; z-index: 50; background: color-mix(in oklch, var(--bg) 88%, transparent); backdrop-filter: blur(10px); border-bottom: 1px solid var(--border); }
+header.site .wrap { display: flex; align-items: center; gap: 24px; height: 60px; }
+.brand { display: flex; align-items: center; gap: 10px; color: var(--text); text-decoration: none; font: 600 1.05rem var(--sans); }
+.brand svg { width: 28px; height: 28px; color: var(--accent); }
+.by { color: var(--muted); font: 400 0.8rem var(--mono); text-decoration: none; padding-top: 2px; }
+.by:hover { color: var(--text); }
+@media (max-width: 560px) { .by { display: none; } }
+nav.main { margin-left: auto; display: flex; gap: 4px; align-items: center; }
+nav.main a { color: var(--muted); text-decoration: none; padding: 8px 12px; border-radius: 8px; font-size: 0.92rem; }
+nav.main a:hover { color: var(--text); background: var(--surface); }
+nav.main a.gh { border: 1px solid var(--border); color: var(--text); }
+@media (max-width: 720px) { nav.main a:not(.gh):not(.keep) { display: none; } }
+
+/* buttons */
+.btn { display: inline-flex; align-items: center; gap: 8px; padding: 11px 20px; border-radius: 9px; font: 500 0.96rem var(--sans); text-decoration: none; border: 1px solid var(--border); color: var(--text); background: var(--surface); cursor: pointer; transition: border-color .15s, background .15s; }
+.btn:hover { border-color: var(--accent); color: var(--text); }
+.btn.primary { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); font-weight: 600; }
+.btn.primary:hover { background: color-mix(in oklch, var(--accent) 88%, white); color: var(--accent-ink); }
+
+/* hero */
+.hero { padding-top: clamp(48px, 9vw, 104px); padding-bottom: clamp(32px, 5vw, 56px); border-bottom: 1px solid var(--border); background:
+  radial-gradient(1px 1px at 1px 1px, color-mix(in oklch, var(--border) 70%, transparent) 1px, transparent 0) 0 0 / 28px 28px; }
+.hero h1 { max-width: 16ch; }
+.hero h1 em { font-style: italic; color: var(--accent); }
+.hero .lede { margin: 22px 0 30px; }
+.actions { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 52px; }
+.pipeline { display: grid; grid-template-columns: 1fr auto 1fr auto 1fr; align-items: stretch; gap: 14px; }
+.node { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px 18px; }
+.node.core { border-color: var(--accent); background: color-mix(in oklch, var(--accent) 9%, var(--surface)); }
+.node h3 { font: 600 0.8rem var(--mono); letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); margin-bottom: 10px; }
+.node.core h3 { color: var(--accent); }
+.node ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; font-size: 0.95rem; }
+.node li { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.node .big { font: 500 1.1rem var(--mono); margin: 0 0 6px; }
+.node .sm { color: var(--muted); font-size: 0.86rem; margin: 0; }
+.arrow { align-self: center; color: var(--muted); }
+.arrow svg { width: 32px; height: 20px; display: block; }
+.pill { font: 500 0.68rem/1 var(--mono); letter-spacing: 0.04em; padding: 3px 7px; border-radius: 99px; border: 1px solid var(--border); color: var(--muted); }
+.pill.ok { color: var(--ok); border-color: color-mix(in oklch, var(--ok) 45%, transparent); }
+.pill.warn { color: var(--warn); border-color: color-mix(in oklch, var(--warn) 45%, transparent); }
+@media (max-width: 820px) {
+  .pipeline { grid-template-columns: minmax(0, 1fr); }
+  .arrow svg { transform: rotate(90deg); margin: 0 auto; width: 28px; }
+}
+
+/* explorer */
+#examples { background: var(--surface); border-block: 1px solid var(--border); }
+.picker { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 24px; }
+.picker button { all: unset; cursor: pointer; padding: 10px 16px; border: 1px solid var(--border); border-radius: 9px; background: var(--bg); color: var(--muted); font: 500 0.95rem var(--sans); display: grid; gap: 2px; }
+.picker button small { font: 400 0.72rem var(--mono); letter-spacing: 0.05em; text-transform: uppercase; color: var(--muted); }
+.picker button:hover { border-color: var(--accent); color: var(--text); }
+.picker button[aria-selected="true"] { border-color: var(--accent); color: var(--text); background: color-mix(in oklch, var(--accent) 12%, var(--bg)); }
+.picker button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.explorer { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); gap: 20px; align-items: start; }
+@media (max-width: 900px) { .explorer { grid-template-columns: minmax(0, 1fr); } }
+.panel { background: var(--bg); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; }
+.panel-head { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 12px 16px; border-bottom: 1px solid var(--border); font-size: 0.86rem; color: var(--muted); flex-wrap: wrap; }
+.viewer { position: relative; touch-action: none; cursor: grab; user-select: none; }
+.viewer:active { cursor: grabbing; }
+.viewer svg { display: block; width: 100%; height: auto; aspect-ratio: 400 / 340; }
+.viewer .hint { position: absolute; left: 14px; bottom: 10px; font: 400 0.74rem var(--mono); color: var(--muted); pointer-events: none; }
+.legend { display: flex; gap: 14px; flex-wrap: wrap; padding: 12px 16px; border-top: 1px solid var(--border); font-size: 0.86rem; }
+.legend span { display: inline-flex; align-items: center; gap: 7px; }
+.legend i { width: 11px; height: 11px; border-radius: 50%; display: inline-block; }
+.stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 1px; background: var(--border); border-bottom: 1px solid var(--border); }
+.stat { background: var(--bg); padding: 12px 16px; min-width: 0; }
+.stat dt { font: 500 0.68rem var(--mono); letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); margin-bottom: 4px; }
+.stat dd { margin: 0; font: 500 1.05rem var(--mono); overflow-wrap: anywhere; }
+.stat dd small { font-size: 0.78rem; color: var(--muted); font-weight: 400; }
+.tabs { display: flex; gap: 2px; padding: 8px 8px 0; border-bottom: 1px solid var(--border); }
+.tabs button { all: unset; cursor: pointer; padding: 8px 14px; font: 500 0.86rem var(--mono); color: var(--muted); border-radius: 7px 7px 0 0; border: 1px solid transparent; border-bottom: 0; }
+.tabs button[aria-selected="true"] { color: var(--text); background: var(--surface); border-color: var(--border); position: relative; top: 1px; }
+.tabs button:focus-visible { outline: 2px solid var(--accent); }
+.code-wrap { position: relative; background: var(--surface); }
+pre { margin: 0; padding: 16px; overflow: auto; font-size: 0.84rem; line-height: 1.6; max-height: 340px; tab-size: 2; }
+.code-wrap pre { padding-top: 46px; }
+.copy { position: absolute; top: 10px; right: 10px; padding: 5px 10px; border-radius: 7px; border: 1px solid var(--border); background: var(--bg); color: var(--muted); font: 500 0.74rem var(--mono); cursor: pointer; }
+.copy:hover { color: var(--text); border-color: var(--accent); }
+.copy.done { color: var(--ok); border-color: var(--ok); }
+.empty { padding: 28px; color: var(--muted); }
+.note { color: var(--muted); font-size: 0.86rem; margin: 16px 0 0; }
+
+/* content blocks */
+.two { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: clamp(24px, 5vw, 64px); }
+@media (max-width: 800px) { .two { grid-template-columns: minmax(0, 1fr); } }
+.records { list-style: none; margin: 0; padding: 0; display: grid; gap: 0; }
+.records li { display: grid; grid-template-columns: 11ch 1fr; gap: 16px; padding: 16px 0; border-top: 1px solid var(--border); }
+.records li:last-child { border-bottom: 1px solid var(--border); }
+.records b { font: 500 0.82rem var(--mono); color: var(--accent); padding-top: 3px; }
+.records span { color: var(--muted); }
+.records strong { color: var(--text); font-weight: 500; }
+@media (max-width: 520px) { .records li { grid-template-columns: 1fr; gap: 4px; } }
+
+.table-wrap { border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; background: var(--surface); }
+table { width: 100%; border-collapse: collapse; font-size: 0.92rem; }
+th, td { text-align: left; padding: 12px 16px; vertical-align: top; border-bottom: 1px solid var(--border); }
+tr:last-child td { border-bottom: 0; }
+th { font: 500 0.72rem var(--mono); letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); background: var(--surface-2); }
+td:first-child { font-family: var(--mono); font-size: 0.86rem; color: var(--accent); white-space: nowrap; }
+td:last-child { font-family: var(--mono); font-size: 0.82rem; color: var(--muted); overflow-wrap: anywhere; }
+@media (max-width: 640px) {
+  thead { display: none; }
+  tr, td { display: block; }
+  tr { padding: 12px 0; border-bottom: 1px solid var(--border); }
+  tr:last-child { border-bottom: 0; }
+  td { border: 0; padding: 3px 16px; }
+  td:first-child { white-space: normal; }
+  td[data-label]::before { content: attr(data-label) " · "; font: 500 0.68rem var(--mono); letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); }
+}
+
+.cmd { position: relative; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); margin-bottom: 14px; }
+.cmd pre { padding-right: 84px; max-height: none; }
+.cmd .label { font: 500 0.72rem var(--mono); letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); padding: 12px 16px 0; }
+
+.audience { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 20px; }
+@media (max-width: 800px) { .audience { grid-template-columns: minmax(0, 1fr); } }
+.audience > div { border-left: 2px solid var(--border); padding-left: 18px; }
+.audience h3 { margin-bottom: 10px; }
+.audience ul { margin: 0; padding-left: 1.1em; color: var(--muted); }
+.audience li { margin-bottom: 6px; }
+
+.timeline { list-style: none; margin: 0; padding: 0; border-left: 2px solid var(--border); margin-left: 8px; }
+.timeline li { position: relative; padding: 0 0 26px 28px; }
+.timeline li::before { content: ""; position: absolute; left: -8px; top: 6px; width: 14px; height: 14px; border-radius: 50%; background: var(--bg); border: 2px solid var(--border); }
+.timeline li.done::before { background: var(--ok); border-color: var(--ok); }
+.timeline li.now::before { border-color: var(--accent); background: var(--accent); box-shadow: 0 0 0 4px color-mix(in oklch, var(--accent) 22%, transparent); }
+.timeline h3 { font: 600 1rem var(--sans); display: flex; gap: 10px; align-items: center; flex-wrap: wrap; margin-bottom: 4px; }
+.timeline p { color: var(--muted); margin: 0; font-size: 0.95rem; }
+
+.links { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px; }
+.links a { display: block; padding: 16px 18px; border: 1px solid var(--border); border-radius: var(--radius); text-decoration: none; background: var(--surface); color: var(--text); }
+.links a:hover { border-color: var(--accent); }
+.links a span { display: block; color: var(--muted); font-size: 0.88rem; margin-top: 2px; }
+
+footer.site { border-top: 1px solid var(--border); padding: 40px 0 56px; color: var(--muted); font-size: 0.92rem; }
+footer.site .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 20px; }
+footer.site p { margin: 0 0 6px; }
+.credit strong { color: var(--text); font-weight: 500; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } * { transition: none !important; } }
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="site">
+  <div class="wrap">
+    <a class="brand" href="#top" aria-label="QMatBridge home">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="10" r="7"/><path d="M15.5 14.5 21 20"/><path d="M2.5 21.5h19" opacity=".55"/><circle cx="2.5" cy="21.5" r="1" fill="currentColor"/><circle cx="21.5" cy="21.5" r="1" fill="currentColor"/></svg>
+      QMatBridge
+    </a>
+    <a class="by" href="../">by q-matsuite</a>
+    <nav class="main" aria-label="Primary">
+      <a href="#examples" class="keep" data-needs-examples>Examples</a>
+      <a href="#schema">Schema</a>
+      <a href="#install">Install</a>
+      <a href="#roadmap">Roadmap</a>
+      <a href="docs/">Docs</a>
+      <a class="gh" href="https://github.com/q-matsuite/qmatbridge" rel="noopener">GitHub</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+<div id="top"></div>
+
+<section class="hero" aria-labelledby="h-hero">
+  <div class="wrap">
+    <span class="eyebrow">Open-source research software · early stage</span>
+    <h1 id="h-hero">Materials databases to <em>first-quantized</em> Hamiltonians.</h1>
+    <p class="lede">QMatBridge is a Python library that turns classical materials-database records into a neutral, provenance-rich description of the Hamiltonian, so fault-tolerant quantum-simulation benchmarks can be compared and reproduced.</p>
+    <div class="actions">
+      <a class="btn primary" href="#examples" data-needs-examples>Explore examples</a>
+      <a class="btn" href="#install">Install</a>
+      <a class="btn" href="docs/">Read the docs</a>
+    </div>
+
+    <div class="pipeline" role="group" aria-label="QMatBridge data flow: sources, then QMatEntry, then exporters">
+      <div class="node">
+        <h3>Sources</h3>
+        <ul>
+          <li>Materials Project <span class="pill ok">available</span></li>
+          <li>OQMD <span class="pill warn">stub</span></li>
+          <li>OPTIMADE <span class="pill">planned</span></li>
+        </ul>
+      </div>
+      <div class="arrow" aria-hidden="true"><svg viewBox="0 0 32 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 10h26M21 3l7 7-7 7"/></svg></div>
+      <div class="node core">
+        <h3>Neutral representation</h3>
+        <p class="big">QMatEntry</p>
+        <p class="sm">Provenance · structure · basis · oracle cost · canonical hash</p>
+      </div>
+      <div class="arrow" aria-hidden="true"><svg viewBox="0 0 32 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 10h26M21 3l7 7-7 7"/></svg></div>
+      <div class="node">
+        <h3>Exporters</h3>
+        <ul>
+          <li>OpenFermion <span class="pill">planned</span></li>
+          <li>qualtran / pyLIQTR <span class="pill">planned</span></li>
+          <li>Qiskit <span class="pill">planned</span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="examples" aria-labelledby="h-examples" data-needs-examples>
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">Examples</span>
+      <h2 id="h-examples">Three materials, one representation</h2>
+      <p>A textbook semiconductor, a wide-gap III–V, and a Li-ion battery cathode, each fetched from the Materials Project and stored as a <code>QMatEntry</code>. Drag the crystal to rotate it.</p>
+    </div>
+    <div class="picker" role="tablist" aria-label="Choose a material" id="picker"></div>
+    <div class="explorer" id="explorer" aria-live="polite"></div>
+    <p class="note" id="explorer-note"></p>
+  </div>
+</section>
+
+<section aria-labelledby="h-problem">
+  <div class="wrap two">
+    <div>
+      <span class="eyebrow">The problem</span>
+      <h2 id="h-problem">Two groups, one “silicon”, no way to check</h2>
+    </div>
+    <div>
+      <p>Research groups developing block-encodings, qubitization variants and truncated Dyson series methods need realistic electronic-structure Hamiltonians. The usual route is a one-off script that pulls DFT data, reformats it and feeds it to a compiler.</p>
+      <p>Those scripts are rarely shared, rarely work with more than one framework, and often drop the provenance needed to reproduce a result. When two groups report T-gate counts for “silicon”, nothing says they used the same Hamiltonian. QMatBridge records what was used, and hashes it.</p>
+    </div>
+  </div>
+</section>
+
+<section aria-labelledby="h-records" style="padding-top:0">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">What an entry records</span>
+      <h2 id="h-records">Everything needed to reproduce the Hamiltonian</h2>
+    </div>
+    <ul class="records">
+      <li><b>provenance</b><span><strong>Where it came from.</strong> Database and identifier, functional, pseudopotential family, DFT code and version, retrieval time.</span></li>
+      <li><b>structure</b><span><strong>What it is.</strong> Reduced and unit-cell formula, species per site, lattice parameters, space group.</span></li>
+      <li><b>basis</b><span><strong>How it is discretised.</strong> Plane-wave cutoff and the resulting number of plane waves.</span></li>
+      <li><b>oracle</b><span><strong>What access costs.</strong> LCU 1-norm, per-term breakdown, SELECT/PREPARE parameters and complexity annotations.</span></li>
+      <li><b>exports</b><span><strong>Where it went.</strong> Downstream framework, format, status and artifact path.</span></li>
+      <li><b>hash</b><span><strong>A stable fingerprint.</strong> <code>canonical_hash()</code> is a SHA-256 over the physically meaningful fields, so a result can be traced to one Hamiltonian.</span></li>
+    </ul>
+  </div>
+</section>
+
+<section id="schema" aria-labelledby="h-schema" style="padding-top:0">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">Schema</span>
+      <h2 id="h-schema">The core dataclasses</h2>
+      <p>Dependency-free, JSON-serialisable, versioned. Changes to the schema go through public discussion and a minor-version bump.</p>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Class</th><th>Role</th><th>Key fields</th></tr></thead>
+        <tbody>
+          <tr><td>QMatEntry</td><td data-label="Role">Top-level record</td><td data-label="Fields">reference, hamiltonian, exports, tags, schema_version</td></tr>
+          <tr><td>MaterialReference</td><td data-label="Role">Provenance plus structure</td><td data-label="Fields">provenance, structure</td></tr>
+          <tr><td>SourceProvenance</td><td data-label="Role">Upstream source and DFT settings</td><td data-label="Fields">primary, functional, pseudopotential, code, retrieved_at</td></tr>
+          <tr><td>StructureMetadata</td><td data-label="Role">Chemistry and geometry</td><td data-label="Fields">formula_reduced, formula_unit_cell, species, lattice</td></tr>
+          <tr><td>HamiltonianMetadata</td><td data-label="Role">Electrons, basis, terms, oracle</td><td data-label="Fields">num_electrons, spin_polarized, basis, terms, oracle</td></tr>
+          <tr><td>BasisMetadata</td><td data-label="Role">Basis-set specification</td><td data-label="Fields">type, cutoff_energy_ev, num_plane_waves</td></tr>
+          <tr><td>OracleMetadata</td><td data-label="Role">Block-encoding oracle description</td><td data-label="Fields">oracle type, index encoding, complexity annotations</td></tr>
+          <tr><td>ExportMetadata</td><td data-label="Role">Downstream export record</td><td data-label="Fields">target, format, status, artifact path</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section id="install" aria-labelledby="h-install" style="background:var(--surface);border-block:1px solid var(--border)">
+  <div class="wrap two">
+    <div>
+      <span class="eyebrow">Install</span>
+      <h2 id="h-install">From source, in a minute</h2>
+      <p class="lede" style="margin-top:14px">Not yet on PyPI. Python 3.10+; the core schema has no required dependencies. Fetching from the Materials Project needs the <code>mp</code> extra and a free API key.</p>
+    </div>
+    <div>
+      <div class="cmd"><div class="label">Install</div><pre><code>git clone https://github.com/q-matsuite/qmatbridge.git
+cd qmatbridge
+pip install -e ".[mp]"</code></pre><button class="copy" type="button">Copy</button></div>
+      <div class="cmd"><div class="label">Fetch an entry</div><pre><code>export MP_API_KEY=...   # your own key
+python -c "from qmatbridge.adapters.materials_project import fetch_entry_from_mp as f; print(f('mp-149').canonical_hash())"</code></pre><button class="copy" type="button">Copy</button></div>
+    </div>
+  </div>
+</section>
+
+<section aria-labelledby="h-who">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">Who it is for</span>
+      <h2 id="h-who">Narrow on purpose: a bridge, not a database</h2>
+    </div>
+    <div class="audience">
+      <div>
+        <h3>Use it if you are</h3>
+        <ul>
+          <li>an algorithm researcher who needs real materials Hamiltonians for block-encoding or qubitization work;</li>
+          <li>a research software engineer who wants a citable format between the DFT and circuit worlds;</li>
+          <li>a resource-estimation group running T-count and qubit studies across many materials.</li>
+        </ul>
+      </div>
+      <div>
+        <h3>Look elsewhere if you want</h3>
+        <ul>
+          <li>a general materials-informatics toolkit — use <a href="https://pymatgen.org" rel="noopener">pymatgen</a> or <a href="https://wiki.fysik.dtu.dk/ase/" rel="noopener">ASE</a>;</li>
+          <li>molecular, Gaussian-basis or excited-state Hamiltonians — out of scope for now.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="roadmap" aria-labelledby="h-road" style="padding-top:0">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">Roadmap</span>
+      <h2 id="h-road">Where the project is</h2>
+    </div>
+    <ol class="timeline">
+      <li class="done"><h3>v0.1 <span class="pill ok">done</span></h3><p>Schema, JSON I/O, canonical hash, adapter stubs, CI.</p></li>
+      <li class="now"><h3>v0.2 <span class="pill warn">in progress</span></h3><p>Materials Project adapter, plane-wave utility, benchmark fixtures, documentation site.</p></li>
+      <li><h3>v0.3 <span class="pill">planned</span></h3><p>OPTIMADE, OQMD and Alexandria adapters; cross-database deduplication.</p></li>
+      <li><h3>v0.4 <span class="pill">planned</span></h3><p>Exporters: OpenFermion, raw plane-wave arrays, LCU coefficients for qualtran / pyLIQTR.</p></li>
+      <li><h3>v0.5 <span class="pill">planned</span></h3><p>T-count, Toffoli and qubit estimation hooks.</p></li>
+    </ol>
+  </div>
+</section>
+
+<section aria-labelledby="h-community" style="padding-top:0">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">Community</span>
+      <h2 id="h-community">Built in the open</h2>
+    </div>
+    <div class="links">
+      <a href="https://github.com/q-matsuite/qmatbridge/discussions" rel="noopener">Discussions<span>Questions and design proposals</span></a>
+      <a href="https://github.com/q-matsuite/qmatbridge/issues" rel="noopener">Issues<span>Bugs and feature requests</span></a>
+      <a href="https://github.com/q-matsuite/qmatbridge/blob/main/CONTRIBUTING.md" rel="noopener">Contributing<span>How to propose changes</span></a>
+      <a href="https://github.com/q-matsuite/qmatbridge/blob/main/GOVERNANCE.md" rel="noopener">Governance<span>Roles and decisions</span></a>
+    </div>
+  </div>
+</section>
+
+<section aria-labelledby="h-cite" style="padding-top:0">
+  <div class="wrap two">
+    <div>
+      <span class="eyebrow">Cite</span>
+      <h2 id="h-cite">Using QMatBridge in a paper?</h2>
+      <p class="lede" style="margin-top:14px">There is no formal publication yet. Please cite the repository.</p>
+    </div>
+    <div class="cmd"><div class="label">BibTeX</div><pre><code>@software{qmatbridge,
+  author = {Reis, Roberto},
+  title  = {{QMatBridge}: A bridge from classical materials
+            databases to first-quantized Hamiltonians for
+            quantum simulation},
+  url    = {https://github.com/q-matsuite/qmatbridge},
+  version = {0.1.0},
+  year   = {2026},
+}</code></pre><button class="copy" type="button">Copy</button></div>
+  </div>
+</section>
+</main>
+
+<footer class="site">
+  <div class="wrap">
+    <div class="credit">
+      <p><strong>QMatBridge</strong> is created and maintained by <strong>Roberto Reis</strong> (<a href="https://github.com/rmsreis" rel="noopener">@rmsreis</a>).</p>
+      <p>A <a href="../">q-matsuite</a> project. Released under the MIT license. Example data from the <a href="https://materialsproject.org" rel="noopener">Materials Project</a> (CC BY 4.0).</p>
+    </div>
+    <div>
+      <p><a href="https://github.com/q-matsuite/qmatbridge" rel="noopener">Source on GitHub</a></p>
+      <p><a href="docs/">Documentation</a></p>
+    </div>
+  </div>
+</footer>
+
+<script type="application/json" id="examples-data">__EXAMPLES_JSON__</script>
+<script>
+(() => {
+  "use strict";
+  const $ = (s, r = document) => r.querySelector(s);
+  const reduceMotion = matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  /* ---------- copy buttons ---------- */
+  // execCommand runs synchronously inside the click gesture, so it works where the
+  // async Clipboard API stalls on a permission prompt; the API is the fallback.
+  async function copyText(text) {
+    const t = document.createElement("textarea");
+    t.value = text; t.setAttribute("readonly", ""); t.style.cssText = "position:fixed;top:0;left:0;opacity:0";
+    document.body.appendChild(t); t.select();
+    let ok = false; try { ok = document.execCommand("copy"); } catch (_) {}
+    t.remove();
+    if (ok) return true;
+    try {
+      await Promise.race([navigator.clipboard.writeText(text), new Promise((_, no) => setTimeout(no, 1500))]);
+      return true;
+    } catch (_) { return false; }
+  }
+  function wireCopy(btn, getText) {
+    btn.addEventListener("click", async () => {
+      const ok = await copyText(getText());
+      btn.textContent = ok ? "Copied" : "Press Ctrl+C";
+      btn.classList.toggle("done", ok);
+      btn.setAttribute("aria-live", "polite");
+      setTimeout(() => { btn.textContent = "Copy"; btn.classList.remove("done"); }, 1800);
+    });
+  }
+  document.querySelectorAll(".cmd .copy").forEach(b => wireCopy(b, () => b.parentElement.querySelector("pre").innerText));
+
+  /* ---------- examples ---------- */
+  let data = [];
+  try { data = JSON.parse($("#examples-data").textContent); } catch (_) {}
+  const picker = $("#picker"), explorer = $("#explorer"), note = $("#explorer-note");
+
+  if (!data.length) {   // no example data built: hide everything that depends on it
+    document.querySelectorAll("[data-needs-examples]").forEach(n => { n.hidden = true; });
+    const first = document.querySelector(".actions .btn:not([hidden])"); if (first) first.classList.add("primary");
+    return;
+  }
+
+  const ELEMENTS = {
+    Si: ["#9fb4d6", 1.11], Ga: ["#e0a15f", 1.22], N: ["#6ea8ff", 0.71], Li: ["#c39bff", 1.28],
+    Co: ["#6fa0d0", 1.26], O: ["#ff7a7a", 0.66], H: ["#e9eef5", 0.31], Fe: ["#d98b5f", 1.32],
+    Mg: ["#8fd18f", 1.41], Ti: ["#9aa5b8", 1.60]
+  };
+  const el = e => ELEMENTS[e] || ["#b8c4d6", 1.2];
+
+  function lattice(L) {
+    const r = d => d * Math.PI / 180, ca = Math.cos(r(L.alpha)), cb = Math.cos(r(L.beta)), cg = Math.cos(r(L.gamma)), sg = Math.sin(r(L.gamma));
+    const a1 = [L.a, 0, 0], a2 = [L.b * cg, L.b * sg, 0];
+    const cx = L.c * cb, cy = L.c * (ca - cb * cg) / sg, cz = Math.sqrt(Math.max(L.c * L.c - cx * cx - cy * cy, 0));
+    return [a1, a2, [cx, cy, cz]];
+  }
+  const cart = (f, M) => [0, 1, 2].map(i => f[0] * M[0][i] + f[1] * M[1][i] + f[2] * M[2][i]);
+
+  function buildScene(ex) {
+    const M = lattice(ex.lattice), eps = 1e-3, atoms = [], seen = new Set();
+    for (const s of ex.sites) {
+      // wrap into [0,1); atoms on a cell face/edge/corner are also drawn on the opposite one
+      const f = s.frac.map(v => { v = ((v % 1) + 1) % 1; return (v < eps || v > 1 - eps) ? 0 : v; });
+      const opts = f.map(v => v === 0 ? [0, 1] : [v]);
+      for (const x of opts[0]) for (const y of opts[1]) for (const z of opts[2]) {
+        const key = s.el + [x, y, z].map(v => v.toFixed(3)).join(",");
+        if (seen.has(key)) continue; seen.add(key);
+        atoms.push({ el: s.el, p: cart([x, y, z], M) });
+      }
+    }
+    const corners = [];
+    for (const i of [0, 1]) for (const j of [0, 1]) for (const k of [0, 1]) corners.push(cart([i, j, k], M));
+    const edges = [];
+    for (let a = 0; a < 8; a++) for (let b = a + 1; b < 8; b++) {
+      const d = a ^ b; if (d === 1 || d === 2 || d === 4) edges.push([a, b]);
+    }
+    const bonds = [];
+    for (let a = 0; a < atoms.length; a++) for (let b = a + 1; b < atoms.length; b++) {
+      const d = Math.hypot(...atoms[a].p.map((v, n) => v - atoms[b].p[n]));
+      if (d > 0.1 && d < 1.1 * (el(atoms[a].el)[1] + el(atoms[b].el)[1])) bonds.push([a, b]);
+    }
+    const c = corners.reduce((s, p) => s.map((v, n) => v + p[n] / 8), [0, 0, 0]);
+    const rad = Math.max(...corners.map(p => Math.hypot(...p.map((v, n) => v - c[n]))));
+    return { atoms, corners, edges, bonds, c, rad };
+  }
+
+  function rot(p, ax, ay) {
+    const [x, y, z] = p, cy = Math.cos(ay), sy = Math.sin(ay), cx = Math.cos(ax), sx = Math.sin(ax);
+    const x1 = x * cy + z * sy, z1 = -x * sy + z * cy;
+    return [x1, y * cx - z1 * sx, y * sx + z1 * cx];
+  }
+
+  function mountViewer(host, ex) {
+    const sc = buildScene(ex), W = 400, H = 340;
+    const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+    svg.setAttribute("viewBox", `0 0 ${W} ${H}`);
+    svg.setAttribute("role", "img");
+    svg.setAttribute("tabindex", "0");
+    svg.setAttribute("aria-label", `Rotatable unit cell of ${ex.label}: ${ex.sites.length} atoms. Use arrow keys to rotate.`);
+    host.appendChild(svg);
+    let ax = -0.5, ay = 0.7, drag = null, auto = !reduceMotion, raf = 0;
+    const scale = (Math.min(W, H) * 0.40) / sc.rad;
+
+    function draw() {
+      const proj = p => { const q = rot(p.map((v, n) => v - sc.c[n]), ax, ay); return { x: W / 2 + q[0] * scale, y: H / 2 - q[1] * scale, z: q[2] }; };
+      const P = sc.atoms.map(a => ({ ...proj(a.p), el: a.el }));
+      const C = sc.corners.map(proj);
+      let out = "";
+      for (const [a, b] of sc.edges)
+        out += `<line x1="${C[a].x.toFixed(1)}" y1="${C[a].y.toFixed(1)}" x2="${C[b].x.toFixed(1)}" y2="${C[b].y.toFixed(1)}" stroke="currentColor" stroke-opacity=".38" stroke-width="1.2"/>`;
+      const items = [];
+      for (const [a, b] of sc.bonds) items.push({ z: (P[a].z + P[b].z) / 2 - 0.01, s: `<line x1="${P[a].x.toFixed(1)}" y1="${P[a].y.toFixed(1)}" x2="${P[b].x.toFixed(1)}" y2="${P[b].y.toFixed(1)}" stroke="currentColor" stroke-opacity=".55" stroke-width="3" stroke-linecap="round"/>` });
+      for (const p of P) {
+        const r = Math.max(5, el(p.el)[1] * scale * 0.34), depth = 0.82 + 0.18 * (p.z / sc.rad);
+        items.push({ z: p.z, s: `<circle cx="${p.x.toFixed(1)}" cy="${p.y.toFixed(1)}" r="${r.toFixed(1)}" fill="${el(p.el)[0]}" fill-opacity="${Math.max(0.6, Math.min(1, depth)).toFixed(2)}" stroke="rgba(0,0,0,.35)" stroke-width="1"/><circle cx="${(p.x - r * 0.3).toFixed(1)}" cy="${(p.y - r * 0.3).toFixed(1)}" r="${(r * 0.28).toFixed(1)}" fill="#fff" fill-opacity=".35"/>` });
+      }
+      items.sort((u, v) => u.z - v.z);
+      svg.innerHTML = `<g style="color:var(--text)">${out}${items.map(i => i.s).join("")}</g>`;
+    }
+    function tick() { if (auto && !drag) { ay += 0.006; draw(); } raf = requestAnimationFrame(tick); }
+    draw(); if (!reduceMotion) raf = requestAnimationFrame(tick);
+
+    host.addEventListener("pointerdown", e => { drag = { x: e.clientX, y: e.clientY }; host.setPointerCapture(e.pointerId); auto = false; });
+    host.addEventListener("pointermove", e => { if (!drag) return; ay += (e.clientX - drag.x) * 0.012; ax += (e.clientY - drag.y) * 0.012; ax = Math.max(-1.5, Math.min(1.5, ax)); drag = { x: e.clientX, y: e.clientY }; draw(); });
+    const end = () => { drag = null; };
+    host.addEventListener("pointerup", end); host.addEventListener("pointercancel", end);
+    svg.addEventListener("keydown", e => {
+      const k = { ArrowLeft: [0, -0.15], ArrowRight: [0, 0.15], ArrowUp: [-0.15, 0], ArrowDown: [0.15, 0] }[e.key];
+      if (k) { e.preventDefault(); auto = false; ax = Math.max(-1.5, Math.min(1.5, ax + k[0])); ay += k[1]; draw(); }
+    });
+    return () => cancelAnimationFrame(raf);
+  }
+
+  const esc = s => String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+  const num = n => (n == null ? "n/a" : Number(n).toLocaleString("en-US"));
+  const sub = f => esc(f).replace(/(\d+)/g, "<sub>$1</sub>");
+  let stop = null;
+
+  function snippet(ex) {
+    return `from qmatbridge.adapters.materials_project import fetch_entry_from_mp
+
+entry = fetch_entry_from_mp("${ex.mp_id}")
+
+entry.hamiltonian.num_electrons          # ${ex.electrons}
+entry.hamiltonian.basis.cutoff_energy_ev # ${ex.ecut_ev}
+entry.hamiltonian.basis.num_plane_waves  # ${ex.num_plane_waves}
+entry.canonical_hash()                   # ${ex.hash.slice(0, 16)}...`;
+  }
+
+  function show(idx) {
+    const ex = data[idx];
+    picker.querySelectorAll("button").forEach((b, i) => { b.setAttribute("aria-selected", i === idx); b.tabIndex = i === idx ? 0 : -1; });
+    if (stop) stop();
+    const colors = [...new Set(ex.sites.map(s => s.el))];
+    explorer.innerHTML = `
+      <div class="panel">
+        <div class="panel-head"><span>${esc(ex.description)}</span><span class="mono">${esc(ex.crystal_system || "")}</span></div>
+        <div class="viewer" id="viewer"><span class="hint">drag to rotate · arrow keys</span></div>
+        <div class="legend">${colors.map(e => `<span><i style="background:${el(e)[0]}"></i>${esc(e)}</span>`).join("")}<span style="margin-left:auto;color:var(--muted)">${ex.sites.length} atoms in the primitive cell</span></div>
+      </div>
+      <div class="panel">
+        <dl class="stats" style="margin:0">
+          <div class="stat"><dt>Formula</dt><dd>${sub(ex.formula)}</dd></div>
+          <div class="stat"><dt>Space group</dt><dd>${esc(ex.spacegroup)}</dd></div>
+          <div class="stat"><dt>Electrons</dt><dd>${num(ex.electrons)}</dd></div>
+          <div class="stat"><dt>Plane waves</dt><dd>${num(ex.num_plane_waves)} <small>@ ${num(ex.ecut_ev)} eV</small></dd></div>
+          <div class="stat"><dt>Functional</dt><dd>${esc(ex.functional || "n/a")}</dd></div>
+          <div class="stat"><dt>Spin</dt><dd>${ex.spin_polarized ? "polarized" : "unpolarized"}</dd></div>
+          <div class="stat"><dt>Source</dt><dd><a href="https://materialsproject.org/materials/${esc(ex.mp_id)}" rel="noopener">${esc(ex.mp_id)}</a></dd></div>
+          <div class="stat"><dt>Hash</dt><dd title="${esc(ex.hash)}">${esc(ex.hash.slice(0, 12))}…</dd></div>
+        </dl>
+        <div class="tabs" role="tablist" aria-label="Code view"><button role="tab" aria-selected="true" data-t="py">Python</button><button role="tab" aria-selected="false" data-t="json">JSON entry</button></div>
+        <div class="code-wrap"><pre id="code" tabindex="0"></pre><button class="copy" type="button" id="copy-code">Copy</button></div>
+      </div>`;
+    stop = mountViewer($("#viewer"), ex);
+    let tab = "py";
+    const code = $("#code"), render = () => { code.textContent = tab === "py" ? snippet(ex) : JSON.stringify(ex.entry, null, 2); };
+    render();
+    explorer.querySelectorAll(".tabs button").forEach(b => b.addEventListener("click", () => {
+      tab = b.dataset.t; explorer.querySelectorAll(".tabs button").forEach(x => x.setAttribute("aria-selected", x === b)); render();
+    }));
+    wireCopy($("#copy-code"), () => code.textContent);
+    note.textContent = `Retrieved ${ex.retrieved_at ? ex.retrieved_at.slice(0, 10) : "n/a"} from the Materials Project API. Plane-wave count is the Γ-point basis size from the unit cell and cutoff.`;
+  }
+
+  data.forEach((ex, i) => {
+    const b = document.createElement("button");
+    b.type = "button"; b.setAttribute("role", "tab");
+    b.innerHTML = `${sub(ex.label)}<small>${esc(ex.category)}</small>`;
+    b.addEventListener("click", () => show(i));
+    b.addEventListener("keydown", e => {
+      const n = { ArrowRight: 1, ArrowLeft: -1 }[e.key]; if (!n) return;
+      e.preventDefault(); const j = (i + n + data.length) % data.length; show(j); picker.children[j].focus();
+    });
+    picker.appendChild(b);
+  });
+  show(0);
+})();
+</script>
+</body>
+</html>

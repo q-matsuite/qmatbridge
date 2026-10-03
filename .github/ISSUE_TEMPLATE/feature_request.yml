@@ -6,7 +6,7 @@ body:
     attributes:
       value: >
         Before opening a feature request, please check
-        [GitHub Discussions](https://github.com/rmsreis/qmatbridge/discussions)
+        [GitHub Discussions](https://github.com/q-matsuite/qmatbridge/discussions)
         to see if this has already been proposed.
         For **schema changes** to `QMatEntry` or nested classes, please open a
         Discussion tagged `schema` first — see

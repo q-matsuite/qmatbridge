@@ -68,7 +68,7 @@ python examples/reproducibility_checks.py
 
 | File | Description |
 | --- | --- |
-| `examples/reproducibility_entry.json` | Baseline JSON artifact for the reproducibility check |
+| `examples/outputs/reproducibility_entry.json` | Baseline JSON artifact for the reproducibility check |
 
 ---
 
@@ -110,9 +110,9 @@ Lower `score` is treated as better for initial benchmarking.
 
 | File | Description |
 | --- | --- |
-| `examples/material_ranking.csv` | Ranked table for notebook plotting (`pandas.read_csv`) |
-| `examples/material_ranking.json` | Same ranking as JSON records |
-| `examples/material_ranking.png` | Matplotlib horizontal bar chart |
+| `examples/outputs/material_ranking.csv` | Ranked table for notebook plotting (`pandas.read_csv`) |
+| `examples/outputs/material_ranking.json` | Same ranking as JSON records |
+| `examples/outputs/material_ranking.png` | Matplotlib horizontal bar chart |
 
 ---
 
@@ -139,9 +139,9 @@ python examples/pareto_frontier.py
 
 | File | Description |
 | --- | --- |
-| `examples/pareto_candidates.csv` | Candidate metrics with `is_pareto_optimal` flag |
-| `examples/pareto_candidates.json` | Same data in JSON record form |
-| `examples/pareto_frontier.png` | Scatter plot with highlighted Pareto frontier |
+| `examples/outputs/pareto_candidates.csv` | Candidate metrics with `is_pareto_optimal` flag |
+| `examples/outputs/pareto_candidates.json` | Same data in JSON record form |
+| `examples/outputs/pareto_frontier.png` | Scatter plot with highlighted Pareto frontier |
 
 ---
 
@@ -201,11 +201,11 @@ elasticity (≈ −1) confirms direct proportionality between T-gate cost and
 
 | File | Description |
 | --- | --- |
-| `examples/sensitivity_grid.csv` | Full OFAT sweep (12 rows × 9 columns) |
-| `examples/sensitivity_grid.json` | Same records + baseline, assumptions metadata |
-| `examples/sensitivity_tornado.csv` | Impact summary per parameter (3 rows) |
-| `examples/sensitivity_elasticity.csv` | Local elasticity at baseline (3 rows) |
-| `examples/sensitivity_tornado.png` | Horizontal tornado chart (publication-quality PNG) |
+| `examples/outputs/sensitivity_grid.csv` | Full OFAT sweep (12 rows × 9 columns) |
+| `examples/outputs/sensitivity_grid.json` | Same records + baseline, assumptions metadata |
+| `examples/outputs/sensitivity_tornado.csv` | Impact summary per parameter (3 rows) |
+| `examples/outputs/sensitivity_elasticity.csv` | Local elasticity at baseline (3 rows) |
+| `examples/outputs/sensitivity_tornado.png` | Horizontal tornado chart (publication-quality PNG) |
 | `examples/sensitivity_methods_note.md` | Proposal-ready 1-page methods narrative |
 
 ---
@@ -231,8 +231,8 @@ The notebook will:
 
 | File | Purpose |
 | --- | --- |
-| `examples/material_ranking.csv` | Composite-score ranking data |
-| `examples/pareto_candidates.csv` | Pareto membership and objective data |
+| `examples/outputs/material_ranking.csv` | Composite-score ranking data |
+| `examples/outputs/pareto_candidates.csv` | Pareto membership and objective data |
 
 ---
 

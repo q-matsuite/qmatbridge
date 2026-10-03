@@ -7,14 +7,14 @@ import json
 import pytest
 
 from qmatbridge.schema import (
+    _INDEX_ENCODINGS,
+    _ORACLE_TYPES,
     ExportMetadata,
     ExternalIdentifier,
     LatticeMetadata,
     OracleMetadata,
     QMatEntry,
     TermMetadata,
-    _INDEX_ENCODINGS,
-    _ORACLE_TYPES,
 )
 
 

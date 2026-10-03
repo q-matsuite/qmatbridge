@@ -44,13 +44,13 @@ htmlcov/
 .DS_Store
 
 # Generated example artifacts
-examples/reproducibility_entry.json
-examples/material_ranking.csv
-examples/material_ranking.json
-examples/material_ranking.png
-examples/pareto_candidates.csv
-examples/pareto_candidates.json
-examples/pareto_frontier.png
+examples/outputs/reproducibility_entry.json
+examples/outputs/material_ranking.csv
+examples/outputs/material_ranking.json
+examples/outputs/material_ranking.png
+examples/outputs/pareto_candidates.csv
+examples/outputs/pareto_candidates.json
+examples/outputs/pareto_frontier.png
 
 # Secrets / API keys
 .env
@@ -60,3 +60,8 @@ api_keys.json
 # Documentation builds
 docs/_build/
 site/
+
+# Private proposal materials (local only)
+/proposal/
+_site/
+website/index.html

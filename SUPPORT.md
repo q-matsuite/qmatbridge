@@ -12,9 +12,9 @@ Please check the following resources first:
 - **[README.md](README.md)** — quickstart, installation, and project overview
 - **[docs/vision.md](docs/vision.md)** — design rationale and scope
 - **[examples/](examples/)** — working code examples
-- **[GitHub Discussions](https://github.com/rmsreis/qmatbridge/discussions)** —
+- **[GitHub Discussions](https://github.com/q-matsuite/qmatbridge/discussions)** —
   prior questions and community answers
-- **[GitHub Issues](https://github.com/rmsreis/qmatbridge/issues)** — known
+- **[GitHub Issues](https://github.com/q-matsuite/qmatbridge/issues)** — known
   bugs and feature requests
 
 ---
@@ -23,10 +23,10 @@ Please check the following resources first:
 
 | Situation | Where to go |
 | --- | --- |
-| "How do I…?" usage question | [GitHub Discussions → Q&A](https://github.com/rmsreis/qmatbridge/discussions/categories/q-a) |
-| Unexpected behavior, possible bug | [GitHub Issues → Bug Report](https://github.com/rmsreis/qmatbridge/issues/new?template=bug_report.yml) |
-| Feature idea or adapter proposal | [GitHub Issues → Feature Request](https://github.com/rmsreis/qmatbridge/issues/new?template=feature_request.yml) |
-| Schema or architecture discussion | [GitHub Discussions → Ideas](https://github.com/rmsreis/qmatbridge/discussions/categories/ideas) |
+| "How do I…?" usage question | [GitHub Discussions → Q&A](https://github.com/q-matsuite/qmatbridge/discussions/categories/q-a) |
+| Unexpected behavior, possible bug | [GitHub Issues → Bug Report](https://github.com/q-matsuite/qmatbridge/issues/new?template=bug_report.yml) |
+| Feature idea or adapter proposal | [GitHub Issues → Feature Request](https://github.com/q-matsuite/qmatbridge/issues/new?template=feature_request.yml) |
+| Schema or architecture discussion | [GitHub Discussions → Ideas](https://github.com/q-matsuite/qmatbridge/discussions/categories/ideas) |
 | Security vulnerability | **Email only** — see [SECURITY.md](SECURITY.md) |
 | Code of Conduct concern | **Email only** — see [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md) |
 
@@ -37,7 +37,7 @@ keep Q&A searchable and separate from the bug tracker.
 
 ## Reporting a Bug
 
-Use the [bug report template](https://github.com/rmsreis/qmatbridge/issues/new?template=bug_report.yml)
+Use the [bug report template](https://github.com/q-matsuite/qmatbridge/issues/new?template=bug_report.yml)
 and include:
 
 - QMatBridge version (`python -c "import qmatbridge; print(qmatbridge.__version__)"`)

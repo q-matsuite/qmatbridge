@@ -1,44 +1,49 @@
-"""Materials Project adapter for QMatBridge — stub / v0.2 target.
+"""Materials Project adapter for QMatBridge.
 
-This module defines the interface that will bridge the Materials Project
-database (https://materialsproject.org) to QMatBridge's neutral intermediate
-representation.
+Bridges the Materials Project database (https://materialsproject.org) to
+QMatBridge's neutral intermediate representation.
 
-Current status
---------------
-**Stub only.**  ``build_material_reference_from_mp`` constructs a
-``MaterialReference`` from a known MP material ID and any structural
-metadata already in hand, without making a network call.
-``fetch_structure_metadata_from_mp`` and ``fetch_hamiltonian_metadata_from_mp``
-raise ``NotImplementedError`` — they mark the seam where the full
-``mp-api`` integration will be inserted in v0.2.
+Layers
+------
+1. **Pure converters** — :func:`structure_from_mp_doc` and
+   :func:`hamiltonian_from_mp_task_doc` turn plain-dict MP documents into
+   schema objects.  No network, no third-party imports; fully unit-testable.
+2. **Live fetchers** — :func:`fetch_structure_metadata_from_mp`,
+   :func:`fetch_hamiltonian_metadata_from_mp` and :func:`fetch_entry_from_mp`
+   query the API through ``mp-api`` (imported lazily) and feed the converters.
+3. **Offline builder** — :func:`build_material_reference_from_mp` builds a
+   ``MaterialReference`` from known values without any API call.
 
-Planned v0.2 work
------------------
-* Full ``mp-api`` client integration behind the ``[mp]`` optional extra
-* Plane-wave basis truncation utilities (``num_plane_waves`` from Ecut + V)
-* Coulomb operator in reciprocal space (electron–electron, electron–nuclear)
-* Extraction of VASP INCAR/KPOINTS settings into ``SourceProvenance.metadata``
+Status
+------
+The converters are covered by unit tests against representative documents.
+The live fetchers have **not** yet been validated against the production
+API in CI; run ``pytest -m integration`` with ``MP_API_KEY`` set to do so.
 
 Dependencies
 ------------
-The stub functions in this module require **no external dependencies**.
-Once the live fetchers are implemented, install the optional extra::
+Layers 1 and 3 need nothing.  Layer 2 needs the optional extra::
 
     pip install qmatbridge[mp]
-
-which adds ``mp-api`` and ``pymatgen``.
 """
 
 from __future__ import annotations
 
+import os
+from collections import Counter
+from collections.abc import Mapping
 from dataclasses import dataclass, field
+from datetime import datetime, timezone
 from typing import Any
 
+from qmatbridge.basis import num_plane_waves_from_ecut
 from qmatbridge.schema import (
+    BasisMetadata,
     ExternalIdentifier,
+    HamiltonianMetadata,
     LatticeMetadata,
     MaterialReference,
+    QMatEntry,
     SourceProvenance,
     StructureMetadata,
 )
@@ -46,8 +51,12 @@ from qmatbridge.schema import (
 __all__ = [
     "MPAdapterConfig",
     "build_material_reference_from_mp",
+    "structure_from_mp_doc",
+    "hamiltonian_from_mp_task_doc",
+    "functional_from_mp_task_doc",
     "fetch_structure_metadata_from_mp",
     "fetch_hamiltonian_metadata_from_mp",
+    "fetch_entry_from_mp",
 ]
 
 # ---------------------------------------------------------------------------
@@ -204,8 +213,185 @@ def build_material_reference_from_mp(
 
 
 # ---------------------------------------------------------------------------
-# Live fetcher stubs — require mp-api (v0.2 implementation target)
+# Pure converters — plain-dict MP documents to schema objects
 # ---------------------------------------------------------------------------
+
+def _hill_formula(counts: Mapping[str, int]) -> str:
+    """Hill-order formula string (C first, H second, then alphabetical)."""
+    def key(el: str) -> tuple[int, str]:
+        if "C" in counts:
+            return (0 if el == "C" else 1 if el == "H" else 2, el)
+        return (0, el)
+
+    return "".join(
+        f"{el}{counts[el] if counts[el] != 1 else ''}"
+        for el in sorted(counts, key=key)
+    )
+
+
+def _reduced_counts(counts: Mapping[str, int]) -> dict[str, int]:
+    from functools import reduce
+    from math import gcd
+
+    g = reduce(gcd, counts.values())
+    return {el: n // g for el, n in counts.items()}
+
+
+def structure_from_mp_doc(doc: Mapping[str, Any]) -> StructureMetadata:
+    """Convert an MP summary document (as a dict) to ``StructureMetadata``.
+
+    Expects ``structure`` in pymatgen ``Structure.as_dict()`` form
+    (``lattice`` with ``a, b, c, alpha, beta, gamma``; ``sites`` each with a
+    ``species`` list) and, optionally, ``symmetry`` with ``number``,
+    ``symbol`` and ``crystal_system``.  Disordered sites are rejected.
+
+    Raises:
+        ValueError: If required keys are missing or a site is disordered.
+    """
+    try:
+        struct = doc["structure"]
+        lat = struct["lattice"]
+        sites = struct["sites"]
+        lattice_params = [
+            float(lat[k]) for k in ("a", "b", "c", "alpha", "beta", "gamma")
+        ]
+    except KeyError as exc:
+        raise ValueError(f"MP document is missing required key: {exc}") from exc
+
+    species: list[str] = []
+    for site in sites:
+        occ = site["species"]
+        if len(occ) != 1 or float(occ[0].get("occu", 1.0)) != 1.0:
+            raise ValueError("disordered / partially occupied sites are not supported")
+        species.append(str(occ[0]["element"]))
+    if not species:
+        raise ValueError("MP structure has no sites")
+
+    counts = Counter(species)
+    sym = doc.get("symmetry") or {}
+    crystal_system = sym.get("crystal_system")
+    lattice = LatticeMetadata(
+        a=lattice_params[0], b=lattice_params[1], c=lattice_params[2],
+        alpha=lattice_params[3], beta=lattice_params[4], gamma=lattice_params[5],
+        spacegroup_number=sym.get("number"),
+        spacegroup_symbol=sym.get("symbol"),
+        crystal_system=str(crystal_system).lower() if crystal_system else None,
+    )
+    return StructureMetadata(
+        formula_reduced=_hill_formula(_reduced_counts(counts)),
+        formula_unit_cell=_hill_formula(counts),
+        num_sites=len(species),
+        species=species,
+        lattice=lattice,
+        is_periodic=True,
+    )
+
+
+def hamiltonian_from_mp_task_doc(
+    task: Mapping[str, Any], structure: StructureMetadata
+) -> HamiltonianMetadata:
+    """Convert an MP VASP task document (as a dict) to ``HamiltonianMetadata``.
+
+    Reads ``input.incar.ENCUT`` (eV), ``input.incar.ISPIN`` and
+    ``input.parameters.NELECT``.  The plane-wave count is computed from the
+    cutoff and ``structure.lattice`` via
+    :func:`qmatbridge.basis.num_plane_waves_from_ecut`.
+
+    Raises:
+        ValueError: If ``ENCUT`` or ``NELECT`` is absent.
+    """
+    inp = task.get("input") or {}
+    incar = inp.get("incar") or {}
+    params = inp.get("parameters") or {}
+    if "ENCUT" not in incar:
+        raise ValueError("task document has no input.incar.ENCUT")
+    if "NELECT" not in params:
+        raise ValueError("task document has no input.parameters.NELECT")
+
+    ecut = float(incar["ENCUT"])
+    nelect = float(params["NELECT"])
+    if nelect != int(nelect):
+        raise ValueError(f"non-integer NELECT ({nelect}) is not supported")
+
+    basis = BasisMetadata(
+        type="plane_wave",
+        cutoff_energy_ev=ecut,
+        num_plane_waves=num_plane_waves_from_ecut(structure.lattice, ecut),
+    )
+    return HamiltonianMetadata(
+        num_electrons=int(nelect),
+        spin_polarized=int(incar.get("ISPIN", 1)) == 2,
+        basis=basis,
+        metadata={"source_task_id": task.get("task_id")},
+    )
+
+
+def functional_from_mp_task_doc(task: Mapping[str, Any]) -> str:
+    """Name the XC functional of an MP task document (e.g. ``"PBE+U"``).
+
+    Uses ``run_type`` when present (``"GGA"`` → ``"PBE"``, ``"GGA+U"`` →
+    ``"PBE+U"``; other run types such as ``"r2SCAN"`` pass through), else
+    infers ``"PBE+U"`` from a non-empty ``input.hubbards`` mapping, else
+    ``"PBE"``.
+    """
+    run_type = task.get("run_type")
+    if run_type:
+        return {"GGA": "PBE", "GGA+U": "PBE+U"}.get(str(run_type), str(run_type))
+    inp = task.get("input") or {}
+    return "PBE+U" if inp.get("hubbards") else "PBE"
+
+
+# ---------------------------------------------------------------------------
+# Live fetchers — require mp-api
+# ---------------------------------------------------------------------------
+
+def _resolve_api_key(api_key: str | None, config: MPAdapterConfig) -> str:
+    key = api_key or config.api_key or os.environ.get("MP_API_KEY")
+    if not key:
+        raise ValueError(
+            "No Materials Project API key: pass api_key=, set "
+            "MPAdapterConfig.api_key, or export MP_API_KEY."
+        )
+    return key
+
+
+def _open_client(api_key: str | None, config: MPAdapterConfig) -> Any:
+    try:
+        from mp_api.client import MPRester
+    except ImportError as exc:
+        raise ImportError(
+            "The Materials Project adapter needs mp-api; "
+            "install it with: pip install qmatbridge[mp]"
+        ) from exc
+    return MPRester(_resolve_api_key(api_key, config), monitor=False)
+
+
+def _to_plain(obj: Any) -> Any:
+    """Convert mp-api / pymatgen objects to plain dicts where possible."""
+    for attr in ("as_dict", "model_dump"):
+        fn = getattr(obj, attr, None)
+        if callable(fn):
+            return fn()
+    return obj
+
+
+def _summary_doc(mpr: Any, material_id: str, max_sites: int | None) -> dict[str, Any]:
+    docs = mpr.materials.summary.search(
+        material_ids=[material_id], fields=["material_id", "structure", "symmetry"]
+    )
+    if not docs:
+        raise LookupError(f"Materials Project has no record for {material_id!r}")
+    d = docs[0]
+    out = {
+        "structure": _to_plain(d.structure),
+        "symmetry": _to_plain(d.symmetry) if d.symmetry is not None else {},
+    }
+    if max_sites is not None and len(out["structure"]["sites"]) > max_sites:
+        raise ValueError(
+            f"{material_id} has more than max_sites={max_sites} sites"
+        )
+    return out
+
 
 def fetch_structure_metadata_from_mp(
     material_id: str,
@@ -214,64 +400,89 @@ def fetch_structure_metadata_from_mp(
 ) -> StructureMetadata:
     """Fetch crystal structure from the Materials Project API.
 
-    Retrieves lattice parameters, site positions, spacegroup, and formula
-    for the given material and returns a fully-populated
-    ``StructureMetadata``.
-
-    .. note::
-        **Not yet implemented.**  This is the primary v0.2 target.
-
     Args:
         material_id: MP identifier, e.g. ``"mp-149"``.
         api_key:     MP API key.  Falls back to ``MPAdapterConfig.api_key``
                      then the ``MP_API_KEY`` environment variable.
-        config:      Adapter configuration.
-
-    Returns:
-        ``StructureMetadata`` with all fields populated from the MP record.
+        config:      Adapter configuration (honours ``max_sites``).
 
     Raises:
-        NotImplementedError: Always, until v0.2 is implemented.
-        ImportError: When ``mp-api`` is not installed (future behaviour).
+        ImportError: ``mp-api`` is not installed.
+        ValueError:  No API key, disordered structure, or ``max_sites`` exceeded.
+        LookupError: Unknown material ID.
     """
-    raise NotImplementedError(
-        "fetch_structure_metadata_from_mp is not yet implemented.\n"
-        "This function is the primary target for the v0.2 Materials Project "
-        "adapter.\n"
-        "Track progress at: https://github.com/rmsreis/qmatbridge/issues"
+    cfg = config or MPAdapterConfig()
+    with _open_client(api_key, cfg) as mpr:
+        return structure_from_mp_doc(_summary_doc(mpr, material_id, cfg.max_sites))
+
+
+def _pick_static_task(mpr: Any, material_id: str) -> dict[str, Any]:
+    """Return the task document of the material's preferred static calc."""
+    mdocs = mpr.materials.search(
+        material_ids=[material_id], fields=["material_id", "calc_types"]
     )
+    if not mdocs:
+        raise LookupError(f"Materials Project has no record for {material_id!r}")
+    calc_types: Mapping[str, str] = mdocs[0].calc_types or {}
+    static = [t for t, c in calc_types.items() if "static" in str(c).lower()]
+    chosen = sorted(static or list(calc_types))
+    if not chosen:
+        raise LookupError(f"No calculation tasks recorded for {material_id!r}")
+    tasks = mpr.materials.tasks.search(task_ids=[chosen[-1]])
+    if not tasks:
+        raise LookupError(f"Task {chosen[-1]!r} not found")
+    task = _to_plain(tasks[0])
+    task.setdefault("task_id", chosen[-1])
+    return dict(task)
 
 
 def fetch_hamiltonian_metadata_from_mp(
     material_id: str,
     api_key: str | None = None,
     config: MPAdapterConfig | None = None,
-) -> Any:
+) -> HamiltonianMetadata:
     """Fetch DFT Hamiltonian parameters from the Materials Project API.
 
-    Retrieves the VASP calculation parameters (INCAR, KPOINTS, POTCAR info,
-    plane-wave cutoff) and packages them into a ``HamiltonianMetadata``
-    object.
-
-    .. note::
-        **Not yet implemented.**  Planned for v0.2 alongside
-        ``fetch_structure_metadata_from_mp``.
-
-    Args:
-        material_id: MP identifier, e.g. ``"mp-149"``.
-        api_key:     MP API key.
-        config:      Adapter configuration.
-
-    Returns:
-        ``HamiltonianMetadata`` populated from the MP task document.
+    Selects the material's static VASP task, reads the plane-wave cutoff,
+    electron count and spin setting from its inputs, and computes the
+    plane-wave count from the fetched cell.
 
     Raises:
-        NotImplementedError: Always, until v0.2 is implemented.
-        ImportError: When ``mp-api`` is not installed (future behaviour).
+        ImportError, ValueError, LookupError: as for
+            :func:`fetch_structure_metadata_from_mp`; also ``ValueError`` if
+            the task lacks ``ENCUT`` or ``NELECT``.
     """
-    raise NotImplementedError(
-        "fetch_hamiltonian_metadata_from_mp is not yet implemented.\n"
-        "This function is the primary target for the v0.2 Materials Project "
-        "adapter.\n"
-        "Track progress at: https://github.com/rmsreis/qmatbridge/issues"
+    cfg = config or MPAdapterConfig()
+    with _open_client(api_key, cfg) as mpr:
+        structure = structure_from_mp_doc(
+            _summary_doc(mpr, material_id, cfg.max_sites)
+        )
+        task = _pick_static_task(mpr, material_id)
+    return hamiltonian_from_mp_task_doc(task, structure)
+
+
+def fetch_entry_from_mp(
+    material_id: str,
+    api_key: str | None = None,
+    config: MPAdapterConfig | None = None,
+    *,
+    tags: list[str] | None = None,
+) -> QMatEntry:
+    """Fetch structure and Hamiltonian from MP and assemble a ``QMatEntry``.
+
+    Provenance records the retrieval time (UTC) and the MP task used.
+    """
+    cfg = config or MPAdapterConfig()
+    with _open_client(api_key, cfg) as mpr:
+        structure = structure_from_mp_doc(_summary_doc(mpr, material_id, cfg.max_sites))
+        task = _pick_static_task(mpr, material_id)
+    hamiltonian = hamiltonian_from_mp_task_doc(task, structure)
+    ref = build_material_reference_from_mp(
+        material_id,
+        functional=functional_from_mp_task_doc(task),
+        retrieved_at=datetime.now(timezone.utc).isoformat(timespec="seconds"),
+        config=cfg,
     )
+    ref.structure = structure
+    ref.provenance.metadata["task_id"] = task.get("task_id")
+    return QMatEntry(reference=ref, hamiltonian=hamiltonian, tags=list(tags or []))

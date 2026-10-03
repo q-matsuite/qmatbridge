@@ -376,7 +376,7 @@ def main() -> None:
             f"qubits={item.qubits_proxy}, t-gate={item.t_gate_proxy:,.0f}"
         )
 
-    out_dir = Path(__file__).parent
+    out_dir = Path(__file__).parent / "outputs"
     csv_path, json_path = export_results(candidates, frontier, out_dir)
     png_path = export_plot(candidates, frontier, out_dir)
 
