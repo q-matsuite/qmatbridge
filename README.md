@@ -7,7 +7,7 @@ Hamiltonians for fault-tolerant quantum simulation.**
 [![Python 3.10+](https://img.shields.io/badge/python-3.10%2B-blue.svg)](https://www.python.org/downloads/)
 [![CI](https://github.com/QMatBridge/qmatbridge/actions/workflows/python-package.yml/badge.svg)](https://github.com/QMatBridge/qmatbridge/actions)
 [![PyPI](https://img.shields.io/badge/PyPI-not%20yet%20published-lightgrey.svg)](#installation)
-[![Docs](https://img.shields.io/badge/docs-in%20progress-lightgrey.svg)](docs/)
+[![Docs](https://img.shields.io/badge/docs-mkdocs-blue.svg)](https://qmatbridge.github.io/qmatbridge/docs/)
 
 > **Status:** early-stage, active development — schema is stabilizing, adapters
 > are stubs, exporters are planned.  The core NIR and I/O layer are functional.
@@ -93,7 +93,7 @@ QMatBridge is intentionally narrow: it is a bridge, not a database.
 - First-quantized Hamiltonian representation (T + U + V in reciprocal space)
 - LCU / qubitization oracle metadata
 - JSON serialization with canonical entry hashes
-- Adapter stubs for Materials Project and OQMD
+- Materials Project adapter (structure + plane-wave Hamiltonian metadata); OQMD stub
 - Zero required dependencies in the core schema
 
 **Out of scope (for now):**
@@ -101,7 +101,7 @@ QMatBridge is intentionally narrow: it is a bridge, not a database.
 - Gaussian / LCAO / real-space basis sets
 - Molecular (non-periodic) systems
 - Excited-state or TDDFT Hamiltonians
-- Live API calls (adapters are stubs until v0.2)
+- Live OQMD / OPTIMADE calls (planned v0.3)
 - Exporter implementations (planned v0.4)
 
 ---
@@ -219,17 +219,22 @@ qmatbridge/
 ├── qmatbridge/
 │   ├── schema.py                  # Neutral intermediate representation (NIR)
 │   ├── io.py                      # JSON serialization utilities
+│   ├── basis.py                   # Plane-wave counting utilities
 │   └── adapters/
-│       ├── materials_project.py   # Materials Project adapter stub (v0.2 target)
+│       ├── materials_project.py   # Materials Project adapter
 │       └── oqmd.py                # OQMD adapter stub (v0.3 target)
 ├── docs/
 │   ├── vision.md                  # Design rationale and architectural constraints
 │   ├── adapters.md                # Upstream adapter documentation
 │   └── oracle-model.md            # Oracle abstraction and export model
 ├── examples/
-│   └── minimal_entry.py           # Silicon QMatEntry with full oracle metadata
+│   ├── minimal_entry.py           # Silicon QMatEntry with full oracle metadata
+│   └── outputs/                   # Generated CSV/JSON/PNG artifacts
 ├── benchmarks/
-│   └── README.md                  # Benchmark methodology and Tier-1 material plan
+│   ├── README.md                  # Benchmark methodology and Tier-1 material plan
+│   ├── tier1.py                   # Tier-1 specification
+│   └── build_tier1_fixtures.py    # Live fixture generator (needs MP_API_KEY)
+├── mkdocs.yml                     # Documentation site configuration
 ├── planning/
 │   └── initial_issues.md          # Scoped GitHub issue set for v0.1–v0.4
 └── .github/workflows/
@@ -253,10 +258,12 @@ qmatbridge/
 
 ### v0.2 — Materials Project live integration
 
-- [ ] `fetch_structure_metadata_from_mp` and `fetch_hamiltonian_metadata_from_mp`
-- [ ] Plane-wave count utility (`num_plane_waves_from_ecut`)
-- [ ] Tier-1 benchmark material fixtures (Si, LiH, Fe, MgO, TiO₂)
-- [ ] MkDocs documentation site on GitHub Pages
+- [x] `fetch_structure_metadata_from_mp` and `fetch_hamiltonian_metadata_from_mp`
+      (implemented; live-API validation pending)
+- [x] Plane-wave count utility (`num_plane_waves_from_ecut`)
+- [ ] Tier-1 benchmark material fixtures (Si, LiH, Fe, MgO, TiO₂) — spec and
+      builder done; fixtures to be generated with an MP API key
+- [x] MkDocs documentation site (GitHub Pages deploy configured)
 
 ### v0.3 — OPTIMADE, OQMD, and Alexandria adapters
 

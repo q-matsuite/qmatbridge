@@ -1,8 +1,20 @@
 # QMatBridge — Initial GitHub Issue Set
 
-Ten scoped issues for the first public milestone of QMatBridge.
+Thirteen scoped issues for the first public milestone of QMatBridge.
 Copy each block into a GitHub issue; suggested labels and milestone are
 included for each.
+
+---
+
+## Status (updated for v0.2 work)
+
+| Issue | State |
+| --- | --- |
+| 3 — MP live fetch | Implemented; live-API validation tracked in Issue 11 |
+| 5 — Tier-1 family | Spec in `benchmarks/tier1.py`; table corrected |
+| 6 — Tier-1 fixtures | Builder done; fixtures need an MP key (Issue 12) |
+| 9 — MkDocs site | Done (`mkdocs.yml`, Pages workflow) |
+| 1, 2, 4, 7, 8, 10 | Open |
 
 ---
 
@@ -280,3 +292,54 @@ DFT database → `QMatEntry` → quantum compiler.
 
 **Labels:** `exporter`, `openfermion`, `v0.4`
 **Milestone:** v0.4 — Hamiltonian Exporters
+
+---
+
+## Issue 11 — Adapter: validate Materials Project fetchers against the live API
+
+**Title:** `[adapter] Validate fetch_entry_from_mp against live MP for Tier-1 materials`
+
+**Rationale:**
+The converters are unit-tested with representative documents and a fake client,
+but the shapes of `summary.search`, `materials.search(calc_types)` and
+`tasks.search` responses, and the presence of `input.parameters.NELECT` in task
+documents, have not been confirmed against the production API.
+
+**Proposed tasks:**
+- [ ] Run `pytest -m integration` with `MP_API_KEY` set; fix any shape mismatches
+- [ ] Confirm static-task selection picks the intended calculation
+- [ ] Confirm electron counts match POTCAR valences for the Tier-1 set
+- [ ] Add a scheduled (non-PR) CI job that runs the integration tests
+
+**Labels:** `adapter`, `v0.2`
+
+---
+
+## Issue 12 — Benchmarks: generate and commit Tier-1 fixtures
+
+**Title:** `[benchmarks] Generate Tier-1 QMatEntry fixtures via build_tier1_fixtures.py`
+
+**Proposed tasks:**
+- [ ] Verify the MP IDs in `benchmarks/tier1.py` (Si, LiH, Fe, MgO, TiO₂)
+- [ ] Run `python benchmarks/build_tier1_fixtures.py` and review the output
+- [ ] Commit `benchmarks/fixtures/*.json` and record each `canonical_hash()`
+
+**Labels:** `benchmarks`, `v0.2`
+**Depends on:** Issue 11, Issue 13
+
+---
+
+## Issue 13 — I/O: read entries back from JSON
+
+**Title:** `[io] Add read_entry_json / from_dict for QMatEntry`
+
+**Rationale:**
+`qmatbridge.io` can write entries but not read them, so hash-regression tests on
+committed fixtures cannot reconstruct an entry and recompute `canonical_hash()`.
+
+**Proposed tasks:**
+- [ ] Implement `from_dict` for the nested dataclasses and `read_entry_json`
+- [ ] Reject unknown `schema_version` with a clear error
+- [ ] Round-trip test: `from_dict(to_dict(e)).canonical_hash() == e.canonical_hash()`
+
+**Labels:** `io`, `schema`, `v0.2`
