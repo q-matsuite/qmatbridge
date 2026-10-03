@@ -485,7 +485,8 @@ def print_summary(
 # ---------------------------------------------------------------------------
 
 def main() -> None:
-    out_dir = Path(__file__).parent
+    out_dir = Path(__file__).parent / "outputs"
+    out_dir.mkdir(parents=True, exist_ok=True)
 
     # 1. Build data
     grid        = build_sensitivity_grid()

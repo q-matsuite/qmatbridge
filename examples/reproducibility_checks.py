@@ -100,7 +100,7 @@ def main() -> None:
     print(f"hash(entry_c): {hash_c}")
     print(f"changed after physical edit: {sensitive}")
 
-    out = Path(__file__).parent / "reproducibility_entry.json"
+    out = Path(__file__).parent / "outputs" / "reproducibility_entry.json"
     written = write_entry_json(entry_a, out)
     print(f"\nWrote baseline entry JSON: {written}")
 
