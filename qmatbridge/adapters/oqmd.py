@@ -247,7 +247,7 @@ def fetch_structure_metadata_from_oqmd(
     raise NotImplementedError(
         "fetch_structure_metadata_from_oqmd is not yet implemented.\n"
         "This function is the primary target for the v0.3 OQMD adapter.\n"
-        "Track progress at: https://github.com/QMatBridge/qmatbridge/issues"
+        "Track progress at: https://github.com/q-matsuite/qmatbridge/issues"
     )
 
 
@@ -277,5 +277,5 @@ def fetch_hamiltonian_metadata_from_oqmd(
     raise NotImplementedError(
         "fetch_hamiltonian_metadata_from_oqmd is not yet implemented.\n"
         "This function is the primary target for the v0.3 OQMD adapter.\n"
-        "Track progress at: https://github.com/QMatBridge/qmatbridge/issues"
+        "Track progress at: https://github.com/q-matsuite/qmatbridge/issues"
     )

@@ -59,9 +59,9 @@ openfermion = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/QMatBridge/qmatbridge"
-Repository = "https://github.com/QMatBridge/qmatbridge"
-Issues = "https://github.com/QMatBridge/qmatbridge/issues"
+Homepage = "https://github.com/q-matsuite/qmatbridge"
+Repository = "https://github.com/q-matsuite/qmatbridge"
+Issues = "https://github.com/q-matsuite/qmatbridge/issues"
 
 [tool.setuptools.packages.find]
 where = ["."]

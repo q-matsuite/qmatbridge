@@ -8,8 +8,8 @@ authors:
 version: 0.1.0
 date-released: 2026-06-03
 license: MIT
-repository-code: "https://github.com/QMatBridge/qmatbridge"
-url: "https://qmatbridge.github.io/qmatbridge/"
+repository-code: "https://github.com/q-matsuite/qmatbridge"
+url: "https://q-matsuite.com/qmatbridge/"
 keywords:
   - quantum computing
   - quantum simulation

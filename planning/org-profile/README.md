@@ -1,7 +1,10 @@
-# QMatBridge
+# q-matsuite
 
 **Open-source tools connecting classical materials databases to first-quantized
 Hamiltonians for fault-tolerant quantum simulation.**
+
+First project: [**QMatBridge**](https://q-matsuite.com/qmatbridge/).  Site:
+[q-matsuite.com](https://q-matsuite.com).
 
 ---
 
@@ -59,9 +62,9 @@ exporters are in progress.  We welcome contributions at any level:
 - **Database maintainers** who want to add an adapter for their source
 - **Educators** building course materials around fault-tolerant simulation
 
-See [`qmatbridge/CONTRIBUTING.md`](https://github.com/QMatBridge/qmatbridge/blob/main/CONTRIBUTING.md)
+See [`qmatbridge/CONTRIBUTING.md`](https://github.com/q-matsuite/qmatbridge/blob/main/CONTRIBUTING.md)
 to get started, and
-[GitHub Discussions](https://github.com/QMatBridge/qmatbridge/discussions)
+[GitHub Discussions](https://github.com/q-matsuite/qmatbridge/discussions)
 to propose ideas or ask questions.
 
 ---

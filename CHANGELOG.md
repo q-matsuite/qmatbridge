@@ -30,7 +30,8 @@ Breaking changes to `QMatEntry` or its nested schema classes are marked
 - `functional_from_mp_task_doc` — records `PBE+U` for GGA+U calculations.
 
 ### Changed
-- Repository URLs now point to `github.com/QMatBridge/qmatbridge`.
+- Repository URLs now point to `github.com/q-matsuite/qmatbridge` (org renamed from
+  `QMatBridge`; GitHub redirects the old URLs). Site moves to `q-matsuite.com/qmatbridge/`.
 - Generated example artifacts moved to `examples/outputs/`.
 - Ruff: long lines allowed in `examples/` and `tests/`.
 
@@ -104,5 +105,5 @@ Initial repository scaffold and schema definition.  First release prepared for P
 **Planning**
 - `planning/initial_issues.md` — ten scoped GitHub issues for v0.1–v0.4
 
-[Unreleased]: https://github.com/QMatBridge/qmatbridge/compare/v0.1.0...HEAD
-[0.1.0]: https://github.com/QMatBridge/qmatbridge/releases/tag/v0.1.0
+[Unreleased]: https://github.com/q-matsuite/qmatbridge/compare/v0.1.0...HEAD
+[0.1.0]: https://github.com/q-matsuite/qmatbridge/releases/tag/v0.1.0

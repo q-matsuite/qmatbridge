@@ -3,7 +3,7 @@
 ## Install
 
 ```bash
-git clone https://github.com/QMatBridge/qmatbridge.git
+git clone https://github.com/q-matsuite/qmatbridge.git
 cd qmatbridge
 pip install -e ".[dev]"
 pip install -e ".[mp]"   # Materials Project adapter (mp-api, pymatgen)

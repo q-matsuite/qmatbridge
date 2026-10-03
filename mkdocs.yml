@@ -1,8 +1,8 @@
 site_name: QMatBridge
 site_description: Bridge from classical materials databases to first-quantized Hamiltonians for fault-tolerant quantum simulation.
-site_url: https://qmatbridge.github.io/qmatbridge/docs/
-repo_url: https://github.com/QMatBridge/qmatbridge
-repo_name: QMatBridge/qmatbridge
+site_url: https://q-matsuite.com/qmatbridge/docs/
+repo_url: https://github.com/q-matsuite/qmatbridge
+repo_name: q-matsuite/qmatbridge
 edit_uri: edit/main/docs/
 
 theme:

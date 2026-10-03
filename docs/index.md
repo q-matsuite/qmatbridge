@@ -27,7 +27,7 @@ OPTIMADE sources  ─┘
     Early-stage. The schema and JSON I/O are functional; the Materials Project
     adapter is implemented but not yet validated against the live API in CI;
     exporters are planned. See the
-    [roadmap](https://github.com/QMatBridge/qmatbridge#roadmap).
+    [roadmap](https://github.com/q-matsuite/qmatbridge#roadmap).
 
 ---
 

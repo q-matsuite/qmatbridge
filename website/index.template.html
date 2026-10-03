@@ -6,13 +6,14 @@
 <title>QMatBridge</title>
 <meta name="description" content="QMatBridge turns classical materials-database records into first-quantized Hamiltonian descriptions for fault-tolerant quantum simulation, with provenance and a canonical hash on every entry.">
 <meta name="author" content="Roberto Reis (@rmsreis)">
+<meta name="application-name" content="QMatBridge by q-matsuite">
 <meta name="color-scheme" content="dark">
-<link rel="canonical" href="https://qmatbridge.github.io/qmatbridge/">
+<link rel="canonical" href="https://q-matsuite.com/qmatbridge/">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <meta property="og:type" content="website">
 <meta property="og:title" content="QMatBridge">
 <meta property="og:description" content="Materials databases to first-quantized Hamiltonians, with provenance.">
-<meta property="og:url" content="https://qmatbridge.github.io/qmatbridge/">
+<meta property="og:url" content="https://q-matsuite.com/qmatbridge/">
 <meta name="twitter:card" content="summary">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -66,6 +67,9 @@ header.site { position: sticky; top: 0; z-index: 50; background: color-mix(in ok
 header.site .wrap { display: flex; align-items: center; gap: 24px; height: 60px; }
 .brand { display: flex; align-items: center; gap: 10px; color: var(--text); text-decoration: none; font: 600 1.05rem var(--sans); }
 .brand svg { width: 28px; height: 28px; color: var(--accent); }
+.by { color: var(--muted); font: 400 0.8rem var(--mono); text-decoration: none; padding-top: 2px; }
+.by:hover { color: var(--text); }
+@media (max-width: 560px) { .by { display: none; } }
 nav.main { margin-left: auto; display: flex; gap: 4px; align-items: center; }
 nav.main a { color: var(--muted); text-decoration: none; padding: 8px 12px; border-radius: 8px; font-size: 0.92rem; }
 nav.main a:hover { color: var(--text); background: var(--surface); }
@@ -209,13 +213,14 @@ footer.site p { margin: 0 0 6px; }
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="10" r="7"/><path d="M15.5 14.5 21 20"/><path d="M2.5 21.5h19" opacity=".55"/><circle cx="2.5" cy="21.5" r="1" fill="currentColor"/><circle cx="21.5" cy="21.5" r="1" fill="currentColor"/></svg>
       QMatBridge
     </a>
+    <a class="by" href="../">by q-matsuite</a>
     <nav class="main" aria-label="Primary">
       <a href="#examples" class="keep" data-needs-examples>Examples</a>
       <a href="#schema">Schema</a>
       <a href="#install">Install</a>
       <a href="#roadmap">Roadmap</a>
       <a href="docs/">Docs</a>
-      <a class="gh" href="https://github.com/QMatBridge/qmatbridge" rel="noopener">GitHub</a>
+      <a class="gh" href="https://github.com/q-matsuite/qmatbridge" rel="noopener">GitHub</a>
     </nav>
   </div>
 </header>
@@ -338,7 +343,7 @@ footer.site p { margin: 0 0 6px; }
       <p class="lede" style="margin-top:14px">Not yet on PyPI. Python 3.10+; the core schema has no required dependencies. Fetching from the Materials Project needs the <code>mp</code> extra and a free API key.</p>
     </div>
     <div>
-      <div class="cmd"><div class="label">Install</div><pre><code>git clone https://github.com/QMatBridge/qmatbridge.git
+      <div class="cmd"><div class="label">Install</div><pre><code>git clone https://github.com/q-matsuite/qmatbridge.git
 cd qmatbridge
 pip install -e ".[mp]"</code></pre><button class="copy" type="button">Copy</button></div>
       <div class="cmd"><div class="label">Fetch an entry</div><pre><code>export MP_API_KEY=...   # your own key
@@ -396,10 +401,10 @@ python -c "from qmatbridge.adapters.materials_project import fetch_entry_from_mp
       <h2 id="h-community">Built in the open</h2>
     </div>
     <div class="links">
-      <a href="https://github.com/QMatBridge/qmatbridge/discussions" rel="noopener">Discussions<span>Questions and design proposals</span></a>
-      <a href="https://github.com/QMatBridge/qmatbridge/issues" rel="noopener">Issues<span>Bugs and feature requests</span></a>
-      <a href="https://github.com/QMatBridge/qmatbridge/blob/main/CONTRIBUTING.md" rel="noopener">Contributing<span>How to propose changes</span></a>
-      <a href="https://github.com/QMatBridge/qmatbridge/blob/main/GOVERNANCE.md" rel="noopener">Governance<span>Roles and decisions</span></a>
+      <a href="https://github.com/q-matsuite/qmatbridge/discussions" rel="noopener">Discussions<span>Questions and design proposals</span></a>
+      <a href="https://github.com/q-matsuite/qmatbridge/issues" rel="noopener">Issues<span>Bugs and feature requests</span></a>
+      <a href="https://github.com/q-matsuite/qmatbridge/blob/main/CONTRIBUTING.md" rel="noopener">Contributing<span>How to propose changes</span></a>
+      <a href="https://github.com/q-matsuite/qmatbridge/blob/main/GOVERNANCE.md" rel="noopener">Governance<span>Roles and decisions</span></a>
     </div>
   </div>
 </section>
@@ -416,7 +421,7 @@ python -c "from qmatbridge.adapters.materials_project import fetch_entry_from_mp
   title  = {{QMatBridge}: A bridge from classical materials
             databases to first-quantized Hamiltonians for
             quantum simulation},
-  url    = {https://github.com/QMatBridge/qmatbridge},
+  url    = {https://github.com/q-matsuite/qmatbridge},
   version = {0.1.0},
   year   = {2026},
 }</code></pre><button class="copy" type="button">Copy</button></div>
@@ -428,10 +433,10 @@ python -c "from qmatbridge.adapters.materials_project import fetch_entry_from_mp
   <div class="wrap">
     <div class="credit">
       <p><strong>QMatBridge</strong> is created and maintained by <strong>Roberto Reis</strong> (<a href="https://github.com/rmsreis" rel="noopener">@rmsreis</a>).</p>
-      <p>Released under the MIT license. Example data from the <a href="https://materialsproject.org" rel="noopener">Materials Project</a> (CC BY 4.0).</p>
+      <p>A <a href="../">q-matsuite</a> project. Released under the MIT license. Example data from the <a href="https://materialsproject.org" rel="noopener">Materials Project</a> (CC BY 4.0).</p>
     </div>
     <div>
-      <p><a href="https://github.com/QMatBridge/qmatbridge" rel="noopener">Source on GitHub</a></p>
+      <p><a href="https://github.com/q-matsuite/qmatbridge" rel="noopener">Source on GitHub</a></p>
       <p><a href="docs/">Documentation</a></p>
     </div>
   </div>

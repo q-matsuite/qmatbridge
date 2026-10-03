@@ -10,7 +10,7 @@ is a research-software page, not a SaaS pitch.
 
 ## Hosting and URLs
 
-- GitHub Pages, project site: `https://qmatbridge.github.io/qmatbridge/`.
+- GitHub Pages, project site: `https://q-matsuite.com/qmatbridge/`.
 - Landing page at the site root; MkDocs output under `/docs/` (see `mkdocs.yml`).
 - Source in `website/` (`index.template.html`, `favicon.svg`, `data/examples.json`); `tools/build_site.py` embeds the data and writes `index.html` (gitignored; built in CI). The repo's
   `.gitignore` already ignores `site/`, so do not use that name.
