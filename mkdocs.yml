@@ -1,0 +1,48 @@
+site_name: QMatBridge
+site_description: Bridge from classical materials databases to first-quantized Hamiltonians for fault-tolerant quantum simulation.
+site_url: https://qmatbridge.github.io/qmatbridge/docs/
+repo_url: https://github.com/QMatBridge/qmatbridge
+repo_name: QMatBridge/qmatbridge
+edit_uri: edit/main/docs/
+
+theme:
+  name: material
+  features:
+    - navigation.sections
+    - content.code.copy
+    - content.action.edit
+  palette:
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      toggle: { icon: material/weather-sunny, name: Switch to light mode }
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      toggle: { icon: material/weather-night, name: Switch to dark mode }
+
+plugins:
+  - search
+  - mkdocstrings:
+      handlers:
+        python:
+          options:
+            show_source: false
+            show_root_heading: true
+            members_order: source
+            docstring_style: google
+
+markdown_extensions:
+  - admonition
+  - tables
+  - toc:
+      permalink: true
+  - pymdownx.highlight
+  - pymdownx.superfences
+
+nav:
+  - Home: index.md
+  - Getting started: getting-started.md
+  - Concepts:
+      - Vision: vision.md
+      - Oracle model: oracle-model.md
+      - Adapters: adapters.md
+  - API reference: api.md

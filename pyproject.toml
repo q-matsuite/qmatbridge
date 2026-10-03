@@ -39,6 +39,11 @@ dev = [
     "ruff>=0.4",
     "mypy>=1.8",
 ]
+docs = [
+    "mkdocs>=1.6,<2",
+    "mkdocs-material>=9.5",
+    "mkdocstrings[python]>=0.25",
+]
 mp = [
     "mp-api>=0.41",
     "pymatgen>=2024.1",
