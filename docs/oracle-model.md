@@ -338,4 +338,4 @@ oracle = OracleMetadata(
 | `OracleMetadata` | `oracle_type`, `index_encoding`, `coefficient_sampling`, `complexity` |
 | `ExportMetadata` | `target_name`, `status` |
 
-See [qmatbridge/schema.py](../qmatbridge/schema.py) for full field documentation.
+See [qmatbridge/schema.py](https://github.com/q-matsuite/qmatbridge/blob/main/qmatbridge/schema.py) for full field documentation.
