@@ -77,5 +77,5 @@ Initial repository scaffold and schema definition.  First release prepared for P
 **Planning**
 - `planning/initial_issues.md` — ten scoped GitHub issues for v0.1–v0.4
 
-[Unreleased]: https://github.com/rmsreis/qmatbridge/compare/v0.1.0...HEAD
-[0.1.0]: https://github.com/rmsreis/qmatbridge/releases/tag/v0.1.0
+[Unreleased]: https://github.com/QMatBridge/qmatbridge/compare/v0.1.0...HEAD
+[0.1.0]: https://github.com/QMatBridge/qmatbridge/releases/tag/v0.1.0

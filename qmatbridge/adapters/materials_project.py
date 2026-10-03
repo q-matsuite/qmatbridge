@@ -238,7 +238,7 @@ def fetch_structure_metadata_from_mp(
         "fetch_structure_metadata_from_mp is not yet implemented.\n"
         "This function is the primary target for the v0.2 Materials Project "
         "adapter.\n"
-        "Track progress at: https://github.com/rmsreis/qmatbridge/issues"
+        "Track progress at: https://github.com/QMatBridge/qmatbridge/issues"
     )
 
 
@@ -273,5 +273,5 @@ def fetch_hamiltonian_metadata_from_mp(
         "fetch_hamiltonian_metadata_from_mp is not yet implemented.\n"
         "This function is the primary target for the v0.2 Materials Project "
         "adapter.\n"
-        "Track progress at: https://github.com/rmsreis/qmatbridge/issues"
+        "Track progress at: https://github.com/QMatBridge/qmatbridge/issues"
     )

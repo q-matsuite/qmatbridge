@@ -456,7 +456,7 @@ def print_summary(
     print("  Sensitivity Analysis — QMatBridge Si-like Benchmark")
     print("=" * 65)
     print(f"\n  Baseline score : {baseline_score:,.2f}")
-    print(f"  (score = t_gate_proxy × (1 + qubits_proxy/100))\n")
+    print("  (score = t_gate_proxy × (1 + qubits_proxy/100))\n")
 
     print("  Tornado ranking (descending absolute impact):")
     print(f"  {'Parameter':<20} {'score_low':>12} {'score_high':>12} "

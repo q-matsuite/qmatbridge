@@ -5,7 +5,7 @@ Hamiltonians for fault-tolerant quantum simulation.**
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![Python 3.10+](https://img.shields.io/badge/python-3.10%2B-blue.svg)](https://www.python.org/downloads/)
-[![CI](https://github.com/rmsreis/qmatbridge/actions/workflows/python-package.yml/badge.svg)](https://github.com/rmsreis/qmatbridge/actions)
+[![CI](https://github.com/QMatBridge/qmatbridge/actions/workflows/python-package.yml/badge.svg)](https://github.com/QMatBridge/qmatbridge/actions)
 [![PyPI](https://img.shields.io/badge/PyPI-not%20yet%20published-lightgrey.svg)](#installation)
 [![Docs](https://img.shields.io/badge/docs-in%20progress-lightgrey.svg)](docs/)
 
@@ -143,7 +143,7 @@ Discussions before any code is written.
 
 ```bash
 # from source (recommended until PyPI publication)
-git clone https://github.com/rmsreis/qmatbridge.git
+git clone https://github.com/QMatBridge/qmatbridge.git
 cd qmatbridge
 pip install -e ".[dev]"
 ```
@@ -294,7 +294,7 @@ qmatbridge/
 | [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md) | Community standards and enforcement |
 | [SECURITY.md](SECURITY.md) | Private vulnerability reporting |
 | [SUPPORT.md](SUPPORT.md) | Where to ask questions vs. file bugs |
-| [GitHub Discussions](https://github.com/rmsreis/qmatbridge/discussions) | Q&A, design proposals, and architecture discussions |
+| [GitHub Discussions](https://github.com/QMatBridge/qmatbridge/discussions) | Q&A, design proposals, and architecture discussions |
 
 Contributions are welcome at any level — bug reports, adapter implementations,
 documentation improvements, and benchmark additions.  Please read
@@ -313,7 +313,7 @@ academic work, please cite the repository directly:
   author  = {Reis, Roberto},
   title   = {{QMatBridge}: A bridge from classical materials databases to
              first-quantized Hamiltonians for quantum simulation},
-  url     = {https://github.com/rmsreis/qmatbridge},
+  url     = {https://github.com/QMatBridge/qmatbridge},
     version = {0.1.0},
   year    = {2026},
 }

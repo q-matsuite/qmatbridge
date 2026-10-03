@@ -60,3 +60,6 @@ api_keys.json
 # Documentation builds
 docs/_build/
 site/
+
+# Private proposal materials (local only)
+/proposal/
