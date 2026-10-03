@@ -1,6 +1,6 @@
 # QMatBridge website — build spec
 
-Status: **draft for review** — nothing in `website/` is built until this is approved.
+Status: **approved; implemented** in `website/index.template.html` (built by `tools/build_site.py`).
 
 ## Goal
 
@@ -12,7 +12,7 @@ is a research-software page, not a SaaS pitch.
 
 - GitHub Pages, project site: `https://qmatbridge.github.io/qmatbridge/`.
 - Landing page at the site root; MkDocs output under `/docs/` (see `mkdocs.yml`).
-- Source in `website/` (`index.html`, `favicon.svg`, `logo.svg`). The repo's
+- Source in `website/` (`index.template.html`, `favicon.svg`, `data/examples.json`); `tools/build_site.py` embeds the data and writes `index.html` (gitignored; built in CI). The repo's
   `.gitignore` already ignores `site/`, so do not use that name.
 - **All asset and link URLs must be relative** (no leading `/`), so the same build
   works at `/qmatbridge/` today and at a custom domain root later. Moving to a custom
@@ -29,6 +29,21 @@ is a research-software page, not a SaaS pitch.
 - Install snippet is from source (`git clone` + `pip install -e .`) until a release.
 - Citation block matches `README.md` and `CITATION.cff` exactly.
 
+## Examples explorer (added on review)
+
+Right after the hero: a material picker (Si, GaN, LiCoO₂ — semiconductor, wide-gap
+III–V, battery cathode) driving a rotatable unit-cell viewer (drag or arrow keys, bonds
+inferred from covalent radii), stat tiles (formula, space group, electrons, plane
+waves, functional, spin, MP source, hash) and Python / JSON tabs with copy buttons.
+All values come from `website/data/examples.json`, which is generated from live
+Materials Project data by `benchmarks/build_tier1_fixtures.py --site ...` after the
+entries pass the Tier-1 spec checks. With no data file the section is hidden.
+
+## Credit
+
+Footer credits **Roberto Reis (@rmsreis)** as creator and maintainer, links to
+github.com/rmsreis, and `<meta name="author">` carries the same.
+
 ## Sections (single `index.html`, hash navigation)
 
 1. **Hero** — name, one-line tagline ("Materials databases to first-quantized
@@ -40,7 +55,7 @@ is a research-software page, not a SaaS pitch.
 3. **What a `QMatEntry` records** — provenance, structure, basis, oracle cost, exports;
    plus `canonical_hash()`.
 4. **Schema** — table of the core dataclasses and their roles.
-5. **Example** — the silicon snippet with copy button and the JSON it produces.
+5. **Example** — see *Examples explorer* above (placed directly after the hero).
 6. **Install** — from-source commands with copy buttons; optional extras.
 7. **Who it is for** — algorithm researchers, RSEs, resource-estimation groups; and
    who it is *not* for (use pymatgen/ASE for general materials informatics).

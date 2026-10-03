@@ -14,6 +14,7 @@ from qmatbridge.adapters.materials_project import (
     fetch_entry_from_mp,
     fetch_hamiltonian_metadata_from_mp,
     fetch_structure_metadata_from_mp,
+    functional_from_mp_task_doc,
     hamiltonian_from_mp_task_doc,
     structure_from_mp_doc,
 )
@@ -107,6 +108,21 @@ def test_hamiltonian_spin_polarized_and_errors() -> None:
         hamiltonian_from_mp_task_doc({"input": {"incar": {"ENCUT": 500}}}, s)
     with pytest.raises(ValueError, match="non-integer"):
         hamiltonian_from_mp_task_doc(task_doc(nelect=7.5), s)
+
+
+@pytest.mark.parametrize(
+    ("task", "expected"),
+    [
+        ({"run_type": "GGA"}, "PBE"),
+        ({"run_type": "GGA+U"}, "PBE+U"),
+        ({"run_type": "r2SCAN"}, "r2SCAN"),
+        ({"input": {"hubbards": {"Co": 3.32}}}, "PBE+U"),
+        ({"input": {"hubbards": {}}}, "PBE"),
+        ({}, "PBE"),
+    ],
+)
+def test_functional_detection(task: dict, expected: str) -> None:
+    assert functional_from_mp_task_doc(task) == expected
 
 
 # ------------------------------------------------------------ fake MPRester

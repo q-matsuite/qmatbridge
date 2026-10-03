@@ -25,6 +25,9 @@ Breaking changes to `QMatEntry` or its nested schema classes are marked
   GitHub Pages deploy workflow.
 - `CITATION.cff`; CI jobs for docs build and distribution build; 85 % coverage floor.
 - `docs` optional extra.
+- Landing page (`website/`, `tools/build_site.py`) with an interactive examples
+  explorer; Tier-1 examples are now Si, GaN and LiCoO₂ (battery cathode).
+- `functional_from_mp_task_doc` — records `PBE+U` for GGA+U calculations.
 
 ### Changed
 - Repository URLs now point to `github.com/QMatBridge/qmatbridge`.

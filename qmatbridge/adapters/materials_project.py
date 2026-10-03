@@ -53,6 +53,7 @@ __all__ = [
     "build_material_reference_from_mp",
     "structure_from_mp_doc",
     "hamiltonian_from_mp_task_doc",
+    "functional_from_mp_task_doc",
     "fetch_structure_metadata_from_mp",
     "fetch_hamiltonian_metadata_from_mp",
     "fetch_entry_from_mp",
@@ -325,6 +326,21 @@ def hamiltonian_from_mp_task_doc(
     )
 
 
+def functional_from_mp_task_doc(task: Mapping[str, Any]) -> str:
+    """Name the XC functional of an MP task document (e.g. ``"PBE+U"``).
+
+    Uses ``run_type`` when present (``"GGA"`` → ``"PBE"``, ``"GGA+U"`` →
+    ``"PBE+U"``; other run types such as ``"r2SCAN"`` pass through), else
+    infers ``"PBE+U"`` from a non-empty ``input.hubbards`` mapping, else
+    ``"PBE"``.
+    """
+    run_type = task.get("run_type")
+    if run_type:
+        return {"GGA": "PBE", "GGA+U": "PBE+U"}.get(str(run_type), str(run_type))
+    inp = task.get("input") or {}
+    return "PBE+U" if inp.get("hubbards") else "PBE"
+
+
 # ---------------------------------------------------------------------------
 # Live fetchers — require mp-api
 # ---------------------------------------------------------------------------
@@ -463,6 +479,7 @@ def fetch_entry_from_mp(
     hamiltonian = hamiltonian_from_mp_task_doc(task, structure)
     ref = build_material_reference_from_mp(
         material_id,
+        functional=functional_from_mp_task_doc(task),
         retrieved_at=datetime.now(timezone.utc).isoformat(timespec="seconds"),
         config=cfg,
     )

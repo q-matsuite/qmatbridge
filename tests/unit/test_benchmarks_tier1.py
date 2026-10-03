@@ -23,6 +23,12 @@ def test_spec_keys_and_ids_unique() -> None:
     assert len({s.mp_id for s in TIER1}) == len(TIER1)
 
 
+def test_planned_ids_do_not_collide_with_tier1() -> None:
+    from benchmarks.tier1 import PLANNED
+
+    assert not {p[1] for p in PLANNED} & {s.mp_id for s in TIER1}
+
+
 def test_all_species_have_valence() -> None:
     for spec in TIER1:
         assert set(spec.cell_species) <= set(MP_VALENCE)
@@ -30,7 +36,7 @@ def test_all_species_have_valence() -> None:
 
 @pytest.mark.parametrize(
     ("key", "electrons"),
-    [("Si", 8), ("LiH", 4), ("Fe", 14), ("MgO", 14), ("TiO2", 44)],
+    [("Si", 8), ("GaN", 36), ("LiCoO2", 24)],
 )
 def test_expected_electrons(key: str, electrons: int) -> None:
     spec = next(s for s in TIER1 if s.key == key)

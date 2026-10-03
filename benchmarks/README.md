@@ -21,16 +21,17 @@ Benchmarks here serve two purposes:
 
 ### Tier 1 — Core materials (open-access, well-studied)
 
-| Material | mp-id | Cell | Valence electrons | Notes |
-|----------|-------|------|-------------------|-------|
+| Material | mp-id | Cell | Valence electrons | Why |
+|----------|-------|------|-------------------|-----|
 | Si (diamond) | mp-149 | Si₂ | 8 | Canonical test case |
-| LiH | mp-23703 | LiH | 4 | Small system, exact-diag reference |
-| Fe (BCC) | mp-13 | Fe | 14 | Magnetic, spin-polarized |
-| MgO | mp-1265 | MgO | 14 | Ionic, wide gap |
-| TiO₂ (rutile) | mp-2657 | Ti₂O₄ | 44 | d-electron system |
+| GaN (wurtzite) | mp-804 | Ga₂N₂ | 36 | Wide-gap III-V; semicore Ga 3d |
+| LiCoO₂ | mp-22526 | LiCoO₂ | 24 | Li-ion cathode; spin-polarized, GGA+U |
+
+Planned next: LiH, BCC Fe, MgO, rutile TiO₂ (see `PLANNED` in
+[`tier1.py`](tier1.py)).
 
 Electron counts are derived from the default Materials Project VASP POTCAR
-valences (`Si`, `Li_sv`, `H`, `Fe_pv`, `Mg_pv`, `O`, `Ti_pv`) for the
+valences (`Si`, `Ga_d`, `N`, `Li_sv`, `Co`, `O`) for the
 primitive cell; see [`tier1.py`](tier1.py).  The plane-wave cutoff is whatever
 the MP static calculation used (520 eV for the standard MP workflow).
 

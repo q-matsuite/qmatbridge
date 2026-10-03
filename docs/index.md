@@ -28,3 +28,7 @@ OPTIMADE sources  ─┘
     adapter is implemented but not yet validated against the live API in CI;
     exporters are planned. See the
     [roadmap](https://github.com/QMatBridge/qmatbridge#roadmap).
+
+---
+
+Created and maintained by [Roberto Reis](https://github.com/rmsreis) ([@rmsreis](https://github.com/rmsreis)).

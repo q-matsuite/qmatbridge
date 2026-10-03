@@ -7,6 +7,7 @@ Hamiltonians for fault-tolerant quantum simulation.**
 [![Python 3.10+](https://img.shields.io/badge/python-3.10%2B-blue.svg)](https://www.python.org/downloads/)
 [![CI](https://github.com/QMatBridge/qmatbridge/actions/workflows/python-package.yml/badge.svg)](https://github.com/QMatBridge/qmatbridge/actions)
 [![PyPI](https://img.shields.io/badge/PyPI-not%20yet%20published-lightgrey.svg)](#installation)
+[![Website](https://img.shields.io/badge/website-qmatbridge.github.io-5fd4dd.svg)](https://qmatbridge.github.io/qmatbridge/)
 [![Docs](https://img.shields.io/badge/docs-mkdocs-blue.svg)](https://qmatbridge.github.io/qmatbridge/docs/)
 
 > **Status:** early-stage, active development — schema is stabilizing, adapters
@@ -261,7 +262,7 @@ qmatbridge/
 - [x] `fetch_structure_metadata_from_mp` and `fetch_hamiltonian_metadata_from_mp`
       (implemented; live-API validation pending)
 - [x] Plane-wave count utility (`num_plane_waves_from_ecut`)
-- [ ] Tier-1 benchmark material fixtures (Si, LiH, Fe, MgO, TiO₂) — spec and
+- [ ] Tier-1 benchmark fixtures (Si, GaN, LiCoO₂ first; LiH, Fe, MgO, TiO₂ planned) — spec and
       builder done; fixtures to be generated with an MP API key
 - [x] MkDocs documentation site (GitHub Pages deploy configured)
 
@@ -328,6 +329,12 @@ academic work, please cite the repository directly:
 
 A citable release and, if the project grows, a JOSS submission are planned
 once the v0.2 Materials Project adapter is complete and the API is stable.
+
+---
+
+## Author
+
+Created and maintained by [Roberto Reis](https://github.com/rmsreis) ([@rmsreis](https://github.com/rmsreis)).
 
 ---
 

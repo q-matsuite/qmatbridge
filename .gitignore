@@ -64,3 +64,4 @@ site/
 # Private proposal materials (local only)
 /proposal/
 _site/
+website/index.html
