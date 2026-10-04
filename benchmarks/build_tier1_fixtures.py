@@ -59,6 +59,11 @@ def load_dotenv(path: Path | None = None) -> None:
             os.environ.setdefault(key, value)
 
 
+#: Materials Project run type that corresponds to each spec functional.  The spec
+#: names the calculation we want; the adapter is asked for exactly that one.
+RUN_TYPE: dict[str, str] = {"PBE": "GGA", "PBE+U": "GGA+U"}
+
+
 def check_entry(spec: BenchmarkSpec, entry: QMatEntry) -> list[str]:
     """Return a list of mismatches between *entry* and *spec* (empty if OK)."""
     problems: list[str] = []
@@ -131,7 +136,11 @@ def main(argv: list[str] | None = None) -> int:
     failures = 0
     records: list[dict] = []
     for spec in TIER1:
-        entry = fetch_entry_from_mp(spec.mp_id, tags=["benchmark", "tier1", spec.key])
+        entry = fetch_entry_from_mp(
+            spec.mp_id,
+            config=MPAdapterConfig(run_types=(RUN_TYPE[spec.functional],)),
+            tags=["benchmark", "tier1", spec.key],
+        )
         problems = check_entry(spec, entry)
         if problems:
             failures += 1

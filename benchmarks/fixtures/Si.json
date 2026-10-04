@@ -1,0 +1,80 @@
+{
+  "reference": {
+    "provenance": {
+      "primary": {
+        "source": "materials_project",
+        "identifier": "mp-149",
+        "url": "https://materialsproject.org/materials/mp-149",
+        "metadata": {}
+      },
+      "additional_ids": [],
+      "functional": "PBE",
+      "pseudopotential": "PAW_PBE",
+      "code": "VASP",
+      "code_version": null,
+      "retrieved_at": "2026-10-04T20:03:27+00:00",
+      "metadata": {
+        "endpoint": "https://api.materialsproject.org",
+        "task_id": "aaafajdk",
+        "candidate_task_ids": [
+          "aaablhuv",
+          "aaacieef",
+          "aaacihll",
+          "aaaddzda",
+          "aaadxyoy",
+          "aaafajdk"
+        ]
+      }
+    },
+    "structure": {
+      "formula_reduced": "Si",
+      "formula_unit_cell": "Si2",
+      "num_sites": 2,
+      "species": [
+        "Si",
+        "Si"
+      ],
+      "lattice": {
+        "a": 3.8492784033699095,
+        "b": 3.8492794116013456,
+        "c": 3.849278,
+        "alpha": 60.00001213094421,
+        "beta": 60.00000346645984,
+        "gamma": 60.00001097545789,
+        "spacegroup_number": 227,
+        "spacegroup_symbol": "Fd-3m",
+        "crystal_system": "cubic",
+        "volume_ang3": null,
+        "metadata": {}
+      },
+      "is_periodic": true,
+      "metadata": {}
+    }
+  },
+  "hamiltonian": {
+    "num_electrons": 8,
+    "spin_polarized": true,
+    "basis": {
+      "type": "plane_wave",
+      "cutoff_energy_ev": 520.0,
+      "num_plane_waves": 1067,
+      "grid_dimensions": null,
+      "basis_set_name": null,
+      "num_basis_functions": null,
+      "metadata": {}
+    },
+    "num_bands": null,
+    "terms": [],
+    "oracle": null,
+    "metadata": {
+      "source_task_id": "aaafajdk"
+    }
+  },
+  "exports": [],
+  "tags": [
+    "benchmark",
+    "tier1",
+    "Si"
+  ],
+  "schema_version": "0.1"
+}

@@ -1,0 +1,84 @@
+{
+  "reference": {
+    "provenance": {
+      "primary": {
+        "source": "materials_project",
+        "identifier": "mp-22526",
+        "url": "https://materialsproject.org/materials/mp-22526",
+        "metadata": {}
+      },
+      "additional_ids": [],
+      "functional": "PBE+U",
+      "pseudopotential": "PAW_PBE",
+      "code": "VASP",
+      "code_version": null,
+      "retrieved_at": "2026-10-04T20:03:30+00:00",
+      "metadata": {
+        "endpoint": "https://api.materialsproject.org",
+        "task_id": "aaaeyhqn",
+        "candidate_task_ids": [
+          "aaabtiih",
+          "aaacinqx",
+          "aaaciqcr",
+          "aaaciqop",
+          "aaaddzbi",
+          "aaadwyxa",
+          "aaadxyky",
+          "aaaeyhqn"
+        ]
+      }
+    },
+    "structure": {
+      "formula_reduced": "CoLiO2",
+      "formula_unit_cell": "CoLiO2",
+      "num_sites": 4,
+      "species": [
+        "Li",
+        "Co",
+        "O",
+        "O"
+      ],
+      "lattice": {
+        "a": 4.912370892891281,
+        "b": 4.912370892891281,
+        "c": 4.9123704771170225,
+        "alpha": 33.25407937825511,
+        "beta": 33.25407937825511,
+        "gamma": 33.25406827000603,
+        "spacegroup_number": 166,
+        "spacegroup_symbol": "R-3m",
+        "crystal_system": "trigonal",
+        "volume_ang3": null,
+        "metadata": {}
+      },
+      "is_periodic": true,
+      "metadata": {}
+    }
+  },
+  "hamiltonian": {
+    "num_electrons": 24,
+    "spin_polarized": true,
+    "basis": {
+      "type": "plane_wave",
+      "cutoff_energy_ev": 520.0,
+      "num_plane_waves": 833,
+      "grid_dimensions": null,
+      "basis_set_name": null,
+      "num_basis_functions": null,
+      "metadata": {}
+    },
+    "num_bands": null,
+    "terms": [],
+    "oracle": null,
+    "metadata": {
+      "source_task_id": "aaaeyhqn"
+    }
+  },
+  "exports": [],
+  "tags": [
+    "benchmark",
+    "tier1",
+    "LiCoO2"
+  ],
+  "schema_version": "0.1"
+}

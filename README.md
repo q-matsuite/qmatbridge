@@ -262,8 +262,7 @@ qmatbridge/
 - [x] `fetch_structure_metadata_from_mp` and `fetch_hamiltonian_metadata_from_mp`
       (implemented; live-API validation pending)
 - [x] Plane-wave count utility (`num_plane_waves_from_ecut`)
-- [ ] Tier-1 benchmark fixtures (Si, GaN, LiCoO₂ first; LiH, Fe, MgO, TiO₂ planned) — spec and
-      builder done; fixtures to be generated with an MP API key
+- [x] Tier-1 benchmark fixtures (Si, GaN, LiCoO₂; LiH, Fe, MgO, TiO₂ planned)
 - [x] MkDocs documentation site (GitHub Pages deploy configured)
 
 ### v0.3 — OPTIMADE, OQMD, and Alexandria adapters
