@@ -12,6 +12,11 @@ Breaking changes to `QMatEntry` or its nested schema classes are marked
 ## [Unreleased]
 
 ### Added
+- `qmatbridge.registry`: `Adapter` and `Exporter` protocols, lazy discovery through the
+  `qmatbridge.adapters` / `qmatbridge.exporters` entry-point groups, `list_adapters`,
+  `get_adapter`, `list_exporters`, `get_exporter`, and `PluginError` / `UnknownPluginError`.
+  The Materials Project adapter is now the `MaterialsProjectAdapter` plugin. See
+  "Writing a plugin" in the docs (#15).
 - Tier-1 fixtures for Si, GaN and LiCoO₂ (`benchmarks/fixtures/`) and the landing-page data
   (`website/data/examples.json`), generated from the live Materials Project API; the first
   end-to-end validation of the MP fetchers against the real API.

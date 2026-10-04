@@ -15,3 +15,7 @@
 ## Materials Project adapter
 
 ::: qmatbridge.adapters.materials_project
+
+## Plugin registry
+
+::: qmatbridge.registry

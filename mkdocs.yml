@@ -41,6 +41,7 @@ markdown_extensions:
 nav:
   - Home: index.md
   - Getting started: getting-started.md
+  - Writing a plugin: plugins.md
   - API keys and licences: api-keys.md
   - Concepts:
       - Vision: vision.md
