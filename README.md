@@ -157,6 +157,13 @@ pip install -e ".[oqmd]"      # OQMD adapter (qmpy-rester)
 pip install -e ".[openfermion]"  # OpenFermion exporter
 ```
 
+### API keys
+
+QMatBridge ships no credentials.  To fetch from the Materials Project you need your
+own free API key (`export MP_API_KEY=...`); reading entries and the committed
+benchmark fixtures needs none.  See [docs/api-keys.md](docs/api-keys.md) for which
+sources need a key, how to keep it out of git, and data-licence/attribution notes.
+
 ### Minimal example
 
 ```python
