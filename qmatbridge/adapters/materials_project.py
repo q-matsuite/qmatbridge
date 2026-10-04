@@ -360,8 +360,9 @@ def _open_client(api_key: str | None, config: MPAdapterConfig) -> Any:
         from mp_api.client import MPRester
     except ImportError as exc:
         raise ImportError(
-            "The Materials Project adapter needs mp-api; "
-            "install it with: pip install qmatbridge[mp]"
+            "The Materials Project adapter needs mp-api and pymatgen. From a "
+            'source checkout run: pip install -e ".[mp]"  '
+            "(once published to PyPI: pip install qmatbridge[mp])"
         ) from exc
     return MPRester(_resolve_api_key(api_key, config), monitor=False)
 
