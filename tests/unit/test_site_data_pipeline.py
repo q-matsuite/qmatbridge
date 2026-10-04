@@ -68,6 +68,8 @@ def fake_mp(monkeypatch: pytest.MonkeyPatch) -> None:
         def __exit__(self, *a: object) -> None:
             return None
 
+    # main() refuses to start without a key; the fake client never uses it.
+    monkeypatch.setenv("MP_API_KEY", "test-key-not-used")
     monkeypatch.setattr(b, "_open_client", lambda key, cfg: Client())
     monkeypatch.setattr(
         b, "fetch_entry_from_mp", lambda mp_id, **kw: _entry_for(specs[mp_id])
