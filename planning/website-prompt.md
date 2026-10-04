@@ -39,6 +39,21 @@ All values come from `website/data/examples.json`, which is generated from live
 Materials Project data by `benchmarks/build_tier1_fixtures.py --site ...` after the
 entries pass the Tier-1 spec checks. With no data file the section is hidden.
 
+## Design pass 2 (stunning pass)
+
+- **Hero:** slowly rotating diamond-cubic lattice drawn on a canvas (decorative,
+  `aria-hidden`, pauses off-screen and when the tab is hidden, static under
+  `prefers-reduced-motion`); animated data flow along the pipeline arrows.
+- **Examples explorer:** per-material fingerprint image generated from the hash, six stat
+  tiles, a scale comparison (plane waves, electrons) across the three materials.
+- **Fingerprint demo (`#fingerprint`):** edit functional, cutoff, electrons, spin and tags;
+  the page recomputes the SHA-256 in the browser with the same rules as
+  `QMatEntry.canonical_hash()` (pure-JS SHA-256, so it works outside secure contexts) and
+  highlights the changed characters and fields. A self-check compares the recomputed
+  hash of the fetched values with the library's value and says so if they differ.
+- **Polish:** scroll reveal, scroll-progress bar, active-section nav, section numbering.
+  All motion is disabled under `prefers-reduced-motion`.
+
 ## Credit
 
 Footer credits **Roberto Reis (@rmsreis)** as creator and maintainer, links to

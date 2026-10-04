@@ -30,6 +30,9 @@ Breaking changes to `QMatEntry` or its nested schema classes are marked
 - `functional_from_mp_task_doc` — records `PBE+U` for GGA+U calculations.
 
 ### Changed
+- Landing page redesign: animated lattice hero, fingerprint images, scale comparison, and an
+  interactive "Change one field, watch the fingerprint" demo that recomputes
+  `canonical_hash()` in the browser (verified against the Python implementation).
 - Repository URLs now point to `github.com/q-matsuite/qmatbridge` (org renamed from
   `QMatBridge`; GitHub redirects the old URLs). Site moves to `q-matsuite.com/qmatbridge/`.
 - Generated example artifacts moved to `examples/outputs/`.
