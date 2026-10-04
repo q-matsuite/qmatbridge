@@ -152,7 +152,7 @@ pip install -e ".[dev]"
 Optional extras:
 
 ```bash
-pip install -e ".[mp]"        # Materials Project adapter (mp-api, pymatgen)
+pip install -e ".[mp]"        # Materials Project adapter (mp-api, pymatgen); use Python 3.11+
 pip install -e ".[oqmd]"      # OQMD adapter (qmpy-rester)
 pip install -e ".[openfermion]"  # OpenFermion exporter
 ```
