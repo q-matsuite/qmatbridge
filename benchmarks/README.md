@@ -25,7 +25,7 @@ Benchmarks here serve two purposes:
 |----------|-------|------|-------------------|-----|
 | Si (diamond) | mp-149 | Si₂ | 8 | Canonical test case |
 | GaN (wurtzite) | mp-804 | Ga₂N₂ | 36 | Wide-gap III-V; semicore Ga 3d |
-| LiCoO₂ | mp-22526 | LiCoO₂ | 24 | Li-ion cathode; spin-polarized, GGA+U |
+| LiCoO₂ | mp-22526 | LiCoO₂ | 24 | Li-ion cathode; GGA+U (Hubbard U on Co) |
 
 Planned next: LiH, BCC Fe, MgO, rutile TiO₂ (see `PLANNED` in
 [`tier1.py`](tier1.py)).
@@ -34,6 +34,12 @@ Electron counts are derived from the default Materials Project VASP POTCAR
 valences (`Si`, `Ga_d`, `N`, `Li_sv`, `Co`, `O`) for the
 primitive cell; see [`tier1.py`](tier1.py).  The plane-wave cutoff is whatever
 the MP static calculation used (520 eV for the standard MP workflow).
+
+**Calculation choice.** Materials Project stores several static calculations per
+material (GGA, GGA+U, r2SCAN, HSE06, …).  The adapter defaults to the standard PBE
+workflow (`MPAdapterConfig.run_types = ("GGA", "GGA+U")`), and the builder checks the
+functional against the spec (PBE for Si and GaN, PBE+U for LiCoO₂).  Every MP
+calculation is spin-polarized (ISPIN=2), including non-magnetic materials.
 
 **Fixtures.** `python benchmarks/build_tier1_fixtures.py` (needs `MP_API_KEY`
 and the `[mp]` extra) fetches each material, checks it against the spec —

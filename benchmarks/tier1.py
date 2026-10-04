@@ -38,11 +38,23 @@ class BenchmarkSpec:
     description: str
     category: str
     cell_species: tuple[str, ...]  # expected primitive-cell sites
-    spin_polarized: bool = False
+    functional: str = "PBE"
+    #: Materials Project runs every calculation with ISPIN=2, including
+    #: non-magnetic materials, so this is True throughout (verified live).
+    spin_polarized: bool = True
 
     @property
     def expected_electrons(self) -> int:
         return sum(MP_VALENCE[el] for el in self.cell_species)
+
+    @property
+    def cell_formula(self) -> str:
+        """Unit-cell formula in first-appearance order, e.g. ``Ga2N2``."""
+        order = list(dict.fromkeys(self.cell_species))
+        return "".join(
+            el + (str(n) if (n := self.cell_species.count(el)) > 1 else "")
+            for el in order
+        )
 
     @property
     def fixture_name(self) -> str:
@@ -63,7 +75,7 @@ TIER1: tuple[BenchmarkSpec, ...] = (
     BenchmarkSpec(
         "LiCoO2", "LiCoO\u2082", "mp-22526",
         "Layered LiCoO\u2082, the classic Li-ion cathode", "battery cathode",
-        ("Li", "Co", "O", "O"), True,
+        ("Li", "Co", "O", "O"), functional="PBE+U",
     ),
 )
 

@@ -43,11 +43,15 @@ def test_expected_electrons(key: str, electrons: int) -> None:
     assert spec.expected_electrons == electrons
 
 
-def _entry(species: list[str], electrons: int, spin: bool) -> QMatEntry:
+def _entry(
+    species: list[str], electrons: int, spin: bool, functional: str = "PBE"
+) -> QMatEntry:
     lat = LatticeMetadata(a=1, b=1, c=1, alpha=90, beta=90, gamma=90)
     return QMatEntry(
         reference=MaterialReference(
-            provenance=SourceProvenance(ExternalIdentifier("materials_project", "x")),
+            provenance=SourceProvenance(
+                ExternalIdentifier("materials_project", "x"), functional=functional
+            ),
             structure=StructureMetadata("X", "X", len(species), species, lat),
         ),
         hamiltonian=HamiltonianMetadata(
@@ -58,6 +62,17 @@ def _entry(species: list[str], electrons: int, spin: bool) -> QMatEntry:
 
 def test_check_entry_accepts_match_and_flags_mismatch() -> None:
     si = next(s for s in TIER1 if s.key == "Si")
-    assert check_entry(si, _entry(["Si", "Si"], 8, False)) == []
-    problems = check_entry(si, _entry(["Si", "Ge"], 10, True))
-    assert len(problems) == 3
+    assert check_entry(si, _entry(["Si", "Si"], 8, True)) == []
+    problems = check_entry(si, _entry(["Si", "Ge"], 10, False, "HSE06"))
+    assert len(problems) == 4  # species, electrons, functional, spin
+
+
+@pytest.mark.parametrize(
+    ("key", "formula"), [("Si", "Si2"), ("GaN", "Ga2N2"), ("LiCoO2", "LiCoO2")]
+)
+def test_cell_formula(key: str, formula: str) -> None:
+    assert next(s for s in TIER1 if s.key == key).cell_formula == formula
+
+
+def test_battery_cathode_expects_hubbard_u() -> None:
+    assert next(s for s in TIER1 if s.key == "LiCoO2").functional == "PBE+U"

@@ -36,6 +36,12 @@ Breaking changes to `QMatEntry` or its nested schema classes are marked
 - Ruff: long lines allowed in `examples/` and `tests/`.
 
 ### Fixed
+- MP adapter picked an arbitrary static calculation when a material had several
+  (found live: LiCoO₂ came back as HSE06).  Selection is now by run type via
+  `MPAdapterConfig.run_types` (default GGA / GGA+U), deterministic, and
+  recorded in provenance (`candidate_task_ids`).
+- Tier-1 spec: Materials Project calculations are always spin-polarized; the builder
+  now also checks the functional.
 - `python benchmarks/build_tier1_fixtures.py` failed with `No module named 'benchmarks'`
   when run by path; it now works that way and as a module, and a missing
   `MP_API_KEY` is a clean error (exit 2) instead of a traceback.

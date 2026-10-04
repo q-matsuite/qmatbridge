@@ -79,6 +79,12 @@ class MPAdapterConfig:
         timeout_s:    HTTP request timeout in seconds.
         max_sites:    If set, skip structures with more than this many sites.
                       Useful for keeping resource estimates tractable.
+        run_types:    Which calculations to use, in order of preference,
+                      matched against the run type of each static task
+                      (case-insensitive; ``"GGA"``, ``"GGA+U"``, ``"r2SCAN"``,
+                      ``"HSE06"`` ...).  Materials Project stores several
+                      static calculations per material, so the choice must be
+                      explicit.  Default: the standard PBE workflow.
         fields:       Explicit list of MP document fields to request.
                       Empty list means "use adapter defaults."
         metadata:     Arbitrary extra config passed through to adapters.
@@ -88,6 +94,7 @@ class MPAdapterConfig:
     endpoint: str = "https://api.materialsproject.org"
     timeout_s: float = 30.0
     max_sites: int | None = None
+    run_types: tuple[str, ...] = ("GGA", "GGA+U")
     fields: list[str] = field(default_factory=list)
     metadata: dict[str, Any] = field(default_factory=dict)
 
@@ -416,24 +423,65 @@ def fetch_structure_metadata_from_mp(
         return structure_from_mp_doc(_summary_doc(mpr, material_id, cfg.max_sites))
 
 
-def _pick_static_task(mpr: Any, material_id: str) -> dict[str, Any]:
-    """Return the task document of the material's preferred static calc."""
+_CALC_SUFFIXES = (
+    "static",
+    "structure optimization",
+    "nscf",
+    "deformation",
+    "unrecognized",
+)
+
+
+def _run_type_of(calc_type: str) -> str:
+    """``"GGA+U Static"`` -> ``"gga+u"`` (functional part, lower-case)."""
+    low = str(calc_type).lower()
+    cut = min((low.find(x) for x in _CALC_SUFFIXES if x in low), default=len(low))
+    return low[:cut].strip()
+
+
+def _pick_static_task(
+    mpr: Any, material_id: str, run_types: tuple[str, ...] = ("GGA", "GGA+U")
+) -> dict[str, Any]:
+    """Return the task document of the material's static calculation.
+
+    Only static tasks whose run type is in ``run_types`` are considered,
+    taking the first run type (in preference order) that has any; ties are
+    broken by sorted task ID so the choice is deterministic.  All matching
+    task IDs are recorded under ``_candidates``.
+
+    Raises:
+        LookupError: If no static task has an acceptable run type.
+    """
     mdocs = mpr.materials.search(
         material_ids=[material_id], fields=["material_id", "calc_types"]
     )
     if not mdocs:
         raise LookupError(f"Materials Project has no record for {material_id!r}")
     calc_types: Mapping[str, str] = mdocs[0].calc_types or {}
-    static = [t for t, c in calc_types.items() if "static" in str(c).lower()]
-    chosen = sorted(static or list(calc_types))
-    if not chosen:
-        raise LookupError(f"No calculation tasks recorded for {material_id!r}")
-    tasks = mpr.materials.tasks.search(task_ids=[chosen[-1]])
+    static = {
+        t: _run_type_of(c)
+        for t, c in calc_types.items()
+        if "static" in str(c).lower()
+    }
+    candidates: list[str] = []
+    for rt in run_types:
+        candidates = sorted(t for t, r in static.items() if r == rt.lower())
+        if candidates:
+            break
+    if not candidates:
+        have = sorted(set(static.values())) or ["none"]
+        raise LookupError(
+            f"No static calculation for {material_id!r} with run type in "
+            f"{list(run_types)}; available static run types: {have}. "
+            "Pass MPAdapterConfig(run_types=...) to choose another."
+        )
+    tasks = mpr.materials.tasks.search(task_ids=[candidates[-1]])
     if not tasks:
-        raise LookupError(f"Task {chosen[-1]!r} not found")
-    task = _to_plain(tasks[0])
-    task.setdefault("task_id", chosen[-1])
-    return dict(task)
+        raise LookupError(f"Task {candidates[-1]!r} not found")
+    task = dict(_to_plain(tasks[0]))
+    task.setdefault("task_id", candidates[-1])
+    task["_candidates"] = candidates
+    return task
 
 
 def fetch_hamiltonian_metadata_from_mp(
@@ -457,7 +505,7 @@ def fetch_hamiltonian_metadata_from_mp(
         structure = structure_from_mp_doc(
             _summary_doc(mpr, material_id, cfg.max_sites)
         )
-        task = _pick_static_task(mpr, material_id)
+        task = _pick_static_task(mpr, material_id, cfg.run_types)
     return hamiltonian_from_mp_task_doc(task, structure)
 
 
@@ -475,7 +523,7 @@ def fetch_entry_from_mp(
     cfg = config or MPAdapterConfig()
     with _open_client(api_key, cfg) as mpr:
         structure = structure_from_mp_doc(_summary_doc(mpr, material_id, cfg.max_sites))
-        task = _pick_static_task(mpr, material_id)
+        task = _pick_static_task(mpr, material_id, cfg.run_types)
     hamiltonian = hamiltonian_from_mp_task_doc(task, structure)
     ref = build_material_reference_from_mp(
         material_id,
@@ -485,4 +533,5 @@ def fetch_entry_from_mp(
     )
     ref.structure = structure
     ref.provenance.metadata["task_id"] = task.get("task_id")
+    ref.provenance.metadata["candidate_task_ids"] = task.get("_candidates", [])
     return QMatEntry(reference=ref, hamiltonian=hamiltonian, tags=list(tags or []))

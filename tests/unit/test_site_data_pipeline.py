@@ -42,7 +42,7 @@ def _entry_for(spec: BenchmarkSpec) -> QMatEntry:
         reference=MaterialReference(
             provenance=SourceProvenance(
                 ExternalIdentifier("materials_project", spec.mp_id),
-                functional="PBE",
+                functional=spec.functional,
                 retrieved_at="2026-01-01T00:00:00+00:00",
             ),
             structure=StructureMetadata(

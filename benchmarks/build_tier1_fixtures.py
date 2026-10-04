@@ -50,6 +50,11 @@ def check_entry(spec: BenchmarkSpec, entry: QMatEntry) -> list[str]:
             f"electrons {entry.hamiltonian.num_electrons} "
             f"!= expected {spec.expected_electrons}"
         )
+    if entry.reference.provenance.functional != spec.functional:
+        problems.append(
+            f"functional {entry.reference.provenance.functional} "
+            f"!= expected {spec.functional}"
+        )
     if entry.hamiltonian.spin_polarized != spec.spin_polarized:
         problems.append(
             f"spin_polarized {entry.hamiltonian.spin_polarized} "
@@ -60,7 +65,7 @@ def check_entry(spec: BenchmarkSpec, entry: QMatEntry) -> list[str]:
 
 def site_record(spec: BenchmarkSpec, entry: QMatEntry, sites: list[dict]) -> dict:
     """Assemble the per-material record consumed by the landing page."""
-    st, lat = entry.reference.structure, entry.reference.structure.lattice
+    lat = entry.reference.structure.lattice
     h = entry.hamiltonian
     return {
         "key": spec.key,
@@ -68,7 +73,7 @@ def site_record(spec: BenchmarkSpec, entry: QMatEntry, sites: list[dict]) -> dic
         "category": spec.category,
         "description": spec.description,
         "mp_id": spec.mp_id,
-        "formula": st.formula_unit_cell,
+        "formula": spec.cell_formula,
         "spacegroup": f"{lat.spacegroup_symbol} ({lat.spacegroup_number})",
         "crystal_system": lat.crystal_system,
         "lattice": {
