@@ -772,6 +772,15 @@ python -c "from qmatbridge.adapters.materials_project import fetch_entry_from_mp
     host.appendChild(svg);
     let ax = -0.5, ay = 0.7, drag = null, auto = !reduceMotion, raf = 0;
     const scale = (Math.min(W, H) * 0.40) / sc.rad;
+    // Elongated cells (e.g. a rhombohedral primitive cell, long diagonal >> width) look like a
+    // thin spindle from the default angle: turn the long diagonal across the screen instead.
+    const C = sc.corners, sub3 = (u, v) => u.map((x, n) => x - v[n]);
+    const a1 = sub3(C[4], C[0]), a2 = sub3(C[2], C[0]), a3 = sub3(C[1], C[0]);
+    const vol = Math.abs(a1[0] * (a2[1] * a3[2] - a2[2] * a3[1]) - a1[1] * (a2[0] * a3[2] - a2[2] * a3[0]) + a1[2] * (a2[0] * a3[1] - a2[1] * a3[0]));
+    if (2 * sc.rad / Math.cbrt(vol) > 3) {
+      const d = sub3(C.reduce((best, p) => Math.hypot(...sub3(p, sc.c)) > Math.hypot(...sub3(best, sc.c)) ? p : best), sc.c);
+      ay = Math.atan2(d[2], d[0]); ax = -0.35;
+    }
     function draw() {
       const proj = p => { const q = rot(p.map((v, n) => v - sc.c[n]), ax, ay); return { x: W / 2 + q[0] * scale, y: H / 2 - q[1] * scale, z: q[2] }; };
       const P = sc.atoms.map(a => ({ ...proj(a.p), el: a.el })), C = sc.corners.map(proj);

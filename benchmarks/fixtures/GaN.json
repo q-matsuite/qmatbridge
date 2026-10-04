@@ -1,0 +1,82 @@
+{
+  "reference": {
+    "provenance": {
+      "primary": {
+        "source": "materials_project",
+        "identifier": "mp-804",
+        "url": "https://materialsproject.org/materials/mp-804",
+        "metadata": {}
+      },
+      "additional_ids": [],
+      "functional": "PBE",
+      "pseudopotential": "PAW_PBE",
+      "code": "VASP",
+      "code_version": null,
+      "retrieved_at": "2026-10-04T20:03:28+00:00",
+      "metadata": {
+        "endpoint": "https://api.materialsproject.org",
+        "task_id": "aaadyasv",
+        "candidate_task_ids": [
+          "aaablhmd",
+          "aaacioxv",
+          "aaaciqgb",
+          "aaacistb",
+          "aaaddzea",
+          "aaadyasv"
+        ]
+      }
+    },
+    "structure": {
+      "formula_reduced": "GaN",
+      "formula_unit_cell": "Ga2N2",
+      "num_sites": 4,
+      "species": [
+        "Ga",
+        "Ga",
+        "N",
+        "N"
+      ],
+      "lattice": {
+        "a": 3.18892989,
+        "b": 3.188930917049292,
+        "c": 5.19235725,
+        "alpha": 90.0,
+        "beta": 90.0,
+        "gamma": 119.9999998231426,
+        "spacegroup_number": 186,
+        "spacegroup_symbol": "P6_3mc",
+        "crystal_system": "hexagonal",
+        "volume_ang3": null,
+        "metadata": {}
+      },
+      "is_periodic": true,
+      "metadata": {}
+    }
+  },
+  "hamiltonian": {
+    "num_electrons": 36,
+    "spin_polarized": true,
+    "basis": {
+      "type": "plane_wave",
+      "cutoff_energy_ev": 520.0,
+      "num_plane_waves": 1237,
+      "grid_dimensions": null,
+      "basis_set_name": null,
+      "num_basis_functions": null,
+      "metadata": {}
+    },
+    "num_bands": null,
+    "terms": [],
+    "oracle": null,
+    "metadata": {
+      "source_task_id": "aaadyasv"
+    }
+  },
+  "exports": [],
+  "tags": [
+    "benchmark",
+    "tier1",
+    "GaN"
+  ],
+  "schema_version": "0.1"
+}

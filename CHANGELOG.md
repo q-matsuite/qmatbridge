@@ -12,6 +12,9 @@ Breaking changes to `QMatEntry` or its nested schema classes are marked
 ## [Unreleased]
 
 ### Added
+- Tier-1 fixtures for Si, GaN and LiCoO₂ (`benchmarks/fixtures/`) and the landing-page data
+  (`website/data/examples.json`), generated from the live Materials Project API; the first
+  end-to-end validation of the MP fetchers against the real API.
 - `qmatbridge.basis` — plane-wave counting: `cell_volume`, `cutoff_wavevector`,
   `num_plane_waves_estimate`, `num_plane_waves_exact`, `num_plane_waves_from_ecut`.
 - Materials Project adapter: `structure_from_mp_doc` and
@@ -39,6 +42,9 @@ Breaking changes to `QMatEntry` or its nested schema classes are marked
 - Ruff: long lines allowed in `examples/` and `tests/`.
 
 ### Fixed
+- Fixture builder requests the Materials Project run type named by each spec (`PBE`→`GGA`,
+  `PBE+U`→`GGA+U`) instead of the adapter default, so LiCoO₂ is the +U calculation.
+- Landing-page crystal viewer turns elongated cells (e.g. rhombohedral LiCoO₂) across the screen.
 - MP adapter picked an arbitrary static calculation when a material had several
   (found live: LiCoO₂ came back as HSE06).  Selection is now by run type via
   `MPAdapterConfig.run_types` (default GGA / GGA+U), deterministic, and

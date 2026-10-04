@@ -1,0 +1,409 @@
+[
+ {
+  "key": "Si",
+  "label": "Si",
+  "category": "semiconductor",
+  "description": "Diamond-cubic silicon",
+  "mp_id": "mp-149",
+  "formula": "Si2",
+  "spacegroup": "Fd-3m (227)",
+  "crystal_system": "cubic",
+  "lattice": {
+   "a": 3.8492784033699095,
+   "b": 3.8492794116013456,
+   "c": 3.849278,
+   "alpha": 60.00001213094421,
+   "beta": 60.00000346645984,
+   "gamma": 60.00001097545789
+  },
+  "sites": [
+   {
+    "el": "Si",
+    "frac": [
+     0.875,
+     0.875,
+     0.875
+    ]
+   },
+   {
+    "el": "Si",
+    "frac": [
+     0.125,
+     0.125,
+     0.125
+    ]
+   }
+  ],
+  "electrons": 8,
+  "spin_polarized": true,
+  "functional": "PBE",
+  "ecut_ev": 520.0,
+  "num_plane_waves": 1067,
+  "hash": "f0393a56115a4f225601344df9e4a817186544ad0bb420833e982773cca93bc5",
+  "retrieved_at": "2026-10-04T20:03:27+00:00",
+  "entry": {
+   "reference": {
+    "provenance": {
+     "primary": {
+      "source": "materials_project",
+      "identifier": "mp-149",
+      "url": "https://materialsproject.org/materials/mp-149",
+      "metadata": {}
+     },
+     "additional_ids": [],
+     "functional": "PBE",
+     "pseudopotential": "PAW_PBE",
+     "code": "VASP",
+     "code_version": null,
+     "retrieved_at": "2026-10-04T20:03:27+00:00",
+     "metadata": {
+      "endpoint": "https://api.materialsproject.org",
+      "task_id": "aaafajdk",
+      "candidate_task_ids": [
+       "aaablhuv",
+       "aaacieef",
+       "aaacihll",
+       "aaaddzda",
+       "aaadxyoy",
+       "aaafajdk"
+      ]
+     }
+    },
+    "structure": {
+     "formula_reduced": "Si",
+     "formula_unit_cell": "Si2",
+     "num_sites": 2,
+     "species": [
+      "Si",
+      "Si"
+     ],
+     "lattice": {
+      "a": 3.8492784033699095,
+      "b": 3.8492794116013456,
+      "c": 3.849278,
+      "alpha": 60.00001213094421,
+      "beta": 60.00000346645984,
+      "gamma": 60.00001097545789,
+      "spacegroup_number": 227,
+      "spacegroup_symbol": "Fd-3m",
+      "crystal_system": "cubic",
+      "volume_ang3": null,
+      "metadata": {}
+     },
+     "is_periodic": true,
+     "metadata": {}
+    }
+   },
+   "hamiltonian": {
+    "num_electrons": 8,
+    "spin_polarized": true,
+    "basis": {
+     "type": "plane_wave",
+     "cutoff_energy_ev": 520.0,
+     "num_plane_waves": 1067,
+     "grid_dimensions": null,
+     "basis_set_name": null,
+     "num_basis_functions": null,
+     "metadata": {}
+    },
+    "num_bands": null,
+    "terms": [],
+    "oracle": null,
+    "metadata": {
+     "source_task_id": "aaafajdk"
+    }
+   },
+   "exports": [],
+   "tags": [
+    "benchmark",
+    "tier1",
+    "Si"
+   ],
+   "schema_version": "0.1"
+  }
+ },
+ {
+  "key": "GaN",
+  "label": "GaN",
+  "category": "wide-gap III-V",
+  "description": "Wurtzite gallium nitride",
+  "mp_id": "mp-804",
+  "formula": "Ga2N2",
+  "spacegroup": "P6_3mc (186)",
+  "crystal_system": "hexagonal",
+  "lattice": {
+   "a": 3.18892989,
+   "b": 3.188930917049292,
+   "c": 5.19235725,
+   "alpha": 90.0,
+   "beta": 90.0,
+   "gamma": 119.9999998231426
+  },
+  "sites": [
+   {
+    "el": "Ga",
+    "frac": [
+     0.666667,
+     0.333333,
+     0.49908371
+    ]
+   },
+   {
+    "el": "Ga",
+    "frac": [
+     0.333333,
+     0.666667,
+     0.99908371
+    ]
+   },
+   {
+    "el": "N",
+    "frac": [
+     0.666667,
+     0.333333,
+     0.87591629
+    ]
+   },
+   {
+    "el": "N",
+    "frac": [
+     0.333333,
+     0.666667,
+     0.37591629
+    ]
+   }
+  ],
+  "electrons": 36,
+  "spin_polarized": true,
+  "functional": "PBE",
+  "ecut_ev": 520.0,
+  "num_plane_waves": 1237,
+  "hash": "7614a23cc06cd107ca2b3208c64bec5bd46cbe870e80b8e5354f9e15af822ae4",
+  "retrieved_at": "2026-10-04T20:03:28+00:00",
+  "entry": {
+   "reference": {
+    "provenance": {
+     "primary": {
+      "source": "materials_project",
+      "identifier": "mp-804",
+      "url": "https://materialsproject.org/materials/mp-804",
+      "metadata": {}
+     },
+     "additional_ids": [],
+     "functional": "PBE",
+     "pseudopotential": "PAW_PBE",
+     "code": "VASP",
+     "code_version": null,
+     "retrieved_at": "2026-10-04T20:03:28+00:00",
+     "metadata": {
+      "endpoint": "https://api.materialsproject.org",
+      "task_id": "aaadyasv",
+      "candidate_task_ids": [
+       "aaablhmd",
+       "aaacioxv",
+       "aaaciqgb",
+       "aaacistb",
+       "aaaddzea",
+       "aaadyasv"
+      ]
+     }
+    },
+    "structure": {
+     "formula_reduced": "GaN",
+     "formula_unit_cell": "Ga2N2",
+     "num_sites": 4,
+     "species": [
+      "Ga",
+      "Ga",
+      "N",
+      "N"
+     ],
+     "lattice": {
+      "a": 3.18892989,
+      "b": 3.188930917049292,
+      "c": 5.19235725,
+      "alpha": 90.0,
+      "beta": 90.0,
+      "gamma": 119.9999998231426,
+      "spacegroup_number": 186,
+      "spacegroup_symbol": "P6_3mc",
+      "crystal_system": "hexagonal",
+      "volume_ang3": null,
+      "metadata": {}
+     },
+     "is_periodic": true,
+     "metadata": {}
+    }
+   },
+   "hamiltonian": {
+    "num_electrons": 36,
+    "spin_polarized": true,
+    "basis": {
+     "type": "plane_wave",
+     "cutoff_energy_ev": 520.0,
+     "num_plane_waves": 1237,
+     "grid_dimensions": null,
+     "basis_set_name": null,
+     "num_basis_functions": null,
+     "metadata": {}
+    },
+    "num_bands": null,
+    "terms": [],
+    "oracle": null,
+    "metadata": {
+     "source_task_id": "aaadyasv"
+    }
+   },
+   "exports": [],
+   "tags": [
+    "benchmark",
+    "tier1",
+    "GaN"
+   ],
+   "schema_version": "0.1"
+  }
+ },
+ {
+  "key": "LiCoO2",
+  "label": "LiCoO\u2082",
+  "category": "battery cathode",
+  "description": "Layered LiCoO\u2082, the classic Li-ion cathode",
+  "mp_id": "mp-22526",
+  "formula": "LiCoO2",
+  "spacegroup": "R-3m (166)",
+  "crystal_system": "trigonal",
+  "lattice": {
+   "a": 4.912370892891281,
+   "b": 4.912370892891281,
+   "c": 4.9123704771170225,
+   "alpha": 33.25407937825511,
+   "beta": 33.25407937825511,
+   "gamma": 33.25406827000603
+  },
+  "sites": [
+   {
+    "el": "Li",
+    "frac": [
+     -0.0,
+     -0.0,
+     -0.0
+    ]
+   },
+   {
+    "el": "Co",
+    "frac": [
+     0.5,
+     0.5,
+     0.5
+    ]
+   },
+   {
+    "el": "O",
+    "frac": [
+     0.7599932,
+     0.7599932,
+     0.7599932
+    ]
+   },
+   {
+    "el": "O",
+    "frac": [
+     0.2400068,
+     0.2400068,
+     0.2400068
+    ]
+   }
+  ],
+  "electrons": 24,
+  "spin_polarized": true,
+  "functional": "PBE+U",
+  "ecut_ev": 520.0,
+  "num_plane_waves": 833,
+  "hash": "5de4b21d06c950b58b1f93a27c9ff8e8d037b3a513ec922d5e598df94a29e250",
+  "retrieved_at": "2026-10-04T20:03:30+00:00",
+  "entry": {
+   "reference": {
+    "provenance": {
+     "primary": {
+      "source": "materials_project",
+      "identifier": "mp-22526",
+      "url": "https://materialsproject.org/materials/mp-22526",
+      "metadata": {}
+     },
+     "additional_ids": [],
+     "functional": "PBE+U",
+     "pseudopotential": "PAW_PBE",
+     "code": "VASP",
+     "code_version": null,
+     "retrieved_at": "2026-10-04T20:03:30+00:00",
+     "metadata": {
+      "endpoint": "https://api.materialsproject.org",
+      "task_id": "aaaeyhqn",
+      "candidate_task_ids": [
+       "aaabtiih",
+       "aaacinqx",
+       "aaaciqcr",
+       "aaaciqop",
+       "aaaddzbi",
+       "aaadwyxa",
+       "aaadxyky",
+       "aaaeyhqn"
+      ]
+     }
+    },
+    "structure": {
+     "formula_reduced": "CoLiO2",
+     "formula_unit_cell": "CoLiO2",
+     "num_sites": 4,
+     "species": [
+      "Li",
+      "Co",
+      "O",
+      "O"
+     ],
+     "lattice": {
+      "a": 4.912370892891281,
+      "b": 4.912370892891281,
+      "c": 4.9123704771170225,
+      "alpha": 33.25407937825511,
+      "beta": 33.25407937825511,
+      "gamma": 33.25406827000603,
+      "spacegroup_number": 166,
+      "spacegroup_symbol": "R-3m",
+      "crystal_system": "trigonal",
+      "volume_ang3": null,
+      "metadata": {}
+     },
+     "is_periodic": true,
+     "metadata": {}
+    }
+   },
+   "hamiltonian": {
+    "num_electrons": 24,
+    "spin_polarized": true,
+    "basis": {
+     "type": "plane_wave",
+     "cutoff_energy_ev": 520.0,
+     "num_plane_waves": 833,
+     "grid_dimensions": null,
+     "basis_set_name": null,
+     "num_basis_functions": null,
+     "metadata": {}
+    },
+    "num_bands": null,
+    "terms": [],
+    "oracle": null,
+    "metadata": {
+     "source_task_id": "aaaeyhqn"
+    }
+   },
+   "exports": [],
+   "tags": [
+    "benchmark",
+    "tier1",
+    "LiCoO2"
+   ],
+   "schema_version": "0.1"
+  }
+ }
+]
