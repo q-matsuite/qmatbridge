@@ -6,6 +6,10 @@ included for each.
 
 ---
 
+> **Note:** these were drafted before the repo went public and were never filed as GitHub
+> issues. The live work items are tracked in [`integrations.md`](integrations.md) (issues #12–#23).
+> Items 10 and 13 here correspond to #19 and #14.
+
 ## Status (updated for v0.2 work)
 
 | Issue | State |
