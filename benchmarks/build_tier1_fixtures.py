@@ -2,9 +2,9 @@
 
 Usage::
 
-    export MP_API_KEY=...
+    cp .env.example .env     # then put your key in .env (gitignored)
     pip install -e ".[mp]"
-    python benchmarks/build_tier1_fixtures.py [--out benchmarks/fixtures]
+    python -m benchmarks.build_tier1_fixtures [--out benchmarks/fixtures]
                                               [--site website/data/examples.json]
 
 Each fixture is validated against :data:`benchmarks.tier1.TIER1` (species,
@@ -37,6 +37,26 @@ from qmatbridge.adapters.materials_project import (
 )
 from qmatbridge.io import to_dict, write_entry_json
 from qmatbridge.schema import QMatEntry
+
+
+def load_dotenv(path: Path | None = None) -> None:
+    """Load ``KEY=VALUE`` lines from a gitignored ``.env`` into ``os.environ``.
+
+    Existing environment variables win.  The file is the repo-root ``.env``
+    unless ``QMATBRIDGE_ENV_FILE`` points elsewhere.  Values are never printed.
+    """
+    default = Path(__file__).resolve().parents[1] / ".env"
+    path = path or Path(os.environ.get("QMATBRIDGE_ENV_FILE", default))
+    if not path.is_file():
+        return
+    for raw in path.read_text(encoding="utf-8").splitlines():
+        line = raw.strip()
+        if not line or line.startswith("#") or "=" not in line:
+            continue
+        key, _, value = line.removeprefix("export ").partition("=")
+        key, value = key.strip(), value.strip().strip("\"'")
+        if key and value:
+            os.environ.setdefault(key, value)
 
 
 def check_entry(spec: BenchmarkSpec, entry: QMatEntry) -> list[str]:
@@ -99,10 +119,11 @@ def main(argv: list[str] | None = None) -> int:
     ap.add_argument("--site", type=Path, help="also write landing-page data here")
     args = ap.parse_args(argv)
 
+    load_dotenv()
     if not os.environ.get("MP_API_KEY"):
         print(
-            "error: MP_API_KEY is not set.  Export your Materials Project API key "
-            "first:\n  export MP_API_KEY=...",
+            "error: MP_API_KEY is not set.  Put it in a .env file at the repo root "
+            "(see .env.example) or export it:\n  export MP_API_KEY=...",
             file=sys.stderr,
         )
         return 2
