@@ -42,6 +42,21 @@ print(entry.canonical_hash())
 write_entry_json(entry, "silicon.json")
 ```
 
+## Read an entry back
+
+```python
+from qmatbridge.io import read_entry_json
+
+entry = read_entry_json("silicon.json")
+assert entry.canonical_hash() == original.canonical_hash()
+```
+
+Reading is strict: unknown fields, missing required fields, wrongly typed values and an
+unsupported `schema_version` raise `EntryFormatError` (a `ValueError`) whose message names
+the file and the offending field, for example
+`wrong.json: hamiltonian.num_electrons: expected an integer, got str`. Nothing is silently
+dropped or coerced, except that an integer is accepted where a float is expected.
+
 ## Fetch from the Materials Project
 
 You need your own (free) Materials Project API key; QMatBridge does not provide one.

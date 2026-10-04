@@ -12,6 +12,10 @@ Breaking changes to `QMatEntry` or its nested schema classes are marked
 ## [Unreleased]
 
 ### Added
+- `qmatbridge.io.read_entry_json`, `entry_from_dict`, `from_dict` and `EntryFormatError`: read entries
+  back from JSON, the inverse of `write_entry_json`. Strict by design (unknown fields, missing
+  fields, wrong types and unsupported `schema_version` are errors that name the field). The
+  committed Tier-1 fixtures now load and reproduce the hashes shown on the website (#14).
 - Tier-1 fixtures for Si, GaN and LiCoO₂ (`benchmarks/fixtures/`) and the landing-page data
   (`website/data/examples.json`), generated from the live Materials Project API; the first
   end-to-end validation of the MP fetchers against the real API.
