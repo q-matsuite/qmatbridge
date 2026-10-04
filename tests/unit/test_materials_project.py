@@ -197,6 +197,65 @@ def test_fetch_entry_is_hashable_and_serializable(fake_client: None) -> None:
     assert to_dict(e)["hamiltonian"]["num_electrons"] == 8
 
 
+# ------------------------------------------------------ run-type selection
+
+MULTI = {
+    "t-gga-u": "GGA+U Static",
+    "t-opt": "GGA+U Structure Optimization",
+    "t-hse": "HSE06 Static",
+    "t-r2": "r2SCAN Static",
+}
+
+
+@pytest.mark.parametrize(
+    ("calc", "expected"),
+    [
+        ("GGA Static", "gga"),
+        ("GGA+U Structure Optimization", "gga+u"),
+        ("HSE06 Static", "hse06"),
+        ("r2SCAN Static", "r2scan"),
+        ("GGA NSCF Uniform", "gga"),
+    ],
+)
+def test_run_type_of(calc: str, expected: str) -> None:
+    assert mp._run_type_of(calc) == expected
+
+
+def test_default_prefers_pbe_workflow_over_hse_and_r2scan() -> None:
+    task = mp._pick_static_task(_FakeMPR(MULTI), "mp-149")
+    assert task["task_id"] == "t-gga-u"
+    assert task["_candidates"] == ["t-gga-u"]
+
+
+def test_explicit_run_type_selects_hse() -> None:
+    task = mp._pick_static_task(_FakeMPR(MULTI), "mp-149", ("HSE06",))
+    assert task["task_id"] == "t-hse"
+
+
+def test_run_type_preference_order() -> None:
+    task = mp._pick_static_task(_FakeMPR(MULTI), "mp-149", ("r2SCAN", "GGA+U"))
+    assert task["task_id"] == "t-r2"
+
+
+def test_no_acceptable_run_type_is_a_clear_error() -> None:
+    only_hse = {"t-hse": "HSE06 Static", "t-opt": "GGA Structure Optimization"}
+    with pytest.raises(LookupError, match=r"hse06.*run_types"):
+        mp._pick_static_task(_FakeMPR(only_hse), "mp-149")
+
+
+def test_ties_are_broken_deterministically() -> None:
+    two = {"b-2": "GGA Static", "a-1": "GGA Static"}
+    task = mp._pick_static_task(_FakeMPR(two), "mp-149")
+    assert task["_candidates"] == ["a-1", "b-2"] and task["task_id"] == "b-2"
+
+
+def test_fetch_entry_uses_config_run_types(monkeypatch: pytest.MonkeyPatch) -> None:
+    monkeypatch.setattr(mp, "_open_client", lambda key, cfg: _FakeMPR(MULTI))
+    e = fetch_entry_from_mp("mp-149", config=MPAdapterConfig(run_types=("HSE06",)))
+    assert e.reference.provenance.metadata["task_id"] == "t-hse"
+    assert e.reference.provenance.metadata["candidate_task_ids"] == ["t-hse"]
+
+
 # ---------------------------------------------------- client plumbing errors
 
 
