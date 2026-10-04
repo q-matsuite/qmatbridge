@@ -12,6 +12,10 @@ Breaking changes to `QMatEntry` or its nested schema classes are marked
 ## [Unreleased]
 
 ### Added
+- Scheduled live integration tests (`.github/workflows/integration.yml`, `tests/integration/`):
+  nightly spec and drift checks of the Tier-1 materials against the live Materials Project API;
+  opens/closes an `integration-failure` issue; skips cleanly until the `MP_API_KEY` secret exists.
+  New "How the workflows work" guide (#21).
 - `qmatbridge.io.read_entry_json`, `entry_from_dict`, `from_dict` and `EntryFormatError`: read entries
   back from JSON, the inverse of `write_entry_json`. Strict by design (unknown fields, missing
   fields, wrong types and unsupported `schema_version` are errors that name the field). The

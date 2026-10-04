@@ -1,0 +1,92 @@
+name: Live integration tests
+
+# Runs the tests marked `integration` against the live Materials Project API, nightly
+# and on demand. Deliberately NOT triggered by pull requests: repository secrets are
+# not available to forks, and live-API results should not gate unrelated changes.
+#
+# One-time setup: add the repository secret MP_API_KEY (Settings -> Secrets and
+# variables -> Actions). Until it exists this workflow succeeds and says it skipped.
+#
+# On failure it opens (or comments on) an issue labelled `integration-failure`, and
+# closes that issue once the tests pass again.
+
+on:
+  schedule:
+    - cron: "23 6 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+concurrency:
+  group: integration
+  cancel-in-progress: false
+
+jobs:
+  live:
+    name: Materials Project (live)
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      GH_TOKEN: ${{ github.token }}
+      GH_REPO: ${{ github.repository }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Check for API key
+        id: gate
+        env:
+          MP_API_KEY: ${{ secrets.MP_API_KEY }}
+        run: |
+          if [ -z "$MP_API_KEY" ]; then
+            echo "::notice::MP_API_KEY secret is not set; skipping the live tests."
+            echo "run=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "run=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - uses: actions/setup-python@v5
+        if: steps.gate.outputs.run == 'true'
+        with:
+          python-version: "3.12"
+          cache: "pip"
+
+      - name: Install
+        if: steps.gate.outputs.run == 'true'
+        run: pip install -e ".[dev,mp]"
+
+      - name: Run live tests
+        id: tests
+        if: steps.gate.outputs.run == 'true'
+        continue-on-error: true
+        env:
+          MP_API_KEY: ${{ secrets.MP_API_KEY }}
+        run: pytest -m integration -o addopts="--tb=short" -v
+
+      - name: Report result
+        if: steps.gate.outputs.run == 'true'
+        run: |
+          set -euo pipefail
+          label="integration-failure"
+          gh label create "$label" --color d93f0b \
+            --description "Scheduled live-API tests failed" 2>/dev/null || true
+          existing="$(gh issue list --label "$label" --state open --json number --jq '.[0].number // empty')"
+          run_url="$GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID"
+          if [ "${{ steps.tests.outcome }}" = "failure" ]; then
+            if [ -n "$existing" ]; then
+              gh issue comment "$existing" --body "Still failing: $run_url"
+            else
+              gh issue create --label "$label" \
+                --title "Scheduled integration tests are failing" \
+                --body "The nightly live Materials Project tests failed: $run_url
+
+          Either the adapter broke or Materials Project now serves different data. The failing test says which fixture to regenerate (see \`docs/workflows.md\`)."
+            fi
+          elif [ -n "$existing" ]; then
+            gh issue close "$existing" --comment "Passing again: $run_url"
+          fi
+
+      - name: Fail the job if the tests failed
+        if: steps.tests.outcome == 'failure'
+        run: exit 1
