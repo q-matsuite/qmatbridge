@@ -36,6 +36,11 @@ Breaking changes to `QMatEntry` or its nested schema classes are marked
 - Ruff: long lines allowed in `examples/` and `tests/`.
 
 ### Fixed
+- `python benchmarks/build_tier1_fixtures.py` failed with `No module named 'benchmarks'`
+  when run by path; it now works that way and as a module, and a missing
+  `MP_API_KEY` is a clean error (exit 2) instead of a traceback.
+- Documented that the `[mp]` extra needs Python 3.11+ in practice: current `mp-api`
+  depends on `emmet-core`, which imports `typing.NotRequired`.
 - Corrected the Tier-1 benchmark table in `benchmarks/README.md` (electron counts
   now derived from MP POTCAR valences; cutoff column removed).
 

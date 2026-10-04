@@ -19,8 +19,14 @@ from __future__ import annotations
 
 import argparse
 import json
+import os
 import sys
 from pathlib import Path
+
+# Allow ``python benchmarks/build_tier1_fixtures.py``: running a script by path
+# puts benchmarks/ (not the repo root) on sys.path, so ``benchmarks.*`` would
+# not import.  ``python -m benchmarks.build_tier1_fixtures`` needs no help.
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 from benchmarks.tier1 import TIER1, BenchmarkSpec
 from qmatbridge.adapters.materials_project import (
@@ -87,6 +93,14 @@ def main(argv: list[str] | None = None) -> int:
     ap.add_argument("--out", type=Path, default=Path(__file__).parent / "fixtures")
     ap.add_argument("--site", type=Path, help="also write landing-page data here")
     args = ap.parse_args(argv)
+
+    if not os.environ.get("MP_API_KEY"):
+        print(
+            "error: MP_API_KEY is not set.  Export your Materials Project API key "
+            "first:\n  export MP_API_KEY=...",
+            file=sys.stderr,
+        )
+        return 2
 
     failures = 0
     records: list[dict] = []
