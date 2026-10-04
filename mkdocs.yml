@@ -46,4 +46,5 @@ nav:
       - Vision: vision.md
       - Oracle model: oracle-model.md
       - Adapters: adapters.md
+  - How the workflows work: workflows.md
   - API reference: api.md
