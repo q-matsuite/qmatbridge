@@ -22,15 +22,19 @@ import json
 import sys
 from pathlib import Path
 
-from benchmarks.tier1 import TIER1, BenchmarkSpec
-from qmatbridge.adapters.materials_project import (
+# Make ``python benchmarks/build_tier1_fixtures.py`` work from any directory:
+# running a file puts its own folder, not the repo root, on sys.path.
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+
+from benchmarks.tier1 import TIER1, BenchmarkSpec  # noqa: E402
+from qmatbridge.adapters.materials_project import (  # noqa: E402
     MPAdapterConfig,
     _open_client,
     _summary_doc,
     fetch_entry_from_mp,
 )
-from qmatbridge.io import to_dict, write_entry_json
-from qmatbridge.schema import QMatEntry
+from qmatbridge.io import to_dict, write_entry_json  # noqa: E402
+from qmatbridge.schema import QMatEntry  # noqa: E402
 
 
 def check_entry(spec: BenchmarkSpec, entry: QMatEntry) -> list[str]:

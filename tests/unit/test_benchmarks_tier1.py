@@ -61,3 +61,18 @@ def test_check_entry_accepts_match_and_flags_mismatch() -> None:
     assert check_entry(si, _entry(["Si", "Si"], 8, False)) == []
     problems = check_entry(si, _entry(["Si", "Ge"], 10, True))
     assert len(problems) == 3
+
+
+def test_fixture_script_runs_directly_from_any_directory(tmp_path) -> None:  # type: ignore[no-untyped-def]
+    """Regression: `python benchmarks/build_tier1_fixtures.py` must import."""
+    import subprocess
+    import sys
+    from pathlib import Path
+
+    script = Path(__file__).resolve().parents[2] / "benchmarks/build_tier1_fixtures.py"
+    out = subprocess.run(
+        [sys.executable, str(script), "--help"],
+        cwd=tmp_path, capture_output=True, text=True, timeout=60,
+    )
+    assert out.returncode == 0, out.stderr
+    assert "--site" in out.stdout
