@@ -357,7 +357,8 @@ def _resolve_api_key(api_key: str | None, config: MPAdapterConfig) -> str:
     if not key:
         raise ValueError(
             "No Materials Project API key: pass api_key=, set "
-            "MPAdapterConfig.api_key, or export MP_API_KEY."
+            "MPAdapterConfig.api_key, or export MP_API_KEY.  QMatBridge ships no "
+            "keys; get your own (free) at https://next-gen.materialsproject.org/api"
         )
     return key
 

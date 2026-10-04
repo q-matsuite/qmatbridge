@@ -44,6 +44,9 @@ write_entry_json(entry, "silicon.json")
 
 ## Fetch from the Materials Project
 
+You need your own (free) Materials Project API key; QMatBridge does not provide one.
+See [API keys and licences](api-keys.md).
+
 ```bash
 export MP_API_KEY=...
 ```

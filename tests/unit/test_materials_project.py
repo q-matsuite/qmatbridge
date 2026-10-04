@@ -296,3 +296,11 @@ def test_live_silicon() -> None:  # pragma: no cover - network
     e = fetch_entry_from_mp("mp-149")
     assert e.reference.structure.formula_reduced == "Si"
     assert e.hamiltonian.num_electrons == 8
+
+
+def test_missing_key_message_says_get_your_own(monkeypatch: pytest.MonkeyPatch) -> None:
+    monkeypatch.delenv("MP_API_KEY", raising=False)
+    with pytest.raises(ValueError) as exc:
+        mp._resolve_api_key(None, MPAdapterConfig())
+    msg = str(exc.value)
+    assert "ships no keys" in msg and "materialsproject.org/api" in msg
