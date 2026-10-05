@@ -1,0 +1,12 @@
+# Keeps the GitHub Actions used by our workflows current. Each weekly update arrives as
+# one pull request, so CI tests it before it can merge.
+version: 2
+updates:
+  - package-ecosystem: github-actions
+    directory: "/"
+    schedule:
+      interval: weekly
+    labels: ["ci"]
+    groups:
+      actions:
+        patterns: ["*"]

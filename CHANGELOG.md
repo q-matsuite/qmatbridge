@@ -39,6 +39,10 @@ Breaking changes to `QMatEntry` or its nested schema classes are marked
 - Landing page (`website/`, `tools/build_site.py`) with an interactive examples
   explorer; Tier-1 examples are now Si, GaN and LiCoO₂ (battery cathode).
 - `functional_from_mp_task_doc` — records `PBE+U` for GGA+U calculations.
+- Release automation (`.github/workflows/release.yml`, `tools/release_info.py`): tag-driven build,
+  tag/version check, wheel smoke test, PyPI trusted publishing, and a GitHub release with notes
+  from this file; dry run to TestPyPI. Dependabot keeps GitHub Actions current. See "Releasing"
+  in the docs (#22).
 
 ### Changed
 - Landing page redesign: animated lattice hero, fingerprint images, scale comparison, and an
@@ -66,6 +70,9 @@ Breaking changes to `QMatEntry` or its nested schema classes are marked
   depends on `emmet-core`, which imports `typing.NotRequired`.
 - Corrected the Tier-1 benchmark table in `benchmarks/README.md` (electron counts
   now derived from MP POTCAR valences; cutoff column removed).
+- Docs, README and website no longer say QMatBridge is not on PyPI: 0.1.0 was published on
+  2026-06-04. The install notes now say that 0.1.0 predates the v0.2 features. The "needs
+  mp-api" error message gives an install command that is correct from source and from PyPI.
 
 ---
 
