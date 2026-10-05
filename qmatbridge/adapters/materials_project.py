@@ -57,6 +57,7 @@ __all__ = [
     "fetch_structure_metadata_from_mp",
     "fetch_hamiltonian_metadata_from_mp",
     "fetch_entry_from_mp",
+    "MaterialsProjectAdapter",
 ]
 
 # ---------------------------------------------------------------------------
@@ -536,3 +537,37 @@ def fetch_entry_from_mp(
     ref.provenance.metadata["task_id"] = task.get("task_id")
     ref.provenance.metadata["candidate_task_ids"] = task.get("_candidates", [])
     return QMatEntry(reference=ref, hamiltonian=hamiltonian, tags=list(tags or []))
+
+
+class MaterialsProjectAdapter:
+    """The Materials Project adapter as a registry plugin.
+
+    Satisfies :class:`qmatbridge.registry.Adapter`::
+
+        from qmatbridge.registry import get_adapter
+
+        adapter = get_adapter("materials_project")
+        entry = adapter.fetch_entry("mp-149", tags=["silicon"])
+
+    Args:
+        config:  Adapter configuration (run types, ``max_sites``, ...).
+        api_key: MP API key; falls back to ``config.api_key`` then ``MP_API_KEY``.
+    """
+
+    name = "materials_project"
+
+    def __init__(
+        self, config: MPAdapterConfig | None = None, *, api_key: str | None = None
+    ) -> None:
+        self._config = config
+        self._api_key = api_key
+
+    def fetch_entry(self, identifier: str, **options: Any) -> QMatEntry:
+        """Fetch *identifier* (e.g. ``"mp-149"``); accepts ``tags=[...]``."""
+        tags = options.pop("tags", None)
+        if options:
+            unexpected = ", ".join(sorted(options))
+            raise TypeError(f"unexpected option(s) for materials_project: {unexpected}")
+        return fetch_entry_from_mp(
+            identifier, api_key=self._api_key, config=self._config, tags=tags
+        )
