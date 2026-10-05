@@ -283,7 +283,7 @@ def test_missing_mp_api_gives_install_hint(monkeypatch: pytest.MonkeyPatch) -> N
         return real_import(name, *a, **k)
 
     monkeypatch.setattr(builtins, "__import__", fake_import)
-    with pytest.raises(ImportError, match=r"qmatbridge\[mp\]"):
+    with pytest.raises(ImportError, match=r"mp-api and pymatgen.*\.\[mp\]"):
         mp._open_client("k", MPAdapterConfig())
 
 

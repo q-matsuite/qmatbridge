@@ -48,4 +48,5 @@ nav:
       - Oracle model: oracle-model.md
       - Adapters: adapters.md
   - How the workflows work: workflows.md
+  - Releasing: releasing.md
   - API reference: api.md

@@ -1,0 +1,104 @@
+name: Release
+
+# Pushing a tag like v0.2.0 builds the package, checks that the tag matches the version
+# in pyproject.toml, publishes to PyPI with trusted publishing (no API token stored),
+# and creates a GitHub release whose notes come from CHANGELOG.md.
+#
+# A manual run (workflow_dispatch) builds and publishes to TestPyPI only, as a dry run.
+#
+# One-time setup is described in docs/releasing.md: register this workflow as a trusted
+# publisher on PyPI/TestPyPI and create the `pypi` and `testpypi` environments.
+
+on:
+  push:
+    tags: ["v[0-9]*"]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    name: Build and verify
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Tag matches the package version
+        if: github.ref_type == 'tag'
+        run: python tools/release_info.py check-tag "$GITHUB_REF_NAME"
+
+      - name: Build and check
+        run: |
+          pip install build twine
+          python -m build
+          twine check dist/*
+
+      - name: Smoke test the wheel in a clean environment
+        run: |
+          python -m venv "$RUNNER_TEMP/smoke"
+          "$RUNNER_TEMP/smoke/bin/pip" install dist/*.whl
+          "$RUNNER_TEMP/smoke/bin/python" -c "import qmatbridge, qmatbridge.schema, qmatbridge.io; print('qmatbridge', qmatbridge.__version__)"
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: dist
+          path: dist/
+          if-no-files-found: error
+
+  publish-testpypi:
+    name: Publish to TestPyPI (dry run)
+    if: github.event_name == 'workflow_dispatch'
+    needs: build
+    runs-on: ubuntu-latest
+    environment: testpypi
+    permissions:
+      id-token: write
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: dist
+          path: dist/
+      - uses: pypa/gh-action-pypi-publish@release/v1
+        with:
+          repository-url: https://test.pypi.org/legacy/
+
+  publish-pypi:
+    name: Publish to PyPI
+    if: github.ref_type == 'tag'
+    needs: build
+    runs-on: ubuntu-latest
+    environment: pypi
+    permissions:
+      id-token: write
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: dist
+          path: dist/
+      - uses: pypa/gh-action-pypi-publish@release/v1
+
+  github-release:
+    name: GitHub release
+    if: github.ref_type == 'tag'
+    needs: publish-pypi
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    env:
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          name: dist
+          path: dist/
+      - name: Create the release from the CHANGELOG
+        run: |
+          python tools/release_info.py notes "$GITHUB_REF_NAME" > notes.md
+          gh release create "$GITHUB_REF_NAME" dist/* \
+            --title "$GITHUB_REF_NAME" --notes-file notes.md --verify-tag

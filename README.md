@@ -6,7 +6,7 @@ Hamiltonians for fault-tolerant quantum simulation.**
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![Python 3.10+](https://img.shields.io/badge/python-3.10%2B-blue.svg)](https://www.python.org/downloads/)
 [![CI](https://github.com/q-matsuite/qmatbridge/actions/workflows/python-package.yml/badge.svg)](https://github.com/q-matsuite/qmatbridge/actions)
-[![PyPI](https://img.shields.io/badge/PyPI-not%20yet%20published-lightgrey.svg)](#installation)
+[![PyPI](https://img.shields.io/pypi/v/qmatbridge.svg)](https://pypi.org/project/qmatbridge/)
 [![Website](https://img.shields.io/badge/website-q--matsuite.com-5fd4dd.svg)](https://q-matsuite.com/qmatbridge/)
 [![Docs](https://img.shields.io/badge/docs-mkdocs-blue.svg)](https://q-matsuite.com/qmatbridge/docs/)
 
@@ -143,11 +143,15 @@ Discussions before any code is written.
 ### Installation
 
 ```bash
-# from source (recommended until PyPI publication)
+# from source (needed for the latest features; see the note below)
 git clone https://github.com/q-matsuite/qmatbridge.git
 cd qmatbridge
 pip install -e ".[dev]"
 ```
+
+> **PyPI vs. source.** `pip install qmatbridge` installs **0.1.0** (the schema, JSON I/O and
+> adapter stubs). The Materials Project adapter, plane-wave utility, entry reader and plugin
+> registry are in this repository and will ship in 0.2.0, so install from source for them.
 
 Optional extras:
 
