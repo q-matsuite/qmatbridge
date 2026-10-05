@@ -62,7 +62,7 @@ exporters are in progress.  We welcome contributions at any level:
 - **Database maintainers** who want to add an adapter for their source
 - **Educators** building course materials around fault-tolerant simulation
 
-See [`qmatbridge/CONTRIBUTING.md`](https://github.com/q-matsuite/qmatbridge/blob/main/CONTRIBUTING.md)
+See [CONTRIBUTING.md](https://github.com/q-matsuite/qmatbridge/blob/main/CONTRIBUTING.md)
 to get started, and
 [GitHub Discussions](https://github.com/q-matsuite/qmatbridge/discussions)
 to propose ideas or ask questions.
@@ -73,10 +73,15 @@ to propose ideas or ask questions.
 
 | Component | Status |
 | --- | --- |
-| Core schema (`QMatEntry`, `HamiltonianMetadata`, …) | Stable — v0.1 |
-| JSON I/O (`qmatbridge.io`) | Stable — v0.1 |
-| Materials Project adapter | Stub — v0.2 target |
-| OQMD adapter | Stub — v0.3 target |
-| OPTIMADE adapter | Planned — v0.3 |
-| Hamiltonian exporters | Planned — v0.4 |
-| Resource estimation hooks | Planned — v0.5 |
+| Core schema (`QMatEntry`, `HamiltonianMetadata`, …) | v0.1; a v0.2 proposal is open for discussion |
+| JSON I/O: write and read back, strictly validated | Available |
+| Plane-wave utilities | Available |
+| Materials Project adapter | Available; validated against the live API for Si, GaN and LiCoO₂ |
+| Plugin registry for adapters and exporters | Available |
+| OQMD adapter | Stub |
+| OPTIMADE adapter | Planned |
+| Hamiltonian exporters | Planned |
+| Resource estimation hooks | Planned |
+
+`pip install qmatbridge` installs 0.1.0 (the scaffold); the features above install from source until
+0.2.0 is released. See the [roadmap](https://github.com/q-matsuite/qmatbridge#roadmap).
