@@ -101,5 +101,5 @@ PLANNED: tuple[tuple[str, str, str], ...] = (
     ("LiH", "mp-23703", "small system with exact-diagonalisation reference"),
     ("Fe", "mp-13", "BCC iron, magnetic"),
     ("MgO", "mp-1265", "ionic, wide gap"),
-    ("TiO2", "mp-2657", "rutile; this MP entry is a 12-site cell, verify before specifying"),
+    ("TiO2", "mp-2657", "rutile; this MP entry is a 12-site cell, verify first"),
 )

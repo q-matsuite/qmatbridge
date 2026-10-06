@@ -76,7 +76,7 @@ to propose ideas or ask questions.
 | Core schema (`QMatEntry`, `HamiltonianMetadata`, …) | v0.1; a v0.2 proposal is open for discussion |
 | JSON I/O: write and read back, strictly validated | Available |
 | Plane-wave utilities | Available |
-| Materials Project adapter | Available; validated against the live API for Si, GaN and LiCoO₂ |
+| Materials Project adapter | Available; validated against the live API for six Tier-1 materials |
 | Plugin registry for adapters and exporters | Available |
 | OQMD adapter | Stub |
 | OPTIMADE adapter | Planned |

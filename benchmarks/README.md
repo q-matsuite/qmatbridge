@@ -26,6 +26,9 @@ Benchmarks here serve two purposes:
 | Si (diamond) | mp-149 | Si₂ | 8 | Canonical test case |
 | GaN (wurtzite) | mp-804 | Ga₂N₂ | 36 | Wide-gap III-V; semicore Ga 3d |
 | LiCoO₂ | mp-22526 | LiCoO₂ | 24 | Li-ion cathode; GGA+U (Hubbard U on Co) |
+| LiFePO₄ | mp-19017 | Li₄Fe₄P₄O₁₆ | 184 | 28-atom olivine cathode; GGA+U; a larger cell |
+| NaCl | mp-22862 | NaCl | 14 | Ionic rocksalt crystal |
+| BaTiO₃ | mp-5020 | BaTiO₃ | 38 | Perovskite (rhombohedral phase) |
 
 Planned next: LiH, BCC Fe, MgO, rutile TiO₂ (see `PLANNED` in
 [`tier1.py`](tier1.py)).
