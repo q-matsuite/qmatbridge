@@ -457,15 +457,18 @@ class QMatEntry:
     # ------------------------------------------------------------------
 
     def canonical_hash(self) -> str:
-        """SHA-256 digest over the physically meaningful fields of this entry.
+        """SHA-256 digest identifying the calculation setup recorded in this entry.
 
-        The hash is stable across ``metadata`` / ``extra`` dict changes,
-        tag edits, and export record additions.  It changes when any field
-        that alters the physics of the Hamiltonian is modified.
+        The hash covers exactly eleven fields: upstream source and identifier,
+        functional, reduced formula, spacegroup number, electron count, spin
+        polarization, basis type, cutoff energy, number of bands, and oracle
+        eta.  It is stable across ``metadata`` dict changes, tag edits, export
+        record additions and a different retrieval time, and it changes when any
+        of the eleven fields changes.
 
-        Fields included: upstream source + identifier, reduced formula,
-        spacegroup, electron count, spin polarization, basis type, cutoff
-        energy, number of bands, and oracle eta.
+        It does **not** cover the lattice parameters, atomic positions, species
+        list, pseudopotential family or plane-wave count, so an identical hash
+        shows the same source record and settings, not identical coordinates.
         """
         prov = self.reference.provenance
         struct = self.reference.structure
