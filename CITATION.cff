@@ -3,8 +3,9 @@ message: "If you use QMatBridge, please cite it as below."
 title: "QMatBridge: A bridge from classical materials databases to first-quantized Hamiltonians for quantum simulation"
 type: software
 authors:
-  - family-names: Reis
+  - family-names: "dos Reis"
     given-names: Roberto
+    affiliation: q-matsuite
 version: 0.2.0
 date-released: 2026-10-05
 license: MIT

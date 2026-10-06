@@ -329,7 +329,8 @@ academic work, please cite the repository directly:
 
 ```bibtex
 @software{qmatbridge,
-  author  = {Reis, Roberto},
+  author       = {{dos Reis}, Roberto},
+  organization = {q-matsuite},
   title   = {{QMatBridge}: A bridge from classical materials databases to
              first-quantized Hamiltonians for quantum simulation},
   url     = {https://github.com/q-matsuite/qmatbridge},
@@ -345,7 +346,7 @@ once the v0.2 Materials Project adapter is complete and the API is stable.
 
 ## Author
 
-Created and maintained by [Roberto Reis](https://github.com/rmsreis) ([@rmsreis](https://github.com/rmsreis)).
+Created and maintained by [Roberto dos Reis](https://github.com/rmsreis) ([@rmsreis](https://github.com/rmsreis)).
 
 ---
 

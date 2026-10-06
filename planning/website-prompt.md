@@ -56,7 +56,7 @@ entries pass the Tier-1 spec checks. With no data file the section is hidden.
 
 ## Credit
 
-Footer credits **Roberto Reis (@rmsreis)** as creator and maintainer, links to
+Footer credits **Roberto dos Reis (@rmsreis)** as creator and maintainer, links to
 github.com/rmsreis, and `<meta name="author">` carries the same.
 
 ## Sections (single `index.html`, hash navigation)

@@ -14,6 +14,10 @@ Breaking changes to `QMatEntry` or its nested schema classes are marked
 ### Changed
 - Install notes (README, website, org profile, release guide) now say `pip install qmatbridge`
   installs 0.2.0 from PyPI; the website's install section shows the PyPI commands.
+- Author credited as Roberto dos Reis (the family name is "dos Reis") with affiliation q-matsuite in
+  `CITATION.cff`, the BibTeX (README and website), the credit lines, `pyproject.toml`, GOVERNANCE and
+  SECURITY. `LICENSE` is unchanged. New `.zenodo.json` sets the metadata of Zenodo archive records;
+  a test keeps the citation files and the package version in sync.
 
 ---
 
