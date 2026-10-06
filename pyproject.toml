@@ -8,7 +8,7 @@ version = "0.2.0"
 description = "Bridge from classical materials databases to first-quantized Hamiltonians for quantum simulation"
 readme = "README.md"
 license = { file = "LICENSE" }
-authors = [{ name = "Roberto Reis", email = "robertomsreis@gmail.com" }]
+authors = [{ name = "Roberto dos Reis", email = "robertomsreis@gmail.com" }]
 keywords = [
     "quantum computing",
     "quantum simulation",

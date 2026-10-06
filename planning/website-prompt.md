@@ -24,9 +24,9 @@ is a research-software page, not a SaaS pitch.
 
 - Describe the project as **early-stage**. Schema + JSON I/O + MP adapter exist;
   exporters are planned.
-- **Do not** imply the v0.2 features are on PyPI (it has 0.1.0 only), and do not claim user counts, testimonials,
+- PyPI has 0.2.0 (`pip install qmatbridge`); the `[mp]` extra needs Python 3.11+. Do not claim user counts, testimonials,
   benchmark results, partner logos, or funding. No fabricated metrics.
-- Install snippet is from source (`git clone` + `pip install -e .`) until a release.
+- Install snippet is `pip install qmatbridge` (and `"qmatbridge[mp]"`).
 - Citation block matches `README.md` and `CITATION.cff` exactly.
 
 ## Examples explorer (added on review)
@@ -56,7 +56,7 @@ entries pass the Tier-1 spec checks. With no data file the section is hidden.
 
 ## Credit
 
-Footer credits **Roberto Reis (@rmsreis)** as creator and maintainer, links to
+Footer credits **Roberto dos Reis (@rmsreis)** as creator and maintainer, links to
 github.com/rmsreis, and `<meta name="author">` carries the same.
 
 ## Sections (single `index.html`, hash navigation)

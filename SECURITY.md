@@ -34,7 +34,7 @@ and we will evaluate together.
 
 Please report security issues by emailing the maintainer directly:
 
-**Roberto Reis — robertomsreis@gmail.com**
+**Roberto dos Reis — robertomsreis@gmail.com**
 
 Include in your report:
 

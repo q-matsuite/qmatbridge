@@ -31,4 +31,4 @@ OPTIMADE sources  ─┘
 
 ---
 
-Created and maintained by [Roberto Reis](https://github.com/rmsreis) ([@rmsreis](https://github.com/rmsreis)).
+Created and maintained by [Roberto dos Reis](https://github.com/rmsreis) ([@rmsreis](https://github.com/rmsreis)).

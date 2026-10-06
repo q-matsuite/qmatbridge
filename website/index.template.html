@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>QMatBridge</title>
 <meta name="description" content="QMatBridge turns classical materials-database records into first-quantized Hamiltonian descriptions for fault-tolerant quantum simulation, with provenance and a canonical hash on every entry.">
-<meta name="author" content="Roberto Reis (@rmsreis)">
+<meta name="author" content="Roberto dos Reis (@rmsreis)">
 <meta name="application-name" content="QMatBridge by q-matsuite">
 <meta name="color-scheme" content="dark">
 <link rel="canonical" href="https://q-matsuite.com/qmatbridge/">
@@ -455,13 +455,12 @@ footer.site p { margin: 0 0 6px; }
   <div class="wrap two reveal">
     <div>
       <span class="eyebrow"><i>06</i> Install</span>
-      <h2 id="h-install">From source, in a minute</h2>
-      <p class="lede" style="margin-top:14px">PyPI has 0.1.0 (the scaffold); the 0.2 features install from source. Python 3.10+; the core schema has no required dependencies. Fetching from the Materials Project needs the <code>mp</code> extra and <em>your own</em> free API key (<a href="docs/api-keys/">details</a>); QMatBridge ships none.</p>
+      <h2 id="h-install">One line from PyPI</h2>
+      <p class="lede" style="margin-top:14px">Python 3.10+; the core schema has no required dependencies. Fetching from the Materials Project needs the <code>mp</code> extra and <em>your own</em> free API key (<a href="docs/api-keys/">details</a>); QMatBridge ships none.</p>
     </div>
     <div>
-      <div class="cmd"><div class="label">Install</div><pre><code>git clone https://github.com/q-matsuite/qmatbridge.git
-cd qmatbridge
-pip install -e ".[mp]"</code></pre><button class="copy" type="button">Copy</button></div>
+      <div class="cmd"><div class="label">Install</div><pre><code>pip install qmatbridge            # core, 0.2.0
+pip install "qmatbridge[mp]"      # + Materials Project adapter (Python 3.11+)</code></pre><button class="copy" type="button">Copy</button></div>
       <div class="cmd"><div class="label">Fetch an entry</div><pre><code>export MP_API_KEY=...   # your own key; QMatBridge ships none
 python -c "from qmatbridge.adapters.materials_project import fetch_entry_from_mp as f; print(f('mp-149').canonical_hash())"</code></pre><button class="copy" type="button">Copy</button></div>
     </div>
@@ -533,12 +532,13 @@ python -c "from qmatbridge.adapters.materials_project import fetch_entry_from_mp
       <p class="lede" style="margin-top:14px">There is no formal publication yet. Please cite the repository.</p>
     </div>
     <div class="cmd"><div class="label">BibTeX</div><pre><code>@software{qmatbridge,
-  author = {Reis, Roberto},
+  author       = {{dos Reis}, Roberto},
+  organization = {q-matsuite},
   title  = {{QMatBridge}: A bridge from classical materials
             databases to first-quantized Hamiltonians for
             quantum simulation},
   url    = {https://github.com/q-matsuite/qmatbridge},
-  version = {0.1.0},
+  version = {0.2.0},
   year   = {2026},
 }</code></pre><button class="copy" type="button">Copy</button></div>
   </div>
@@ -548,7 +548,7 @@ python -c "from qmatbridge.adapters.materials_project import fetch_entry_from_mp
 <footer class="site">
   <div class="wrap">
     <div class="credit">
-      <p><strong>QMatBridge</strong> is created and maintained by <strong>Roberto Reis</strong> (<a href="https://github.com/rmsreis" rel="noopener">@rmsreis</a>).</p>
+      <p><strong>QMatBridge</strong> is created and maintained by <strong>Roberto dos Reis</strong> (<a href="https://github.com/rmsreis" rel="noopener">@rmsreis</a>).</p>
       <p>A <a href="../">q-matsuite</a> project. Released under the MIT license. Example data from the <a href="https://materialsproject.org" rel="noopener">Materials Project</a> (CC BY 4.0).</p>
     </div>
     <div>
