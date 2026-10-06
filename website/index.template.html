@@ -373,7 +373,7 @@ footer.site p { margin: 0 0 6px; }
     <div class="section-head reveal">
       <span class="eyebrow"><i>02</i> Fingerprint</span>
       <h2 id="h-fp">Change one field, watch the fingerprint</h2>
-      <p>Every entry has a <code>canonical_hash()</code>: a SHA-256 over the eleven fields that define the physics. Edit the selected material below. Metadata that does not change the Hamiltonian, such as tags, leaves the fingerprint alone. The hash is recomputed here in your browser with the same rules as the Python library.</p>
+      <p>Every entry has a <code>canonical_hash()</code>: a SHA-256 over eleven fields that identify the calculation setup: the source record, functional, electron count, basis cutoff and a few more. (Lattice and atom positions are not hashed yet.) Edit the selected material below. Metadata that does not change the Hamiltonian, such as tags, leaves the fingerprint alone. The hash is recomputed here in your browser with the same rules as the Python library.</p>
     </div>
     <div class="demo reveal">
       <div class="panel">
@@ -404,7 +404,7 @@ footer.site p { margin: 0 0 6px; }
     </div>
     <div>
       <p>Research groups developing block-encodings, qubitization variants and truncated Dyson series methods need realistic electronic-structure Hamiltonians. The usual route is a one-off script that pulls DFT data, reformats it and feeds it to a compiler.</p>
-      <p>Those scripts are rarely shared, rarely work with more than one framework, and often drop the provenance needed to reproduce a result. When two groups report T-gate counts for “silicon”, nothing says they used the same Hamiltonian. QMatBridge records what was used, and hashes it.</p>
+      <p>Those scripts are rarely shared, rarely work with more than one framework, and often drop the provenance needed to reproduce a result. When two groups report T-gate counts for “silicon”, nothing says they used the same Hamiltonian. QMatBridge records what was used, and fingerprints the setup.</p>
     </div>
   </div>
 </section>
@@ -421,7 +421,7 @@ footer.site p { margin: 0 0 6px; }
       <li><b>basis</b><span><strong>How it is discretised.</strong> Plane-wave cutoff and the resulting number of plane waves.</span></li>
       <li><b>oracle</b><span><strong>What access costs.</strong> LCU 1-norm, per-term breakdown, SELECT/PREPARE parameters and complexity annotations.</span></li>
       <li><b>exports</b><span><strong>Where it went.</strong> Downstream framework, format, status and artifact path.</span></li>
-      <li><b>hash</b><span><strong>A stable fingerprint.</strong> <code>canonical_hash()</code> is a SHA-256 over the physically meaningful fields, so a result can be traced to one Hamiltonian.</span></li>
+      <li><b>hash</b><span><strong>A stable fingerprint.</strong> <code>canonical_hash()</code> is a SHA-256 over eleven setup fields (source record, functional, electrons, basis and more), so a result can be traced to one recorded calculation setup. Geometry is not hashed yet.</span></li>
     </ul>
   </div>
 </section>

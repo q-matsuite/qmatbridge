@@ -26,6 +26,9 @@ classifiers = [
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
+    "Typing :: Typed",
     "Topic :: Scientific/Engineering :: Physics",
     "Topic :: Scientific/Engineering :: Chemistry",
 ]
@@ -34,6 +37,7 @@ dependencies = []
 
 [project.optional-dependencies]
 dev = [
+    "hypothesis>=6.100",
     "pytest>=7.4",
     "pytest-cov>=4.1",
     "ruff>=0.4",
@@ -44,9 +48,12 @@ docs = [
     "mkdocs-material>=9.5",
     "mkdocstrings[python]>=0.25",
 ]
+# Current mp-api / emmet-core releases need Python 3.11+.  Without the marker, pip on
+# 3.10 installs a stack whose import fails; with it, the extra is simply empty there
+# and the adapter explains what to do.
 mp = [
-    "mp-api>=0.41",
-    "pymatgen>=2024.1",
+    "mp-api>=0.41; python_version >= '3.11'",
+    "pymatgen>=2024.1; python_version >= '3.11'",
 ]
 ase = [
     "ase>=3.22",
@@ -66,6 +73,9 @@ Issues = "https://github.com/q-matsuite/qmatbridge/issues"
 [tool.setuptools.packages.find]
 where = ["."]
 include = ["qmatbridge*"]
+
+[tool.setuptools.package-data]
+qmatbridge = ["py.typed"]
 
 [tool.ruff]
 line-length = 88

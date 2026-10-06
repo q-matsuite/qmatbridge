@@ -29,14 +29,17 @@ Layers 1 and 3 need nothing.  Layer 2 needs the optional extra::
 
 from __future__ import annotations
 
+import enum
+import math
 import os
+import sys
 from collections import Counter
 from collections.abc import Mapping
 from dataclasses import dataclass, field
 from datetime import datetime, timezone
 from typing import Any
 
-from qmatbridge.basis import num_plane_waves_from_ecut
+from qmatbridge.basis import cell_volume, num_plane_waves_from_ecut
 from qmatbridge.schema import (
     BasisMetadata,
     ExternalIdentifier,
@@ -245,6 +248,34 @@ def _reduced_counts(counts: Mapping[str, int]) -> dict[str, int]:
     return {el: n // g for el, n in counts.items()}
 
 
+def _mapping(obj: Any, where: str) -> Mapping[str, Any]:
+    if not isinstance(obj, Mapping):
+        raise ValueError(f"{where} must be an object, got {type(obj).__name__}")
+    return obj
+
+
+def _number(value: Any, where: str) -> float:
+    """A finite float from a number or numeric string; ``ValueError`` otherwise."""
+    if isinstance(value, bool):
+        raise ValueError(f"{where} must be a number, got {value!r}")
+    try:
+        x = float(value)
+    except (TypeError, ValueError, OverflowError) as exc:
+        raise ValueError(f"{where} must be a number, got {value!r}") from exc
+    if not math.isfinite(x):
+        raise ValueError(f"{where} must be finite, got {value!r}")
+    return x
+
+
+def _text(value: Any, where: str) -> str:
+    """A string (or the value of a string-like Enum); ``ValueError`` otherwise."""
+    if isinstance(value, enum.Enum):
+        value = value.value
+    if not isinstance(value, str) or not value:
+        raise ValueError(f"{where} must be a non-empty string, got {value!r}")
+    return value
+
+
 def structure_from_mp_doc(doc: Mapping[str, Any]) -> StructureMetadata:
     """Convert an MP summary document (as a dict) to ``StructureMetadata``.
 
@@ -253,38 +284,66 @@ def structure_from_mp_doc(doc: Mapping[str, Any]) -> StructureMetadata:
     ``species`` list) and, optionally, ``symmetry`` with ``number``,
     ``symbol`` and ``crystal_system``.  Disordered sites are rejected.
 
+    Every malformed input raises ``ValueError``: wrong shapes or types, missing
+    keys, non-finite or non-positive lattice parameters, and invalid cells.
+
     Raises:
-        ValueError: If required keys are missing or a site is disordered.
+        ValueError: If the document is malformed, or a site is disordered.
     """
+    doc_m = _mapping(doc, "MP document")
     try:
-        struct = doc["structure"]
-        lat = struct["lattice"]
+        struct = _mapping(doc_m["structure"], "structure")
+        lat = _mapping(struct["lattice"], "structure.lattice")
         sites = struct["sites"]
-        lattice_params = [
-            float(lat[k]) for k in ("a", "b", "c", "alpha", "beta", "gamma")
-        ]
     except KeyError as exc:
         raise ValueError(f"MP document is missing required key: {exc}") from exc
 
+    params: list[float] = []
+    for key in ("a", "b", "c", "alpha", "beta", "gamma"):
+        if key not in lat:
+            raise ValueError(f"MP document is missing required key: {key!r}")
+        params.append(_number(lat[key], f"structure.lattice.{key}"))
+    lattice = LatticeMetadata(
+        a=params[0], b=params[1], c=params[2],
+        alpha=params[3], beta=params[4], gamma=params[5],
+    )
+    cell_volume(lattice)  # rejects non-positive lengths and impossible angles
+
+    if not isinstance(sites, (list, tuple)):
+        raise ValueError(f"structure.sites must be a list, got {type(sites).__name__}")
     species: list[str] = []
-    for site in sites:
-        occ = site["species"]
-        if len(occ) != 1 or float(occ[0].get("occu", 1.0)) != 1.0:
+    for i, site in enumerate(sites):
+        where = f"structure.sites[{i}]"
+        occ = _mapping(site, where).get("species")
+        if not isinstance(occ, (list, tuple)) or not occ:
+            raise ValueError(f"{where}.species must be a non-empty list")
+        first = _mapping(occ[0], f"{where}.species[0]")
+        if len(occ) != 1 or _number(first.get("occu", 1.0), f"{where}.occu") != 1.0:
             raise ValueError("disordered / partially occupied sites are not supported")
-        species.append(str(occ[0]["element"]))
+        species.append(_text(first.get("element"), f"{where}.species[0].element"))
     if not species:
         raise ValueError("MP structure has no sites")
 
-    counts = Counter(species)
-    sym = doc.get("symmetry") or {}
-    crystal_system = sym.get("crystal_system")
-    lattice = LatticeMetadata(
-        a=lattice_params[0], b=lattice_params[1], c=lattice_params[2],
-        alpha=lattice_params[3], beta=lattice_params[4], gamma=lattice_params[5],
-        spacegroup_number=sym.get("number"),
-        spacegroup_symbol=sym.get("symbol"),
-        crystal_system=str(crystal_system).lower() if crystal_system else None,
+    sym_raw = doc_m.get("symmetry")
+    sym = {} if sym_raw is None else _mapping(sym_raw, "symmetry")
+    number = sym.get("number")
+    if number is not None and (
+        isinstance(number, bool)
+        or not isinstance(number, int)
+        or not 1 <= number <= 230
+    ):
+        raise ValueError(f"symmetry.number must be an integer 1-230, got {number!r}")
+    symbol = sym.get("symbol")
+    system = sym.get("crystal_system")
+    lattice.spacegroup_number = number
+    lattice.spacegroup_symbol = (
+        None if symbol is None else _text(symbol, "symmetry.symbol")
     )
+    lattice.crystal_system = (
+        None if system is None else _text(system, "symmetry.crystal_system").lower()
+    )
+
+    counts = Counter(species)
     return StructureMetadata(
         formula_reduced=_hill_formula(_reduced_counts(counts)),
         formula_unit_cell=_hill_formula(counts),
@@ -305,21 +364,34 @@ def hamiltonian_from_mp_task_doc(
     cutoff and ``structure.lattice`` via
     :func:`qmatbridge.basis.num_plane_waves_from_ecut`.
 
+    Every malformed input raises ``ValueError``: wrong shapes or types, a
+    missing or non-finite ``ENCUT``/``NELECT``, non-positive values, a
+    non-integer electron count, ``ISPIN`` other than 1 or 2, or a cell and
+    cutoff too large for exact plane-wave enumeration.
+
     Raises:
-        ValueError: If ``ENCUT`` or ``NELECT`` is absent.
+        ValueError: If the task document is malformed or unusable.
     """
-    inp = task.get("input") or {}
-    incar = inp.get("incar") or {}
-    params = inp.get("parameters") or {}
+    task_m = _mapping(task, "task document")
+    inp = _mapping(task_m.get("input") or {}, "input")
+    incar = _mapping(inp.get("incar") or {}, "input.incar")
+    params = _mapping(inp.get("parameters") or {}, "input.parameters")
     if "ENCUT" not in incar:
         raise ValueError("task document has no input.incar.ENCUT")
     if "NELECT" not in params:
         raise ValueError("task document has no input.parameters.NELECT")
 
-    ecut = float(incar["ENCUT"])
-    nelect = float(params["NELECT"])
+    ecut = _number(incar["ENCUT"], "input.incar.ENCUT")
+    if ecut <= 0:
+        raise ValueError(f"input.incar.ENCUT must be positive, got {ecut}")
+    nelect = _number(params["NELECT"], "input.parameters.NELECT")
     if nelect != int(nelect):
         raise ValueError(f"non-integer NELECT ({nelect}) is not supported")
+    if nelect <= 0:
+        raise ValueError(f"input.parameters.NELECT must be positive, got {nelect}")
+    ispin = _number(incar.get("ISPIN", 1), "input.incar.ISPIN")
+    if ispin not in (1.0, 2.0):
+        raise ValueError(f"input.incar.ISPIN must be 1 or 2, got {ispin}")
 
     basis = BasisMetadata(
         type="plane_wave",
@@ -328,9 +400,9 @@ def hamiltonian_from_mp_task_doc(
     )
     return HamiltonianMetadata(
         num_electrons=int(nelect),
-        spin_polarized=int(incar.get("ISPIN", 1)) == 2,
+        spin_polarized=ispin == 2.0,
         basis=basis,
-        metadata={"source_task_id": task.get("task_id")},
+        metadata={"source_task_id": task_m.get("task_id")},
     )
 
 
@@ -342,11 +414,13 @@ def functional_from_mp_task_doc(task: Mapping[str, Any]) -> str:
     infers ``"PBE+U"`` from a non-empty ``input.hubbards`` mapping, else
     ``"PBE"``.
     """
-    run_type = task.get("run_type")
+    task_m = _mapping(task, "task document")
+    run_type = task_m.get("run_type")
     if run_type:
         return {"GGA": "PBE", "GGA+U": "PBE+U"}.get(str(run_type), str(run_type))
-    inp = task.get("input") or {}
-    return "PBE+U" if inp.get("hubbards") else "PBE"
+    inp = task_m.get("input")
+    hubbards = inp.get("hubbards") if isinstance(inp, Mapping) else None
+    return "PBE+U" if hubbards else "PBE"
 
 
 # ---------------------------------------------------------------------------
@@ -368,10 +442,17 @@ def _open_client(api_key: str | None, config: MPAdapterConfig) -> Any:
     try:
         from mp_api.client import MPRester
     except ImportError as exc:
+        hint = ""
+        if sys.version_info < (3, 11):
+            hint = (
+                " Current mp-api / emmet-core releases do not import on Python "
+                f"{sys.version_info.major}.{sys.version_info.minor}; "
+                "use Python 3.11 or newer."
+            )
         raise ImportError(
-            "The Materials Project adapter needs mp-api and pymatgen: "
-            "pip install mp-api pymatgen  "
-            '(or, from a source checkout: pip install -e ".[mp]")'
+            'The Materials Project adapter needs mp-api and pymatgen: pip install '
+            '"qmatbridge[mp]" (from a source checkout: pip install -e ".[mp]"). '
+            f"Importing mp-api failed: {type(exc).__name__}: {exc}.{hint}"
         ) from exc
     return MPRester(_resolve_api_key(api_key, config), monitor=False)
 
@@ -396,6 +477,8 @@ def _summary_doc(mpr: Any, material_id: str, max_sites: int | None) -> dict[str,
         "structure": _to_plain(d.structure),
         "symmetry": _to_plain(d.symmetry) if d.symmetry is not None else {},
     }
+    if not isinstance(out["structure"], Mapping):
+        raise ValueError(f"Materials Project returned no structure for {material_id!r}")
     if max_sites is not None and len(out["structure"]["sites"]) > max_sites:
         raise ValueError(
             f"{material_id} has more than max_sites={max_sites} sites"

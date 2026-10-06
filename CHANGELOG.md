@@ -11,6 +11,42 @@ Breaking changes to `QMatEntry` or its nested schema classes are marked
 
 ## [Unreleased]
 
+Hardening from a stress test of the published 0.2.0 (install matrix on Python 3.10, 3.12, 3.13 and
+3.14, 27 live Materials Project materials, hostile-input and property-based fuzzing).
+
+### Fixed
+- **`write_entry_json` could destroy an existing file.** A failure part-way through serialisation
+  left the previous good file truncated. It now serialises first and replaces the file atomically,
+  and refuses NaN/Infinity (which are not valid JSON) with a clear `ValueError`.
+- **Unbounded work in `num_plane_waves_exact`.** A huge cutoff or cell (for example `ENCUT = 1e12`)
+  ran effectively forever. It now refuses, in milliseconds, anything beyond `max_candidates`
+  (default 50 million, about 15 s; configurable, `None` disables) and points to `method="estimate"`.
+  Non-finite or non-positive lengths and cutoffs, angles outside (0, 180) and overflowing cells now
+  raise `ValueError` instead of `OverflowError` / `ZeroDivisionError`.
+- **`entry_from_dict` was ~30x slower than necessary** on entries with many nested objects: type
+  hints were re-resolved per object. Decoding 200,000 terms took 129 s; it now takes about 4 s.
+- **`read_entry_json` leaked non-`EntryFormatError` exceptions** for hostile files
+  (`UnicodeDecodeError`, `RecursionError`, over-long integers) and accepted `NaN` / `Infinity`.
+  All are now `EntryFormatError`; a UTF-8 BOM is tolerated; non-finite floats are rejected anywhere
+  in an entry.
+- **Materials Project converters** (`structure_from_mp_doc`, `hamiltonian_from_mp_task_doc`,
+  `functional_from_mp_task_doc`) leaked `TypeError`, `KeyError`, `AttributeError` and
+  `OverflowError` for malformed documents and accepted NaN, infinite, negative or zero lattice
+  constants and zero or negative electron counts. Every malformed input is now a `ValueError`.
+- **Packaging:** the wheel now ships `py.typed`, so downstream type checkers use the annotations.
+  The `[mp]` extra is restricted to Python 3.11+ (on 3.10 pip installed an `emmet-core` whose import
+  fails), and the adapter's `ImportError` now shows the underlying error and the Python-version hint.
+  Python 3.13 and 3.14 are added to the classifiers and the CI matrix (both were tested manually).
+- **Docs:** the getting-started "Read an entry back" example raised `NameError`; the
+  `canonical_hash()` docstring omitted `functional` from its list of hashed fields; and the hash was
+  described as covering "the physics". It covers eleven setup fields and **not** the lattice, atomic
+  positions, species or pseudopotential; the guide, README, vision page and website now say so.
+
+### Added
+- Property-based tests (`tests/property/`, `hypothesis` in the `dev` extra): reader, round trip,
+  hash invariants, MP converters and plane-wave counting. Regression tests for every fix above
+  (`tests/unit/test_hardening.py`) and a test that runs the documentation's code examples.
+
 ### Changed
 - Install notes (README, website, org profile, release guide) now say `pip install qmatbridge`
   installs 0.2.0 from PyPI; the website's install section shows the PyPI commands.
