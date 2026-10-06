@@ -143,22 +143,23 @@ Discussions before any code is written.
 ### Installation
 
 ```bash
-# from source (needed for the latest features; see the note below)
+pip install qmatbridge             # 0.2.0 from PyPI; the core has no required dependencies
+pip install "qmatbridge[mp]"       # + Materials Project adapter (mp-api, pymatgen); use Python 3.11+
+```
+
+Optional extras (the `oqmd` adapter is still a stub; `openfermion` is for a planned exporter):
+
+```bash
+pip install "qmatbridge[oqmd]"         # OQMD adapter (qmpy-rester)
+pip install "qmatbridge[openfermion]"  # OpenFermion exporter
+```
+
+To work on QMatBridge itself, install from source:
+
+```bash
 git clone https://github.com/q-matsuite/qmatbridge.git
 cd qmatbridge
 pip install -e ".[dev]"
-```
-
-> **PyPI vs. source.** `pip install qmatbridge` installs **0.1.0** (the schema, JSON I/O and
-> adapter stubs). The Materials Project adapter, plane-wave utility, entry reader and plugin
-> registry are in this repository and will ship in 0.2.0, so install from source for them.
-
-Optional extras:
-
-```bash
-pip install -e ".[mp]"        # Materials Project adapter (mp-api, pymatgen); use Python 3.11+
-pip install -e ".[oqmd]"      # OQMD adapter (qmpy-rester)
-pip install -e ".[openfermion]"  # OpenFermion exporter
 ```
 
 ### API keys

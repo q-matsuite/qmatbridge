@@ -11,6 +11,10 @@ Breaking changes to `QMatEntry` or its nested schema classes are marked
 
 ## [Unreleased]
 
+### Changed
+- Install notes (README, website, org profile, release guide) now say `pip install qmatbridge`
+  installs 0.2.0 from PyPI; the website's install section shows the PyPI commands.
+
 ---
 
 ## [0.2.0] — 2026-10-05
