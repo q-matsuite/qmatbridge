@@ -9,6 +9,11 @@ from pathlib import Path
 from tools.release_info import package_version
 
 ROOT = Path(__file__).resolve().parents[2]
+AFFILIATION = (
+    "Department of Materials Science and Engineering, Northwestern University, "
+    "Evanston, IL 60208, USA"
+)
+WEBSITE = "https://www.robertodosreis.com"
 
 
 def cff_field(text: str, key: str) -> str:
@@ -27,7 +32,8 @@ def test_author_is_consistent_everywhere() -> None:
     cff = (ROOT / "CITATION.cff").read_text()
     assert 'family-names: "dos Reis"' in cff
     assert "given-names: Roberto" in cff
-    assert "affiliation: q-matsuite" in cff
+    assert f'affiliation: "{AFFILIATION}"' in cff
+    assert f'website: "{WEBSITE}"' in cff
 
     for rel in ("README.md", "website/index.template.html"):
         text = (ROOT / rel).read_text()
@@ -36,12 +42,12 @@ def test_author_is_consistent_everywhere() -> None:
         assert re.search(r"version\s*=\s*\{%s\}" % re.escape(package_version()), text), rel
 
     zen = json.loads((ROOT / ".zenodo.json").read_text())
-    assert zen["creators"] == [{"name": "dos Reis, Roberto", "affiliation": "q-matsuite"}]
+    assert zen["creators"] == [{"name": "dos Reis, Roberto", "affiliation": AFFILIATION}]
 
 
 def test_no_stale_author_spelling_in_credits() -> None:
-    """'Roberto Reis' was a mis-spelling of the author's name (LICENSE is deliberately excluded)."""
-    skip = {"LICENSE", "CHANGELOG.md"}
+    """'Roberto Reis' was a mis-spelling of the author's name (including in the LICENSE)."""
+    skip = {"CHANGELOG.md"}
     offenders = []
     for path in ROOT.rglob("*"):
         rel = path.relative_to(ROOT)
@@ -65,3 +71,22 @@ def test_zenodo_metadata_is_well_formed() -> None:
     assert zen["title"] == cff_field((ROOT / "CITATION.cff").read_text(), "title")
     assert zen["license"] == "MIT"
     assert all(r["identifier"].startswith("https://") for r in zen["related_identifiers"])
+
+
+def test_license_names_the_author_correctly() -> None:
+    head = (ROOT / "LICENSE").read_text().splitlines()[:4]
+    assert "Copyright (c) 2026 Roberto dos Reis" in head
+
+
+def test_credit_lines_link_the_authors_website_and_affiliation() -> None:
+    for rel in ("README.md", "docs/index.md", "website/index.template.html", "company-site/index.html"):
+        text = (ROOT / rel).read_text()
+        assert WEBSITE in text, rel
+        assert "Department of Materials Science and Engineering" in text, rel
+        assert "Northwestern University" in text, rel
+
+
+def test_q_matsuite_remains_the_organisation() -> None:
+    """The company name stays: BibTeX organisation and the Zenodo description."""
+    assert "organization = {q-matsuite}," in (ROOT / "README.md").read_text()
+    assert "q-matsuite" in json.loads((ROOT / ".zenodo.json").read_text())["description"]

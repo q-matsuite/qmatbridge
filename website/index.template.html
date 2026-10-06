@@ -558,7 +558,7 @@ footer.site p { margin: 0 0 6px; }
       <p class="lede" style="margin-top:14px">Python 3.10+; the core schema has no required dependencies. Fetching from the Materials Project needs the <code>mp</code> extra and <em>your own</em> free API key (<a href="docs/api-keys/">details</a>); QMatBridge ships none.</p>
     </div>
     <div>
-      <div class="cmd"><div class="label">Install</div><pre><code>pip install qmatbridge            # core, 0.2.0
+      <div class="cmd"><div class="label">Install</div><pre><code>pip install qmatbridge            # core
 pip install "qmatbridge[mp]"      # + Materials Project adapter (Python 3.11+)</code></pre><button class="copy" type="button">Copy</button></div>
       <div class="cmd"><div class="label">Fetch an entry</div><pre><code>export MP_API_KEY=...   # your own key; QMatBridge ships none
 python -c "from qmatbridge.adapters.materials_project import fetch_entry_from_mp as f; print(f('mp-149').canonical_hash())"</code></pre><button class="copy" type="button">Copy</button></div>
@@ -644,7 +644,7 @@ python -c "from qmatbridge.adapters.materials_project import fetch_entry_from_mp
             databases to first-quantized Hamiltonians for
             quantum simulation},
   url    = {https://github.com/q-matsuite/qmatbridge},
-  version = {0.2.0},
+  version = {0.2.1},
   year   = {2026},
 }</code></pre><button class="copy" type="button">Copy</button></div>
   </div>
@@ -654,7 +654,7 @@ python -c "from qmatbridge.adapters.materials_project import fetch_entry_from_mp
 <footer class="site">
   <div class="wrap">
     <div class="credit">
-      <p><strong>QMatBridge</strong> is created and maintained by <strong>Roberto dos Reis</strong> (<a href="https://github.com/rmsreis" rel="noopener">@rmsreis</a>).</p>
+      <p><strong>QMatBridge</strong> is created and maintained by <strong><a href="https://www.robertodosreis.com" rel="noopener">Roberto dos Reis</a></strong>, Department of Materials Science and Engineering, Northwestern University (<a href="https://github.com/rmsreis" rel="noopener">@rmsreis</a>).</p>
       <p>A <a href="../">q-matsuite</a> project. Released under the MIT license. Example data from the <a href="https://materialsproject.org" rel="noopener">Materials Project</a> (CC BY 4.0).</p>
     </div>
     <div>

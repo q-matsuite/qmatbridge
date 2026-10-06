@@ -5,9 +5,10 @@ type: software
 authors:
   - family-names: "dos Reis"
     given-names: Roberto
-    affiliation: q-matsuite
-version: 0.2.0
-date-released: 2026-10-05
+    affiliation: "Department of Materials Science and Engineering, Northwestern University, Evanston, IL 60208, USA"
+    website: "https://www.robertodosreis.com"
+version: 0.2.1
+date-released: 2026-10-06
 license: MIT
 repository-code: "https://github.com/q-matsuite/qmatbridge"
 url: "https://q-matsuite.com/qmatbridge/"

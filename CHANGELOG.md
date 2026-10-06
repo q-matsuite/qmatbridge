@@ -11,6 +11,15 @@ Breaking changes to `QMatEntry` or its nested schema classes are marked
 
 ## [Unreleased]
 
+---
+
+## [0.2.1] — 2026-10-06
+
+Hardening release: fixes the defects found by stress-testing 0.2.0, corrects the author's name and
+adds the affiliation, and adds three Tier-1 materials. No schema change (`schema_version` stays
+`0.1`) and no change to any `canonical_hash()` value: entries and hashes from 0.2.0 remain valid.
+This is the first release archived on Zenodo with the corrected author metadata.
+
 Hardening from a stress test of the published 0.2.0 (install matrix on Python 3.10, 3.12, 3.13 and
 3.14, 27 live Materials Project materials, hostile-input and property-based fuzzing).
 
@@ -51,11 +60,15 @@ Hardening from a stress test of the published 0.2.0 (install matrix on Python 3.
 
 ### Changed
 - Install notes (README, website, org profile, release guide) now say `pip install qmatbridge`
-  installs 0.2.0 from PyPI; the website's install section shows the PyPI commands.
+  installs the latest release from PyPI; the website's install section shows the PyPI commands.
 - Author credited as Roberto dos Reis (the family name is "dos Reis") with affiliation q-matsuite in
   `CITATION.cff`, the BibTeX (README and website), the credit lines, `pyproject.toml`, GOVERNANCE and
-  SECURITY. `LICENSE` is unchanged. New `.zenodo.json` sets the metadata of Zenodo archive records;
-  a test keeps the citation files and the package version in sync.
+  SECURITY. New `.zenodo.json` sets the metadata of Zenodo archive records; a test keeps the citation
+  files and the package version in sync.
+- Author credited as Roberto dos Reis with the affiliation Department of Materials Science and Engineering,
+  Northwestern University (Evanston, IL), linked to https://www.robertodosreis.com, in `CITATION.cff`,
+  `.zenodo.json`, the credit lines, and the website. `LICENSE` now reads "Roberto dos Reis" (it was
+  "Roberto Reis"). q-matsuite remains the organisation in the BibTeX and the project pages.
 
 ---
 
@@ -204,6 +217,7 @@ Initial repository scaffold and schema definition.  First release prepared for P
 **Planning**
 - `planning/initial_issues.md` — ten scoped GitHub issues for v0.1–v0.4
 
-[Unreleased]: https://github.com/q-matsuite/qmatbridge/compare/v0.2.0...HEAD
+[Unreleased]: https://github.com/q-matsuite/qmatbridge/compare/v0.2.1...HEAD
+[0.2.1]: https://github.com/q-matsuite/qmatbridge/compare/v0.2.0...v0.2.1
 [0.2.0]: https://github.com/q-matsuite/qmatbridge/compare/v0.1.0...v0.2.0
 [0.1.0]: https://github.com/q-matsuite/qmatbridge/releases/tag/v0.1.0
