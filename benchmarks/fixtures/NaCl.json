@@ -3,8 +3,8 @@
     "provenance": {
       "primary": {
         "source": "materials_project",
-        "identifier": "mp-149",
-        "url": "https://materialsproject.org/materials/mp-149",
+        "identifier": "mp-22862",
+        "url": "https://materialsproject.org/materials/mp-22862",
         "metadata": {}
       },
       "additional_ids": [],
@@ -12,37 +12,35 @@
       "pseudopotential": "PAW_PBE",
       "code": "VASP",
       "code_version": null,
-      "retrieved_at": "2026-10-06T15:25:26+00:00",
+      "retrieved_at": "2026-10-06T15:25:33+00:00",
       "metadata": {
         "endpoint": "https://api.materialsproject.org",
-        "task_id": "aaafajdk",
+        "task_id": "aaafaqvs",
         "candidate_task_ids": [
-          "aaablhuv",
-          "aaacieef",
-          "aaacihll",
-          "aaaddzda",
-          "aaadxyoy",
-          "aaafajdk"
+          "aaablhxm",
+          "aaaddzkj",
+          "aaadxzjd",
+          "aaafaqvs"
         ]
       }
     },
     "structure": {
-      "formula_reduced": "Si",
-      "formula_unit_cell": "Si2",
+      "formula_reduced": "ClNa",
+      "formula_unit_cell": "ClNa",
       "num_sites": 2,
       "species": [
-        "Si",
-        "Si"
+        "Na",
+        "Cl"
       ],
       "lattice": {
-        "a": 3.8492784033699095,
-        "b": 3.8492794116013456,
-        "c": 3.849278,
-        "alpha": 60.00001213094421,
-        "beta": 60.00000346645984,
-        "gamma": 60.00001097545789,
-        "spacegroup_number": 227,
-        "spacegroup_symbol": "Fd-3m",
+        "a": 3.951402922131455,
+        "b": 3.951402172480169,
+        "c": 3.951402,
+        "alpha": 59.99998470065273,
+        "beta": 59.99999097646917,
+        "gamma": 59.99999737523848,
+        "spacegroup_number": 225,
+        "spacegroup_symbol": "Fm-3m",
         "crystal_system": "cubic",
         "volume_ang3": null,
         "metadata": {}
@@ -52,12 +50,12 @@
     }
   },
   "hamiltonian": {
-    "num_electrons": 8,
+    "num_electrons": 14,
     "spin_polarized": true,
     "basis": {
       "type": "plane_wave",
       "cutoff_energy_ev": 520.0,
-      "num_plane_waves": 1067,
+      "num_plane_waves": 1211,
       "grid_dimensions": null,
       "basis_set_name": null,
       "num_basis_functions": null,
@@ -67,14 +65,14 @@
     "terms": [],
     "oracle": null,
     "metadata": {
-      "source_task_id": "aaafajdk"
+      "source_task_id": "aaafaqvs"
     }
   },
   "exports": [],
   "tags": [
     "benchmark",
     "tier1",
-    "Si"
+    "NaCl"
   ],
   "schema_version": "0.1"
 }

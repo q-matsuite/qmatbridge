@@ -40,7 +40,7 @@
   "ecut_ev": 520.0,
   "num_plane_waves": 1067,
   "hash": "f0393a56115a4f225601344df9e4a817186544ad0bb420833e982773cca93bc5",
-  "retrieved_at": "2026-10-04T20:03:27+00:00",
+  "retrieved_at": "2026-10-06T15:25:26+00:00",
   "entry": {
    "reference": {
     "provenance": {
@@ -55,7 +55,7 @@
      "pseudopotential": "PAW_PBE",
      "code": "VASP",
      "code_version": null,
-     "retrieved_at": "2026-10-04T20:03:27+00:00",
+     "retrieved_at": "2026-10-06T15:25:26+00:00",
      "metadata": {
       "endpoint": "https://api.materialsproject.org",
       "task_id": "aaafajdk",
@@ -179,7 +179,7 @@
   "ecut_ev": 520.0,
   "num_plane_waves": 1237,
   "hash": "7614a23cc06cd107ca2b3208c64bec5bd46cbe870e80b8e5354f9e15af822ae4",
-  "retrieved_at": "2026-10-04T20:03:28+00:00",
+  "retrieved_at": "2026-10-06T15:25:28+00:00",
   "entry": {
    "reference": {
     "provenance": {
@@ -194,7 +194,7 @@
      "pseudopotential": "PAW_PBE",
      "code": "VASP",
      "code_version": null,
-     "retrieved_at": "2026-10-04T20:03:28+00:00",
+     "retrieved_at": "2026-10-06T15:25:28+00:00",
      "metadata": {
       "endpoint": "https://api.materialsproject.org",
       "task_id": "aaadyasv",
@@ -320,7 +320,7 @@
   "ecut_ev": 520.0,
   "num_plane_waves": 833,
   "hash": "5de4b21d06c950b58b1f93a27c9ff8e8d037b3a513ec922d5e598df94a29e250",
-  "retrieved_at": "2026-10-04T20:03:30+00:00",
+  "retrieved_at": "2026-10-06T15:25:30+00:00",
   "entry": {
    "reference": {
     "provenance": {
@@ -335,7 +335,7 @@
      "pseudopotential": "PAW_PBE",
      "code": "VASP",
      "code_version": null,
-     "retrieved_at": "2026-10-04T20:03:30+00:00",
+     "retrieved_at": "2026-10-06T15:25:30+00:00",
      "metadata": {
       "endpoint": "https://api.materialsproject.org",
       "task_id": "aaaeyhqn",
@@ -402,6 +402,641 @@
     "benchmark",
     "tier1",
     "LiCoO2"
+   ],
+   "schema_version": "0.1"
+  }
+ },
+ {
+  "key": "LiFePO4",
+  "label": "LiFePO\u2084",
+  "category": "battery cathode",
+  "description": "Olivine LiFePO\u2084, a 28-atom Li-ion cathode",
+  "mp_id": "mp-19017",
+  "formula": "Li4Fe4P4O16",
+  "spacegroup": "Pnma (62)",
+  "crystal_system": "orthorhombic",
+  "lattice": {
+   "a": 10.23619605,
+   "b": 5.970755100000077,
+   "c": 4.654917190000101,
+   "alpha": 90.00002115162388,
+   "beta": 90.0,
+   "gamma": 90.0
+  },
+  "sites": [
+   {
+    "el": "Li",
+    "frac": [
+     0.0,
+     0.0,
+     0.0
+    ]
+   },
+   {
+    "el": "Li",
+    "frac": [
+     0.5,
+     0.5,
+     0.5
+    ]
+   },
+   {
+    "el": "Li",
+    "frac": [
+     0.5,
+     0.0,
+     0.5
+    ]
+   },
+   {
+    "el": "Li",
+    "frac": [
+     0.0,
+     0.5,
+     0.0
+    ]
+   },
+   {
+    "el": "Fe",
+    "frac": [
+     0.78115127,
+     0.25,
+     0.52986573
+    ]
+   },
+   {
+    "el": "Fe",
+    "frac": [
+     0.71884873,
+     0.75,
+     0.02986773
+    ]
+   },
+   {
+    "el": "Fe",
+    "frac": [
+     0.28115127,
+     0.25,
+     0.97013327
+    ]
+   },
+   {
+    "el": "Fe",
+    "frac": [
+     0.21884873,
+     0.75,
+     0.47013327
+    ]
+   },
+   {
+    "el": "P",
+    "frac": [
+     0.0938663,
+     0.25,
+     0.41862257
+    ]
+   },
+   {
+    "el": "P",
+    "frac": [
+     0.4061337,
+     0.75,
+     0.91862357
+    ]
+   },
+   {
+    "el": "P",
+    "frac": [
+     0.5938663,
+     0.25,
+     0.08137543
+    ]
+   },
+   {
+    "el": "P",
+    "frac": [
+     0.9061337,
+     0.75,
+     0.58137643
+    ]
+   },
+   {
+    "el": "O",
+    "frac": [
+     0.09423067,
+     0.25,
+     0.74478656
+    ]
+   },
+   {
+    "el": "O",
+    "frac": [
+     0.83415452,
+     0.54555803,
+     0.71373534
+    ]
+   },
+   {
+    "el": "O",
+    "frac": [
+     0.83415452,
+     0.95444297,
+     0.71373534
+    ]
+   },
+   {
+    "el": "O",
+    "frac": [
+     0.90577033,
+     0.75,
+     0.25521444
+    ]
+   },
+   {
+    "el": "O",
+    "frac": [
+     0.04430856,
+     0.75,
+     0.70986445
+    ]
+   },
+   {
+    "el": "O",
+    "frac": [
+     0.40576933,
+     0.75,
+     0.24478556
+    ]
+   },
+   {
+    "el": "O",
+    "frac": [
+     0.16584548,
+     0.04555803,
+     0.28626566
+    ]
+   },
+   {
+    "el": "O",
+    "frac": [
+     0.66584548,
+     0.45444197,
+     0.21373434
+    ]
+   },
+   {
+    "el": "O",
+    "frac": [
+     0.33415452,
+     0.54555803,
+     0.78626566
+    ]
+   },
+   {
+    "el": "O",
+    "frac": [
+     0.33415452,
+     0.95444297,
+     0.78626566
+    ]
+   },
+   {
+    "el": "O",
+    "frac": [
+     0.95569144,
+     0.25,
+     0.29013655
+    ]
+   },
+   {
+    "el": "O",
+    "frac": [
+     0.45569144,
+     0.25,
+     0.20986345
+    ]
+   },
+   {
+    "el": "O",
+    "frac": [
+     0.54430856,
+     0.75,
+     0.79013755
+    ]
+   },
+   {
+    "el": "O",
+    "frac": [
+     0.59423067,
+     0.25,
+     0.75521544
+    ]
+   },
+   {
+    "el": "O",
+    "frac": [
+     0.66584548,
+     0.04555803,
+     0.21373434
+    ]
+   },
+   {
+    "el": "O",
+    "frac": [
+     0.16584548,
+     0.45444197,
+     0.28626566
+    ]
+   }
+  ],
+  "electrons": 184,
+  "spin_polarized": true,
+  "functional": "PBE+U",
+  "ecut_ev": 520.0,
+  "num_plane_waves": 7633,
+  "hash": "565d3a007d6c4496ce88165ff41595128d33ae1196439ac6677e04f87f9ba8d0",
+  "retrieved_at": "2026-10-06T15:25:31+00:00",
+  "entry": {
+   "reference": {
+    "provenance": {
+     "primary": {
+      "source": "materials_project",
+      "identifier": "mp-19017",
+      "url": "https://materialsproject.org/materials/mp-19017",
+      "metadata": {}
+     },
+     "additional_ids": [],
+     "functional": "PBE+U",
+     "pseudopotential": "PAW_PBE",
+     "code": "VASP",
+     "code_version": null,
+     "retrieved_at": "2026-10-06T15:25:31+00:00",
+     "metadata": {
+      "endpoint": "https://api.materialsproject.org",
+      "task_id": "aaadwvyp",
+      "candidate_task_ids": [
+       "aaabtihz",
+       "aaacsdjq",
+       "aaacsdmv",
+       "aaacsdsy",
+       "aaacsdxj",
+       "aaacuolu",
+       "aaacuqcp",
+       "aaacuxcs",
+       "aaacuxlm",
+       "aaaddzgz",
+       "aaadwvyp"
+      ]
+     }
+    },
+    "structure": {
+     "formula_reduced": "FeLiO4P",
+     "formula_unit_cell": "Fe4Li4O16P4",
+     "num_sites": 28,
+     "species": [
+      "Li",
+      "Li",
+      "Li",
+      "Li",
+      "Fe",
+      "Fe",
+      "Fe",
+      "Fe",
+      "P",
+      "P",
+      "P",
+      "P",
+      "O",
+      "O",
+      "O",
+      "O",
+      "O",
+      "O",
+      "O",
+      "O",
+      "O",
+      "O",
+      "O",
+      "O",
+      "O",
+      "O",
+      "O",
+      "O"
+     ],
+     "lattice": {
+      "a": 10.23619605,
+      "b": 5.970755100000077,
+      "c": 4.654917190000101,
+      "alpha": 90.00002115162388,
+      "beta": 90.0,
+      "gamma": 90.0,
+      "spacegroup_number": 62,
+      "spacegroup_symbol": "Pnma",
+      "crystal_system": "orthorhombic",
+      "volume_ang3": null,
+      "metadata": {}
+     },
+     "is_periodic": true,
+     "metadata": {}
+    }
+   },
+   "hamiltonian": {
+    "num_electrons": 184,
+    "spin_polarized": true,
+    "basis": {
+     "type": "plane_wave",
+     "cutoff_energy_ev": 520.0,
+     "num_plane_waves": 7633,
+     "grid_dimensions": null,
+     "basis_set_name": null,
+     "num_basis_functions": null,
+     "metadata": {}
+    },
+    "num_bands": null,
+    "terms": [],
+    "oracle": null,
+    "metadata": {
+     "source_task_id": "aaadwvyp"
+    }
+   },
+   "exports": [],
+   "tags": [
+    "benchmark",
+    "tier1",
+    "LiFePO4"
+   ],
+   "schema_version": "0.1"
+  }
+ },
+ {
+  "key": "NaCl",
+  "label": "NaCl",
+  "category": "ionic crystal",
+  "description": "Rocksalt sodium chloride",
+  "mp_id": "mp-22862",
+  "formula": "NaCl",
+  "spacegroup": "Fm-3m (225)",
+  "crystal_system": "cubic",
+  "lattice": {
+   "a": 3.951402922131455,
+   "b": 3.951402172480169,
+   "c": 3.951402,
+   "alpha": 59.99998470065273,
+   "beta": 59.99999097646917,
+   "gamma": 59.99999737523848
+  },
+  "sites": [
+   {
+    "el": "Na",
+    "frac": [
+     0.0,
+     0.0,
+     0.0
+    ]
+   },
+   {
+    "el": "Cl",
+    "frac": [
+     0.5,
+     0.5,
+     0.5
+    ]
+   }
+  ],
+  "electrons": 14,
+  "spin_polarized": true,
+  "functional": "PBE",
+  "ecut_ev": 520.0,
+  "num_plane_waves": 1211,
+  "hash": "6e0801483495b05ab4459435931a65c7a74f8fac2a3151e2e1fd2002ec6b5c45",
+  "retrieved_at": "2026-10-06T15:25:33+00:00",
+  "entry": {
+   "reference": {
+    "provenance": {
+     "primary": {
+      "source": "materials_project",
+      "identifier": "mp-22862",
+      "url": "https://materialsproject.org/materials/mp-22862",
+      "metadata": {}
+     },
+     "additional_ids": [],
+     "functional": "PBE",
+     "pseudopotential": "PAW_PBE",
+     "code": "VASP",
+     "code_version": null,
+     "retrieved_at": "2026-10-06T15:25:33+00:00",
+     "metadata": {
+      "endpoint": "https://api.materialsproject.org",
+      "task_id": "aaafaqvs",
+      "candidate_task_ids": [
+       "aaablhxm",
+       "aaaddzkj",
+       "aaadxzjd",
+       "aaafaqvs"
+      ]
+     }
+    },
+    "structure": {
+     "formula_reduced": "ClNa",
+     "formula_unit_cell": "ClNa",
+     "num_sites": 2,
+     "species": [
+      "Na",
+      "Cl"
+     ],
+     "lattice": {
+      "a": 3.951402922131455,
+      "b": 3.951402172480169,
+      "c": 3.951402,
+      "alpha": 59.99998470065273,
+      "beta": 59.99999097646917,
+      "gamma": 59.99999737523848,
+      "spacegroup_number": 225,
+      "spacegroup_symbol": "Fm-3m",
+      "crystal_system": "cubic",
+      "volume_ang3": null,
+      "metadata": {}
+     },
+     "is_periodic": true,
+     "metadata": {}
+    }
+   },
+   "hamiltonian": {
+    "num_electrons": 14,
+    "spin_polarized": true,
+    "basis": {
+     "type": "plane_wave",
+     "cutoff_energy_ev": 520.0,
+     "num_plane_waves": 1211,
+     "grid_dimensions": null,
+     "basis_set_name": null,
+     "num_basis_functions": null,
+     "metadata": {}
+    },
+    "num_bands": null,
+    "terms": [],
+    "oracle": null,
+    "metadata": {
+     "source_task_id": "aaafaqvs"
+    }
+   },
+   "exports": [],
+   "tags": [
+    "benchmark",
+    "tier1",
+    "NaCl"
+   ],
+   "schema_version": "0.1"
+  }
+ },
+ {
+  "key": "BaTiO3",
+  "label": "BaTiO\u2083",
+  "category": "perovskite",
+  "description": "Perovskite barium titanate",
+  "mp_id": "mp-5020",
+  "formula": "BaTiO3",
+  "spacegroup": "R3m (160)",
+  "crystal_system": "trigonal",
+  "lattice": {
+   "a": 4.033806554507884,
+   "b": 4.033805892924775,
+   "c": 4.033806146413204,
+   "alpha": 89.83638279997638,
+   "beta": 89.83636957742058,
+   "gamma": 89.83638729523724
+  },
+  "sites": [
+   {
+    "el": "Ba",
+    "frac": [
+     0.99985396,
+     0.99985396,
+     0.99985396
+    ]
+   },
+   {
+    "el": "Ti",
+    "frac": [
+     0.48666229,
+     0.48666229,
+     0.48666229
+    ]
+   },
+   {
+    "el": "O",
+    "frac": [
+     0.02028337,
+     0.51104969,
+     0.51104969
+    ]
+   },
+   {
+    "el": "O",
+    "frac": [
+     0.51104969,
+     0.51104969,
+     0.02028337
+    ]
+   },
+   {
+    "el": "O",
+    "frac": [
+     0.51104969,
+     0.02028337,
+     0.51104969
+    ]
+   }
+  ],
+  "electrons": 38,
+  "spin_polarized": true,
+  "functional": "PBE",
+  "ecut_ev": 520.0,
+  "num_plane_waves": 1791,
+  "hash": "186c3c6f7613e4663f1ce19d9f1b72088e7040ed1e5f751ee42811282101a650",
+  "retrieved_at": "2026-10-06T15:25:35+00:00",
+  "entry": {
+   "reference": {
+    "provenance": {
+     "primary": {
+      "source": "materials_project",
+      "identifier": "mp-5020",
+      "url": "https://materialsproject.org/materials/mp-5020",
+      "metadata": {}
+     },
+     "additional_ids": [],
+     "functional": "PBE",
+     "pseudopotential": "PAW_PBE",
+     "code": "VASP",
+     "code_version": null,
+     "retrieved_at": "2026-10-06T15:25:35+00:00",
+     "metadata": {
+      "endpoint": "https://api.materialsproject.org",
+      "task_id": "aaafavyw",
+      "candidate_task_ids": [
+       "aaablidd",
+       "aaacivwr",
+       "aaaciwjf",
+       "aaaciwrm",
+       "aaaddzdo",
+       "aaaegdgk",
+       "aaaexepv",
+       "aaafavyw"
+      ]
+     }
+    },
+    "structure": {
+     "formula_reduced": "BaO3Ti",
+     "formula_unit_cell": "BaO3Ti",
+     "num_sites": 5,
+     "species": [
+      "Ba",
+      "Ti",
+      "O",
+      "O",
+      "O"
+     ],
+     "lattice": {
+      "a": 4.033806554507884,
+      "b": 4.033805892924775,
+      "c": 4.033806146413204,
+      "alpha": 89.83638279997638,
+      "beta": 89.83636957742058,
+      "gamma": 89.83638729523724,
+      "spacegroup_number": 160,
+      "spacegroup_symbol": "R3m",
+      "crystal_system": "trigonal",
+      "volume_ang3": null,
+      "metadata": {}
+     },
+     "is_periodic": true,
+     "metadata": {}
+    }
+   },
+   "hamiltonian": {
+    "num_electrons": 38,
+    "spin_polarized": true,
+    "basis": {
+     "type": "plane_wave",
+     "cutoff_energy_ev": 520.0,
+     "num_plane_waves": 1791,
+     "grid_dimensions": null,
+     "basis_set_name": null,
+     "num_basis_functions": null,
+     "metadata": {}
+    },
+    "num_bands": null,
+    "terms": [],
+    "oracle": null,
+    "metadata": {
+     "source_task_id": "aaafavyw"
+    }
+   },
+   "exports": [],
+   "tags": [
+    "benchmark",
+    "tier1",
+    "BaTiO3"
    ],
    "schema_version": "0.1"
   }
