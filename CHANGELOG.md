@@ -11,6 +11,25 @@ Breaking changes to `QMatEntry` or its nested schema classes are marked
 
 ## [Unreleased]
 
+### Added
+- **Schema 0.2: atomic positions.** `SiteMetadata` (element and fractional coordinates) and
+  `StructureMetadata.sites` (default empty). `schema_version` defaults to `"0.2"`; readers accept
+  `"0.1"` and `"0.2"`. The Materials Project adapter now records positions, and the Tier-1
+  fixtures and the website carry them.
+- `canonical_hash()` covers the lattice parameters and the positions **when `sites` is non-empty**
+  (Discussion #24, option B): fixed 6-decimal strings, coordinates wrapped into [0, 1), sites
+  sorted. Python and the website's JavaScript produce identical hashes (tested by running the
+  site's actual script under Node, including exact rounding ties such as 1/128).
+
+### Changed
+- **Hashes of freshly fetched entries change.** They now include positions, so
+  `fetch_entry_from_mp("mp-149").canonical_hash()` differs from 0.2.x. Entries *without* `sites`,
+  including every entry stored by 0.2.x, keep exactly their old hash (verified for the six Tier-1
+  materials against the published values). Anyone who stored 0.2.x hashes next to freshly fetched
+  entries should re-fetch, or compare with `sites` cleared.
+- A lattice 50% larger no longer collides with the original for entries that record positions.
+- The fixture builder takes positions from the entry instead of making a second API call.
+
 ---
 
 ## [0.2.1] — 2026-10-06
