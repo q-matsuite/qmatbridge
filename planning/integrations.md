@@ -25,7 +25,7 @@ need a public Discussion before work starts, as GOVERNANCE.md requires for schem
 | Source: OPTIMADE, Alexandria | Not started |
 | Exporters | None |
 | Resource estimation | None |
-| Release | 0.2.0 is on PyPI (tag-driven trusted publishing); no DOI yet |
+| Release | 0.2.x is on PyPI (tag-driven trusted publishing); Zenodo DOI from 0.2.1 |
 
 ## Gaps that block exporters
 

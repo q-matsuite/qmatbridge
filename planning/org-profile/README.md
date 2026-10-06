@@ -83,5 +83,5 @@ to propose ideas or ask questions.
 | Hamiltonian exporters | Planned |
 | Resource estimation hooks | Planned |
 
-Install with `pip install qmatbridge` (0.2.0 is on [PyPI](https://pypi.org/project/qmatbridge/)). See the
+Install with `pip install qmatbridge` (latest release on [PyPI](https://pypi.org/project/qmatbridge/)). See the
 [roadmap](https://github.com/q-matsuite/qmatbridge#roadmap).
