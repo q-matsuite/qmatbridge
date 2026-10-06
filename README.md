@@ -332,7 +332,7 @@ academic work, please cite the repository directly:
   title   = {{QMatBridge}: A bridge from classical materials databases to
              first-quantized Hamiltonians for quantum simulation},
   url     = {https://github.com/q-matsuite/qmatbridge},
-    version = {0.1.0},
+    version = {0.2.0},
   year    = {2026},
 }
 ```

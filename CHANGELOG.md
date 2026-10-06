@@ -11,6 +11,19 @@ Breaking changes to `QMatEntry` or its nested schema classes are marked
 
 ## [Unreleased]
 
+---
+
+## [0.2.0] — 2026-10-05
+
+First release with a working Materials Project adapter. Install from PyPI with
+`pip install qmatbridge`; the `[mp]` extra (`mp-api`, `pymatgen`) needs Python 3.11+ in practice.
+The data model is unchanged (`schema_version` stays `0.1`; same fields, same `canonical_hash()`
+algorithm), so entries and hashes from 0.1.0 remain valid.
+
+Highlights: live Materials Project fetching validated for Si, GaN and LiCoO₂; plane-wave counting;
+reading entries back from JSON; a plugin registry for adapters and exporters; Tier-1 fixtures with
+nightly drift checks; documentation and a landing page at https://q-matsuite.com/qmatbridge/.
+
 ### Added
 - `qmatbridge.registry`: `Adapter` and `Exporter` protocols, lazy discovery through the
   `qmatbridge.adapters` / `qmatbridge.exporters` entry-point groups, `list_adapters`,
@@ -33,8 +46,8 @@ Breaking changes to `QMatEntry` or its nested schema classes are marked
 - Materials Project adapter: `structure_from_mp_doc` and
   `hamiltonian_from_mp_task_doc` (pure converters), plus live
   `fetch_structure_metadata_from_mp`, `fetch_hamiltonian_metadata_from_mp` and
-  `fetch_entry_from_mp` (lazy `mp-api` import). Unit-tested with a fake client;
-  **not yet validated against the live API** (`pytest -m integration`).
+  `fetch_entry_from_mp` (lazy `mp-api` import). Unit-tested with a fake client and validated
+  against the live API for Si, GaN and LiCoO₂ (nightly via `pytest -m integration`).
 - Tier-1 benchmark specification (`benchmarks/tier1.py`) and a fixture builder
   (`benchmarks/build_tier1_fixtures.py`) that validates live MP data before writing.
 - MkDocs documentation site (`mkdocs.yml`, getting-started, API reference) and a
@@ -145,5 +158,6 @@ Initial repository scaffold and schema definition.  First release prepared for P
 **Planning**
 - `planning/initial_issues.md` — ten scoped GitHub issues for v0.1–v0.4
 
-[Unreleased]: https://github.com/q-matsuite/qmatbridge/compare/v0.1.0...HEAD
+[Unreleased]: https://github.com/q-matsuite/qmatbridge/compare/v0.2.0...HEAD
+[0.2.0]: https://github.com/q-matsuite/qmatbridge/compare/v0.1.0...v0.2.0
 [0.1.0]: https://github.com/q-matsuite/qmatbridge/releases/tag/v0.1.0
