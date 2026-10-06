@@ -36,7 +36,7 @@ def test_all_species_have_valence() -> None:
 
 @pytest.mark.parametrize(
     ("key", "electrons"),
-    [("Si", 8), ("GaN", 36), ("LiCoO2", 24)],
+    [("Si", 8), ("GaN", 36), ("LiCoO2", 24), ("LiFePO4", 184), ("NaCl", 14), ("BaTiO3", 38)],
 )
 def test_expected_electrons(key: str, electrons: int) -> None:
     spec = next(s for s in TIER1 if s.key == key)

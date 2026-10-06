@@ -27,6 +27,10 @@ MP_VALENCE: dict[str, int] = {
     "Co": 9,   # Co
     "Fe": 14,  # Fe_pv
     "Ga": 13,  # Ga_d
+    "Na": 7,   # Na_pv
+    "Cl": 7,   # Cl
+    "Ba": 10,  # Ba_sv
+    "P": 5,    # P
 }
 
 
@@ -77,6 +81,19 @@ TIER1: tuple[BenchmarkSpec, ...] = (
         "Layered LiCoO\u2082, the classic Li-ion cathode", "battery cathode",
         ("Li", "Co", "O", "O"), functional="PBE+U",
     ),
+    BenchmarkSpec(
+        "LiFePO4", "LiFePO\u2084", "mp-19017",
+        "Olivine LiFePO\u2084, a 28-atom Li-ion cathode", "battery cathode",
+        ("Li",) * 4 + ("Fe",) * 4 + ("P",) * 4 + ("O",) * 16, functional="PBE+U",
+    ),
+    BenchmarkSpec(
+        "NaCl", "NaCl", "mp-22862", "Rocksalt sodium chloride", "ionic crystal",
+        ("Na", "Cl"),
+    ),
+    BenchmarkSpec(
+        "BaTiO3", "BaTiO\u2083", "mp-5020", "Perovskite barium titanate",
+        "perovskite", ("Ba", "Ti", "O", "O", "O"),
+    ),
 )
 
 #: Candidate follow-ups (not yet specified in detail): (key, mp_id, note).
@@ -84,5 +101,5 @@ PLANNED: tuple[tuple[str, str, str], ...] = (
     ("LiH", "mp-23703", "small system with exact-diagonalisation reference"),
     ("Fe", "mp-13", "BCC iron, magnetic"),
     ("MgO", "mp-1265", "ionic, wide gap"),
-    ("TiO2", "mp-2657", "rutile, d-electron system"),
+    ("TiO2", "mp-2657", "rutile; this MP entry is a 12-site cell, verify first"),
 )

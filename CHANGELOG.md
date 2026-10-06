@@ -43,6 +43,8 @@ Hardening from a stress test of the published 0.2.0 (install matrix on Python 3.
   positions, species or pseudopotential; the guide, README, vision page and website now say so.
 
 ### Added
+- Landing page visual pass: an interactive **anatomy of an entry** (real values for the selected material, with the fingerprint-covered fields marked), a **"two groups, one silicon"** illustration built from fingerprints computed in the browser, a horizontal **roadmap** with corrected statuses (v0.2 is released), and a dynamic example count.
+- Three more Tier-1 materials, fetched live and validated against the spec: LiFePO₄ (a 28-atom cathode), NaCl and BaTiO₃. The original three keep their hashes.
 - Property-based tests (`tests/property/`, `hypothesis` in the `dev` extra): reader, round trip,
   hash invariants, MP converters and plane-wave counting. Regression tests for every fix above
   (`tests/unit/test_hardening.py`) and a test that runs the documentation's code examples.

@@ -1,0 +1,111 @@
+{
+  "reference": {
+    "provenance": {
+      "primary": {
+        "source": "materials_project",
+        "identifier": "mp-19017",
+        "url": "https://materialsproject.org/materials/mp-19017",
+        "metadata": {}
+      },
+      "additional_ids": [],
+      "functional": "PBE+U",
+      "pseudopotential": "PAW_PBE",
+      "code": "VASP",
+      "code_version": null,
+      "retrieved_at": "2026-10-06T15:25:31+00:00",
+      "metadata": {
+        "endpoint": "https://api.materialsproject.org",
+        "task_id": "aaadwvyp",
+        "candidate_task_ids": [
+          "aaabtihz",
+          "aaacsdjq",
+          "aaacsdmv",
+          "aaacsdsy",
+          "aaacsdxj",
+          "aaacuolu",
+          "aaacuqcp",
+          "aaacuxcs",
+          "aaacuxlm",
+          "aaaddzgz",
+          "aaadwvyp"
+        ]
+      }
+    },
+    "structure": {
+      "formula_reduced": "FeLiO4P",
+      "formula_unit_cell": "Fe4Li4O16P4",
+      "num_sites": 28,
+      "species": [
+        "Li",
+        "Li",
+        "Li",
+        "Li",
+        "Fe",
+        "Fe",
+        "Fe",
+        "Fe",
+        "P",
+        "P",
+        "P",
+        "P",
+        "O",
+        "O",
+        "O",
+        "O",
+        "O",
+        "O",
+        "O",
+        "O",
+        "O",
+        "O",
+        "O",
+        "O",
+        "O",
+        "O",
+        "O",
+        "O"
+      ],
+      "lattice": {
+        "a": 10.23619605,
+        "b": 5.970755100000077,
+        "c": 4.654917190000101,
+        "alpha": 90.00002115162388,
+        "beta": 90.0,
+        "gamma": 90.0,
+        "spacegroup_number": 62,
+        "spacegroup_symbol": "Pnma",
+        "crystal_system": "orthorhombic",
+        "volume_ang3": null,
+        "metadata": {}
+      },
+      "is_periodic": true,
+      "metadata": {}
+    }
+  },
+  "hamiltonian": {
+    "num_electrons": 184,
+    "spin_polarized": true,
+    "basis": {
+      "type": "plane_wave",
+      "cutoff_energy_ev": 520.0,
+      "num_plane_waves": 7633,
+      "grid_dimensions": null,
+      "basis_set_name": null,
+      "num_basis_functions": null,
+      "metadata": {}
+    },
+    "num_bands": null,
+    "terms": [],
+    "oracle": null,
+    "metadata": {
+      "source_task_id": "aaadwvyp"
+    }
+  },
+  "exports": [],
+  "tags": [
+    "benchmark",
+    "tier1",
+    "LiFePO4"
+  ],
+  "schema_version": "0.1"
+}

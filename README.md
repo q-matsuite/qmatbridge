@@ -259,7 +259,7 @@ qmatbridge/
 
 ## Roadmap
 
-### v0.1 — Schema and scaffold *(current)*
+### v0.1 — Schema and scaffold *(released)*
 
 - [x] Core dataclasses: `MaterialReference`, `HamiltonianMetadata`, `QMatEntry`
 - [x] Oracle and term metadata: `OracleMetadata`, `TermMetadata`, `ExportMetadata`
@@ -270,13 +270,15 @@ qmatbridge/
 - [x] JSON round-trip regression fixtures
 - [x] Oracle convention vocabulary (`oracle_type`, `index_encoding`)
 
-### v0.2 — Materials Project live integration
+### v0.2 — Materials Project live integration *(released as 0.2.0)*
 
-- [x] `fetch_structure_metadata_from_mp` and `fetch_hamiltonian_metadata_from_mp`
-      (implemented; live-API validation pending)
+- [x] `fetch_structure_metadata_from_mp`, `fetch_hamiltonian_metadata_from_mp` and
+      `fetch_entry_from_mp`, validated against the live API
 - [x] Plane-wave count utility (`num_plane_waves_from_ecut`)
-- [x] Tier-1 benchmark fixtures (Si, GaN, LiCoO₂; LiH, Fe, MgO, TiO₂ planned)
-- [x] MkDocs documentation site (GitHub Pages deploy configured)
+- [x] Tier-1 benchmark fixtures (Si, GaN, LiCoO₂, LiFePO₄, NaCl, BaTiO₃; LiH, Fe, MgO, TiO₂ planned)
+      with nightly live drift checks
+- [x] Entry reader (`read_entry_json`) and a plugin registry for adapters and exporters
+- [x] MkDocs documentation site, deployed with the landing page
 
 ### v0.3 — OPTIMADE, OQMD, and Alexandria adapters
 

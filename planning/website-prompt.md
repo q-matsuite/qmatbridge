@@ -31,7 +31,7 @@ is a research-software page, not a SaaS pitch.
 
 ## Examples explorer (added on review)
 
-Right after the hero: a material picker (Si, GaN, LiCoO₂ — semiconductor, wide-gap
+Right after the hero: a material picker (the six Tier-1 materials: Si, GaN, LiCoO₂, LiFePO₄, NaCl, BaTiO₃; semiconductor, wide-gap
 III–V, battery cathode) driving a rotatable unit-cell viewer (drag or arrow keys, bonds
 inferred from covalent radii), stat tiles (formula, space group, electrons, plane
 waves, functional, spin, MP source, hash) and Python / JSON tabs with copy buttons.
@@ -45,7 +45,7 @@ entries pass the Tier-1 spec checks. With no data file the section is hidden.
   `aria-hidden`, pauses off-screen and when the tab is hidden, static under
   `prefers-reduced-motion`); animated data flow along the pipeline arrows.
 - **Examples explorer:** per-material fingerprint image generated from the hash, six stat
-  tiles, a scale comparison (plane waves, electrons) across the three materials.
+  tiles, a scale comparison (plane waves, electrons) across the materials.
 - **Fingerprint demo (`#fingerprint`):** edit functional, cutoff, electrons, spin and tags;
   the page recomputes the SHA-256 in the browser with the same rules as
   `QMatEntry.canonical_hash()` (pure-JS SHA-256, so it works outside secure contexts) and
@@ -114,3 +114,15 @@ Verified in the browser pane before the PR is marked ready:
 4. Lighthouse: Accessibility ≥ 95, Best Practices ≥ 95, SEO ≥ 95, no console errors.
 5. All internal links resolve under `/qmatbridge/` and with the Pages path removed.
 6. Every factual claim on the page is traceable to the README, docs, or code.
+
+## Design pass 3 (visual pass)
+
+- The lower half was text-heavy, so it became interactive and data-driven: *Anatomy of an entry*
+  (select provenance, structure, basis, oracle, exports or hash; the values shown are the real ones
+  for the selected material, and a lit dot marks the fields that are in the fingerprint), *Two groups,
+  one silicon* (two cards whose fingerprints are computed in the browser; Group B is labelled as an
+  invented illustration), and a horizontal roadmap with a progress track.
+- Everything is derived from `website/data/examples.json`; with no data the sections fall back to the
+  plain list and the examples/fingerprint/illustration sections hide.
+- Claims on the page must stay checkable: no invented numbers, and the hash is described as covering
+  eleven setup fields and **not** the geometry.

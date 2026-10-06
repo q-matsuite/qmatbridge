@@ -3,8 +3,8 @@
     "provenance": {
       "primary": {
         "source": "materials_project",
-        "identifier": "mp-149",
-        "url": "https://materialsproject.org/materials/mp-149",
+        "identifier": "mp-5020",
+        "url": "https://materialsproject.org/materials/mp-5020",
         "metadata": {}
       },
       "additional_ids": [],
@@ -12,38 +12,43 @@
       "pseudopotential": "PAW_PBE",
       "code": "VASP",
       "code_version": null,
-      "retrieved_at": "2026-10-06T15:25:26+00:00",
+      "retrieved_at": "2026-10-06T15:25:35+00:00",
       "metadata": {
         "endpoint": "https://api.materialsproject.org",
-        "task_id": "aaafajdk",
+        "task_id": "aaafavyw",
         "candidate_task_ids": [
-          "aaablhuv",
-          "aaacieef",
-          "aaacihll",
-          "aaaddzda",
-          "aaadxyoy",
-          "aaafajdk"
+          "aaablidd",
+          "aaacivwr",
+          "aaaciwjf",
+          "aaaciwrm",
+          "aaaddzdo",
+          "aaaegdgk",
+          "aaaexepv",
+          "aaafavyw"
         ]
       }
     },
     "structure": {
-      "formula_reduced": "Si",
-      "formula_unit_cell": "Si2",
-      "num_sites": 2,
+      "formula_reduced": "BaO3Ti",
+      "formula_unit_cell": "BaO3Ti",
+      "num_sites": 5,
       "species": [
-        "Si",
-        "Si"
+        "Ba",
+        "Ti",
+        "O",
+        "O",
+        "O"
       ],
       "lattice": {
-        "a": 3.8492784033699095,
-        "b": 3.8492794116013456,
-        "c": 3.849278,
-        "alpha": 60.00001213094421,
-        "beta": 60.00000346645984,
-        "gamma": 60.00001097545789,
-        "spacegroup_number": 227,
-        "spacegroup_symbol": "Fd-3m",
-        "crystal_system": "cubic",
+        "a": 4.033806554507884,
+        "b": 4.033805892924775,
+        "c": 4.033806146413204,
+        "alpha": 89.83638279997638,
+        "beta": 89.83636957742058,
+        "gamma": 89.83638729523724,
+        "spacegroup_number": 160,
+        "spacegroup_symbol": "R3m",
+        "crystal_system": "trigonal",
         "volume_ang3": null,
         "metadata": {}
       },
@@ -52,12 +57,12 @@
     }
   },
   "hamiltonian": {
-    "num_electrons": 8,
+    "num_electrons": 38,
     "spin_polarized": true,
     "basis": {
       "type": "plane_wave",
       "cutoff_energy_ev": 520.0,
-      "num_plane_waves": 1067,
+      "num_plane_waves": 1791,
       "grid_dimensions": null,
       "basis_set_name": null,
       "num_basis_functions": null,
@@ -67,14 +72,14 @@
     "terms": [],
     "oracle": null,
     "metadata": {
-      "source_task_id": "aaafajdk"
+      "source_task_id": "aaafavyw"
     }
   },
   "exports": [],
   "tags": [
     "benchmark",
     "tier1",
-    "Si"
+    "BaTiO3"
   ],
   "schema_version": "0.1"
 }
