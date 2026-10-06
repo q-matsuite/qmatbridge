@@ -145,7 +145,7 @@ Discussions before any code is written.
 ### Installation
 
 ```bash
-pip install qmatbridge             # 0.2.0 from PyPI; the core has no required dependencies
+pip install qmatbridge             # from PyPI; the core has no required dependencies
 pip install "qmatbridge[mp]"       # + Materials Project adapter (mp-api, pymatgen); use Python 3.11+
 ```
 
@@ -338,7 +338,7 @@ academic work, please cite the repository directly:
   title   = {{QMatBridge}: A bridge from classical materials databases to
              first-quantized Hamiltonians for quantum simulation},
   url     = {https://github.com/q-matsuite/qmatbridge},
-    version = {0.2.0},
+    version = {0.2.1},
   year    = {2026},
 }
 ```
@@ -350,7 +350,7 @@ once the v0.2 Materials Project adapter is complete and the API is stable.
 
 ## Author
 
-Created and maintained by [Roberto dos Reis](https://github.com/rmsreis) ([@rmsreis](https://github.com/rmsreis)).
+Created and maintained by [Roberto dos Reis](https://www.robertodosreis.com), Department of Materials Science and Engineering, Northwestern University ([@rmsreis](https://github.com/rmsreis)).
 
 ---
 

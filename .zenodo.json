@@ -1,11 +1,11 @@
 {
   "title": "QMatBridge: A bridge from classical materials databases to first-quantized Hamiltonians for quantum simulation",
   "upload_type": "software",
-  "description": "QMatBridge is a Python library that turns classical materials-database records into a neutral, provenance-rich description of the Hamiltonian (QMatEntry) for fault-tolerant quantum simulation. Entries carry provenance and a deterministic canonical hash so benchmark results can be compared and reproduced.",
+  "description": "QMatBridge is a Python library that turns classical materials-database records into a neutral, provenance-rich description of the Hamiltonian (QMatEntry) for fault-tolerant quantum simulation. Entries carry provenance and a deterministic canonical hash so benchmark results can be compared and reproduced. Developed by q-matsuite.",
   "creators": [
     {
       "name": "dos Reis, Roberto",
-      "affiliation": "q-matsuite"
+      "affiliation": "Department of Materials Science and Engineering, Northwestern University, Evanston, IL 60208, USA"
     }
   ],
   "license": "MIT",

@@ -24,7 +24,7 @@ is a research-software page, not a SaaS pitch.
 
 - Describe the project as **early-stage**. Schema + JSON I/O + MP adapter exist;
   exporters are planned.
-- PyPI has 0.2.0 (`pip install qmatbridge`); the `[mp]` extra needs Python 3.11+. Do not claim user counts, testimonials,
+- PyPI has the latest release (`pip install qmatbridge`); the `[mp]` extra needs Python 3.11+. Do not claim user counts, testimonials,
   benchmark results, partner logos, or funding. No fabricated metrics.
 - Install snippet is `pip install qmatbridge` (and `"qmatbridge[mp]"`).
 - Citation block matches `README.md` and `CITATION.cff` exactly.

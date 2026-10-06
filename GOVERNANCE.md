@@ -34,7 +34,7 @@ Maintainers have commit access to the repository and are responsible for:
 
 | Name | GitHub | Affiliation |
 | --- | --- | --- |
-| Roberto dos Reis | [@rmsreis](https://github.com/rmsreis) | — |
+| [Roberto dos Reis](https://www.robertodosreis.com) | [@rmsreis](https://github.com/rmsreis) | — |
 
 New maintainers are nominated by an existing maintainer and confirmed by
 consensus of all current maintainers. There is no fixed term; maintainers

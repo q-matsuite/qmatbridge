@@ -5,8 +5,8 @@ A release is a version bump, a tag, and one automated workflow. PyPI is publishe
 
 ## Where things stand
 
-- `qmatbridge` **0.2.0** is on PyPI (released with this workflow; 0.1.0 was published by hand on
-  2026-06-04). Versions cannot be re-uploaded, so the next release must be higher than 0.2.0.
+- `qmatbridge` is on PyPI: 0.1.0 was published by hand on 2026-06-04, and later releases (0.2.0, 0.2.1) with
+  this workflow. Versions cannot be re-uploaded, so the next release must be higher than the latest.
 - The PyPI and TestPyPI trusted publishers are registered and both have been exercised.
 - TestPyPI's `0.1.0` was used by the dry run, so a dry run of a later version needs that version
   to be unused there (for example `0.3.0rc1`).

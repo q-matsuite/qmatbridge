@@ -31,4 +31,4 @@ OPTIMADE sources  ─┘
 
 ---
 
-Created and maintained by [Roberto dos Reis](https://github.com/rmsreis) ([@rmsreis](https://github.com/rmsreis)).
+Created and maintained by [Roberto dos Reis](https://www.robertodosreis.com), Department of Materials Science and Engineering, Northwestern University ([@rmsreis](https://github.com/rmsreis)).
