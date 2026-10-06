@@ -7,6 +7,7 @@ Hamiltonians for fault-tolerant quantum simulation.**
 [![Python 3.10+](https://img.shields.io/badge/python-3.10%2B-blue.svg)](https://www.python.org/downloads/)
 [![CI](https://github.com/q-matsuite/qmatbridge/actions/workflows/python-package.yml/badge.svg)](https://github.com/q-matsuite/qmatbridge/actions)
 [![PyPI](https://img.shields.io/pypi/v/qmatbridge.svg)](https://pypi.org/project/qmatbridge/)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.23192772.svg)](https://doi.org/10.5281/zenodo.23192772)
 [![Website](https://img.shields.io/badge/website-q--matsuite.com-5fd4dd.svg)](https://q-matsuite.com/qmatbridge/)
 [![Docs](https://img.shields.io/badge/docs-mkdocs-blue.svg)](https://q-matsuite.com/qmatbridge/docs/)
 
@@ -104,8 +105,8 @@ QMatBridge is intentionally narrow: it is a bridge, not a database.
 - Gaussian / LCAO / real-space basis sets
 - Molecular (non-periodic) systems
 - Excited-state or TDDFT Hamiltonians
-- Live OQMD / OPTIMADE calls (planned v0.3)
-- Exporter implementations (planned v0.4)
+- Live OQMD / OPTIMADE calls (planned v0.4)
+- Exporter implementations (planned v0.5)
 
 ---
 
@@ -237,7 +238,7 @@ qmatbridge/
 │   ├── basis.py                   # Plane-wave counting utilities
 │   └── adapters/
 │       ├── materials_project.py   # Materials Project adapter
-│       └── oqmd.py                # OQMD adapter stub (v0.3 target)
+│       └── oqmd.py                # OQMD adapter stub (v0.4 target)
 ├── docs/
 │   ├── vision.md                  # Design rationale and architectural constraints
 │   ├── adapters.md                # Upstream adapter documentation
@@ -281,26 +282,35 @@ qmatbridge/
 - [x] Entry reader (`read_entry_json`) and a plugin registry for adapters and exporters
 - [x] MkDocs documentation site, deployed with the landing page
 
-### v0.3 — OPTIMADE, OQMD, and Alexandria adapters
+### v0.3 — Atomic positions and a geometry-aware hash *(released as 0.3.0)*
+
+- [x] Schema 0.2: `SiteMetadata` and `StructureMetadata.sites` (fractional coordinates)
+- [x] `canonical_hash()` covers lattice and positions when an entry records them; entries
+      without positions keep their old hash
+- [x] Python and website JavaScript produce identical hashes (tested under Node)
+- [x] Tier-1 fixtures and the website carry atomic positions
+- [ ] Per-species valence charges (still open, issue #13)
+
+### v0.4 — OPTIMADE, OQMD, and Alexandria adapters
 
 - [ ] Generic OPTIMADE adapter (AFLOW, JARVIS, NOMAD, MC3D)
 - [ ] OQMD live fetch
 - [ ] Alexandria adapter (PBEsol / HSE06 / r²SCAN, ~4.5 M structures)
 - [ ] Cross-database deduplication via shared ICSD numbers
 
-### v0.4 — Hamiltonian exporters
+### v0.5 — Hamiltonian exporters
 
 - [ ] OpenFermion `InteractionOperator` exporter
 - [ ] First-quantized plane-wave Hamiltonian (raw NumPy arrays)
 - [ ] LCU coefficient export for `qualtran` / `pyLIQTR`
 
-### v0.5 — Resource estimation hooks
+### v0.6 — Resource estimation hooks
 
 - [ ] T-count and Toffoli estimation interface
 - [ ] Qubit footprint estimator
 - [ ] Direct integration with `qualtran` / `pyLIQTR` resource analysis
 
-### Beyond v0.5
+### Beyond v0.6
 
 - Gaussian and real-space basis support
 - Defect and surface slab geometries
@@ -338,7 +348,8 @@ academic work, please cite the repository directly:
   title   = {{QMatBridge}: A bridge from classical materials databases to
              first-quantized Hamiltonians for quantum simulation},
   url     = {https://github.com/q-matsuite/qmatbridge},
-    version = {0.2.1},
+    version = {0.3.0},
+    doi     = {10.5281/zenodo.23192772},
   year    = {2026},
 }
 ```

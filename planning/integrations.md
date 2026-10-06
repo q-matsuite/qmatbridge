@@ -85,7 +85,7 @@ Each source documents its licence and key requirements (see the bring-your-own-k
 *Acceptance:* each exporter reproduces a published or analytically known number on a small system
 (e.g. total G-vector count against `qmatbridge.basis`), recorded in `ExportMetadata`.
 
-### M6 — Resource estimation (roadmap v0.5)
+### M6 — Resource estimation (roadmap v0.6)
 T/Toffoli and qubit estimates from `OracleMetadata`, delegating to qualtran or pyLIQTR rather than
 reimplementing them. Estimates are labelled with the method, assumptions and the entry hash.
 

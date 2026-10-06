@@ -11,6 +11,15 @@ Breaking changes to `QMatEntry` or its nested schema classes are marked
 
 ## [Unreleased]
 
+---
+
+## [0.3.0] — 2026-10-06
+
+Schema 0.2: atomic positions, and a fingerprint that covers them. **[BREAKING] for stored
+hashes of freshly fetched entries** (details under *Changed*). The roadmap is renumbered so that
+this schema work is v0.3; the OPTIMADE/OQMD/Alexandria adapters move to v0.4, exporters to v0.5 and
+resource estimation to v0.6.
+
 ### Added
 - **Schema 0.2: atomic positions.** `SiteMetadata` (element and fractional coordinates) and
   `StructureMetadata.sites` (default empty). `schema_version` defaults to `"0.2"`; readers accept
@@ -29,6 +38,14 @@ Breaking changes to `QMatEntry` or its nested schema classes are marked
   entries should re-fetch, or compare with `sites` cleared.
 - A lattice 50% larger no longer collides with the original for entries that record positions.
 - The fixture builder takes positions from the entry instead of making a second API call.
+- **Forward compatibility.** Entries written by 0.3.0 carry `schema_version: "0.2"`, which 0.2.x
+  readers reject with a clear `unsupported schema_version` error. 0.3.0 reads both `"0.1"` and `"0.2"`.
+- Roadmap renumbered in the README, docs and website (see above).
+- `CITATION.cff` and the README now carry the Zenodo concept DOI `10.5281/zenodo.23192772`
+  (the 0.2.1 archive is `10.5281/zenodo.23192773`).
+
+### Fixed
+- The release workflow is safe to retry: PyPI upload skips files that already exist (#40).
 
 ---
 
@@ -236,7 +253,8 @@ Initial repository scaffold and schema definition.  First release prepared for P
 **Planning**
 - `planning/initial_issues.md` — ten scoped GitHub issues for v0.1–v0.4
 
-[Unreleased]: https://github.com/q-matsuite/qmatbridge/compare/v0.2.1...HEAD
+[Unreleased]: https://github.com/q-matsuite/qmatbridge/compare/v0.3.0...HEAD
+[0.3.0]: https://github.com/q-matsuite/qmatbridge/compare/v0.2.1...v0.3.0
 [0.2.1]: https://github.com/q-matsuite/qmatbridge/compare/v0.2.0...v0.2.1
 [0.2.0]: https://github.com/q-matsuite/qmatbridge/compare/v0.1.0...v0.2.0
 [0.1.0]: https://github.com/q-matsuite/qmatbridge/releases/tag/v0.1.0

@@ -88,7 +88,7 @@ print(ref.provenance.primary.identifier)   # "mp-149"
 
 | | |
 | --- | --- |
-| **Status** | Planned — v0.3 target |
+| **Status** | Planned — v0.4 target |
 | **Module** | `qmatbridge.adapters.optimade` (planned) |
 | **Optional extra** | `pip install qmatbridge[optimade]` |
 | **Spec** | https://www.optimade.org |
@@ -117,7 +117,7 @@ adapter targeting the OPTIMADE spec covers all compliant sources.
 
 | | |
 | --- | --- |
-| **Status** | Planned — v0.3 target |
+| **Status** | Planned — v0.4 target |
 | **Module** | `qmatbridge.adapters.alexandria` (planned) |
 | **Optional extra** | `pip install qmatbridge[alexandria]` |
 | **Database** | https://alexandria.icams.rub.de |
@@ -149,7 +149,7 @@ dependence in Hamiltonian norms.
 
 | | |
 | --- | --- |
-| **Status** | Stub available — full implementation planned for v0.3 |
+| **Status** | Stub available — full implementation planned for v0.4 |
 | **Module** | `qmatbridge.adapters.oqmd` |
 | **Optional extra** | `pip install qmatbridge[oqmd]` (adds `qmpy-rester`) |
 | **Database** | [oqmd.org](https://oqmd.org) |
@@ -174,7 +174,7 @@ Entry IDs are integers.  QMatBridge stores them in canonical prefixed form:
 - **Comparable DFT settings**: VASP + PBE + PAW_PBE, same functional family as
   MP, so λ values are directly comparable across databases.
 
-### Planned v0.3 scope
+### Planned v0.4 scope
 
 - `fetch_structure_metadata_from_oqmd` — lattice, sites, spacegroup via
   the public REST endpoint ``/oqmdapi/entry/<id>``

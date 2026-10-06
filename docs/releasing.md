@@ -55,7 +55,10 @@ A release is a version bump, a tag, and one automated workflow. PyPI is publishe
    python -c "import qmatbridge; print(qmatbridge.__version__)"
    ```
 
-7. If Zenodo is on, add the DOI badge to the README and a `doi:` line to `CITATION.cff`.
+7. Zenodo archives the release automatically. `CITATION.cff` and the README badge use the *concept* DOI
+   (`10.5281/zenodo.23192772`), which always resolves to the latest version, so no per-release edit is
+   needed. Each release also gets its own version DOI, shown on its Zenodo record; cite that one when you
+   need to point at an exact version.
 
 ## If something goes wrong
 

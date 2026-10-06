@@ -267,7 +267,7 @@ For Qiskit users, the expected export path is:
 
 1. Set `ExportMetadata.framework = "qiskit"`, `format = "SparsePauliOp"` or
    `"FermionOperator"`.
-2. The QMatBridge exporter (planned v0.4) produces a serialized
+2. The QMatBridge exporter (planned v0.5) produces a serialized
    `SparsePauliOp` (`.npz` or `.json`).
 3. `artifact_path` points to that file; downstream Qiskit circuits load it
    via `SparsePauliOp.from_list(...)`.

@@ -338,7 +338,7 @@ footer.site p { margin: 0 0 6px; }
 .a-note { padding: 12px 20px 16px; color: var(--muted); font-size: 0.9rem; }
 
 /* horizontal roadmap */
-.roadmap { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); position: relative; }
+.roadmap { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); position: relative; }
 .roadmap::before { content: ""; position: absolute; left: 8px; right: 0; top: 7px; height: 2px; background: var(--border); }
 .roadmap li { position: relative; padding: 34px 18px 0 0; }
 .roadmap li::before { content: ""; position: absolute; left: 0; top: 0; width: 16px; height: 16px; border-radius: 50%; background: var(--bg); border: 2px solid var(--border); z-index: 1; }
@@ -601,9 +601,10 @@ python -c "from qmatbridge.adapters.materials_project import fetch_entry_from_mp
     <ol class="roadmap reveal">
       <li class="done"><h3>v0.1 <span class="pill ok">done</span></h3><p>Schema, JSON I/O, canonical hash, adapter stubs, CI.</p><span class="when">June 2026</span></li>
       <li class="done"><h3>v0.2 <span class="pill ok">released</span></h3><p>Materials Project adapter validated against the live API, plane-wave utility, entry reader, plugin registry, Tier-1 fixtures with nightly drift checks, docs.</p><span class="when">0.2.0 · October 2026</span></li>
-      <li class="next"><h3>v0.3 <span class="pill acc">next</span></h3><p>Atomic positions in the schema (hashed when present), OPTIMADE, OQMD and Alexandria adapters; cross-database deduplication.</p></li>
-      <li><h3>v0.4 <span class="pill">planned</span></h3><p>Exporters: OpenFermion, raw plane-wave arrays, LCU coefficients for qualtran / pyLIQTR.</p></li>
-      <li><h3>v0.5 <span class="pill">planned</span></h3><p>T-count, Toffoli and qubit estimation hooks.</p></li>
+      <li class="done"><h3>v0.3 <span class="pill ok">released</span></h3><p>Atomic positions in the schema (schema 0.2), hashed when an entry records them; the website recomputes the same fingerprint in your browser.</p><span class="when">0.3.0 · October 2026</span></li>
+      <li class="next"><h3>v0.4 <span class="pill acc">next</span></h3><p>OPTIMADE, OQMD and Alexandria adapters; cross-database deduplication.</p></li>
+      <li><h3>v0.5 <span class="pill">planned</span></h3><p>Exporters: OpenFermion, raw plane-wave arrays, LCU coefficients for qualtran / pyLIQTR.</p></li>
+      <li><h3>v0.6 <span class="pill">planned</span></h3><p>T-count, Toffoli and qubit estimation hooks.</p></li>
     </ol>
     <div class="focus-card reveal">
       <div>
@@ -644,7 +645,7 @@ python -c "from qmatbridge.adapters.materials_project import fetch_entry_from_mp
             databases to first-quantized Hamiltonians for
             quantum simulation},
   url    = {https://github.com/q-matsuite/qmatbridge},
-  version = {0.2.1},
+  version = {0.3.0},
   year   = {2026},
 }</code></pre><button class="copy" type="button">Copy</button></div>
   </div>
