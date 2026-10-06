@@ -39,8 +39,8 @@
   "functional": "PBE",
   "ecut_ev": 520.0,
   "num_plane_waves": 1067,
-  "hash": "f0393a56115a4f225601344df9e4a817186544ad0bb420833e982773cca93bc5",
-  "retrieved_at": "2026-10-06T15:25:26+00:00",
+  "hash": "dd6ee3f62e7d1865195c45b8854a66a9d3f503f31166d48f6186462c10517b12",
+  "retrieved_at": "2026-10-06T15:46:49+00:00",
   "entry": {
    "reference": {
     "provenance": {
@@ -55,7 +55,7 @@
      "pseudopotential": "PAW_PBE",
      "code": "VASP",
      "code_version": null,
-     "retrieved_at": "2026-10-06T15:25:26+00:00",
+     "retrieved_at": "2026-10-06T15:46:49+00:00",
      "metadata": {
       "endpoint": "https://api.materialsproject.org",
       "task_id": "aaafajdk",
@@ -91,7 +91,27 @@
       "metadata": {}
      },
      "is_periodic": true,
-     "metadata": {}
+     "metadata": {},
+     "sites": [
+      {
+       "element": "Si",
+       "frac_coords": [
+        0.875,
+        0.875,
+        0.875
+       ],
+       "metadata": {}
+      },
+      {
+       "element": "Si",
+       "frac_coords": [
+        0.125,
+        0.125,
+        0.125
+       ],
+       "metadata": {}
+      }
+     ]
     }
    },
    "hamiltonian": {
@@ -119,7 +139,7 @@
     "tier1",
     "Si"
    ],
-   "schema_version": "0.1"
+   "schema_version": "0.2"
   }
  },
  {
@@ -178,8 +198,8 @@
   "functional": "PBE",
   "ecut_ev": 520.0,
   "num_plane_waves": 1237,
-  "hash": "7614a23cc06cd107ca2b3208c64bec5bd46cbe870e80b8e5354f9e15af822ae4",
-  "retrieved_at": "2026-10-06T15:25:28+00:00",
+  "hash": "1c42c9e99db58677b18684eb01e9e5cf1b04bec5515a6c251f42649f0b4a9ad1",
+  "retrieved_at": "2026-10-06T15:46:50+00:00",
   "entry": {
    "reference": {
     "provenance": {
@@ -194,7 +214,7 @@
      "pseudopotential": "PAW_PBE",
      "code": "VASP",
      "code_version": null,
-     "retrieved_at": "2026-10-06T15:25:28+00:00",
+     "retrieved_at": "2026-10-06T15:46:50+00:00",
      "metadata": {
       "endpoint": "https://api.materialsproject.org",
       "task_id": "aaadyasv",
@@ -232,7 +252,45 @@
       "metadata": {}
      },
      "is_periodic": true,
-     "metadata": {}
+     "metadata": {},
+     "sites": [
+      {
+       "element": "Ga",
+       "frac_coords": [
+        0.666667,
+        0.333333,
+        0.49908371
+       ],
+       "metadata": {}
+      },
+      {
+       "element": "Ga",
+       "frac_coords": [
+        0.333333,
+        0.666667,
+        0.99908371
+       ],
+       "metadata": {}
+      },
+      {
+       "element": "N",
+       "frac_coords": [
+        0.666667,
+        0.333333,
+        0.87591629
+       ],
+       "metadata": {}
+      },
+      {
+       "element": "N",
+       "frac_coords": [
+        0.333333,
+        0.666667,
+        0.37591629
+       ],
+       "metadata": {}
+      }
+     ]
     }
    },
    "hamiltonian": {
@@ -260,7 +318,7 @@
     "tier1",
     "GaN"
    ],
-   "schema_version": "0.1"
+   "schema_version": "0.2"
   }
  },
  {
@@ -319,8 +377,8 @@
   "functional": "PBE+U",
   "ecut_ev": 520.0,
   "num_plane_waves": 833,
-  "hash": "5de4b21d06c950b58b1f93a27c9ff8e8d037b3a513ec922d5e598df94a29e250",
-  "retrieved_at": "2026-10-06T15:25:30+00:00",
+  "hash": "2b196c74c7e414fbe0bc9a772d80a577e7576f78c2ef1ea8d2f19f2c3943b368",
+  "retrieved_at": "2026-10-06T15:46:51+00:00",
   "entry": {
    "reference": {
     "provenance": {
@@ -335,7 +393,7 @@
      "pseudopotential": "PAW_PBE",
      "code": "VASP",
      "code_version": null,
-     "retrieved_at": "2026-10-06T15:25:30+00:00",
+     "retrieved_at": "2026-10-06T15:46:51+00:00",
      "metadata": {
       "endpoint": "https://api.materialsproject.org",
       "task_id": "aaaeyhqn",
@@ -375,7 +433,45 @@
       "metadata": {}
      },
      "is_periodic": true,
-     "metadata": {}
+     "metadata": {},
+     "sites": [
+      {
+       "element": "Li",
+       "frac_coords": [
+        -0.0,
+        -0.0,
+        -0.0
+       ],
+       "metadata": {}
+      },
+      {
+       "element": "Co",
+       "frac_coords": [
+        0.5,
+        0.5,
+        0.5
+       ],
+       "metadata": {}
+      },
+      {
+       "element": "O",
+       "frac_coords": [
+        0.7599932,
+        0.7599932,
+        0.7599932
+       ],
+       "metadata": {}
+      },
+      {
+       "element": "O",
+       "frac_coords": [
+        0.2400068,
+        0.2400068,
+        0.2400068
+       ],
+       "metadata": {}
+      }
+     ]
     }
    },
    "hamiltonian": {
@@ -403,7 +499,7 @@
     "tier1",
     "LiCoO2"
    ],
-   "schema_version": "0.1"
+   "schema_version": "0.2"
   }
  },
  {
@@ -654,8 +750,8 @@
   "functional": "PBE+U",
   "ecut_ev": 520.0,
   "num_plane_waves": 7633,
-  "hash": "565d3a007d6c4496ce88165ff41595128d33ae1196439ac6677e04f87f9ba8d0",
-  "retrieved_at": "2026-10-06T15:25:31+00:00",
+  "hash": "6686ce1eba14a42fbc3c82e728465167e1ee14c9ebbc4d3741fa4c2bb4e873df",
+  "retrieved_at": "2026-10-06T15:46:52+00:00",
   "entry": {
    "reference": {
     "provenance": {
@@ -670,7 +766,7 @@
      "pseudopotential": "PAW_PBE",
      "code": "VASP",
      "code_version": null,
-     "retrieved_at": "2026-10-06T15:25:31+00:00",
+     "retrieved_at": "2026-10-06T15:46:52+00:00",
      "metadata": {
       "endpoint": "https://api.materialsproject.org",
       "task_id": "aaadwvyp",
@@ -737,7 +833,261 @@
       "metadata": {}
      },
      "is_periodic": true,
-     "metadata": {}
+     "metadata": {},
+     "sites": [
+      {
+       "element": "Li",
+       "frac_coords": [
+        0.0,
+        0.0,
+        0.0
+       ],
+       "metadata": {}
+      },
+      {
+       "element": "Li",
+       "frac_coords": [
+        0.5,
+        0.5,
+        0.5
+       ],
+       "metadata": {}
+      },
+      {
+       "element": "Li",
+       "frac_coords": [
+        0.5,
+        0.0,
+        0.5
+       ],
+       "metadata": {}
+      },
+      {
+       "element": "Li",
+       "frac_coords": [
+        0.0,
+        0.5,
+        0.0
+       ],
+       "metadata": {}
+      },
+      {
+       "element": "Fe",
+       "frac_coords": [
+        0.78115127,
+        0.25,
+        0.52986573
+       ],
+       "metadata": {}
+      },
+      {
+       "element": "Fe",
+       "frac_coords": [
+        0.71884873,
+        0.75,
+        0.02986773
+       ],
+       "metadata": {}
+      },
+      {
+       "element": "Fe",
+       "frac_coords": [
+        0.28115127,
+        0.25,
+        0.97013327
+       ],
+       "metadata": {}
+      },
+      {
+       "element": "Fe",
+       "frac_coords": [
+        0.21884873,
+        0.75,
+        0.47013327
+       ],
+       "metadata": {}
+      },
+      {
+       "element": "P",
+       "frac_coords": [
+        0.0938663,
+        0.25,
+        0.41862257
+       ],
+       "metadata": {}
+      },
+      {
+       "element": "P",
+       "frac_coords": [
+        0.4061337,
+        0.75,
+        0.91862357
+       ],
+       "metadata": {}
+      },
+      {
+       "element": "P",
+       "frac_coords": [
+        0.5938663,
+        0.25,
+        0.08137543
+       ],
+       "metadata": {}
+      },
+      {
+       "element": "P",
+       "frac_coords": [
+        0.9061337,
+        0.75,
+        0.58137643
+       ],
+       "metadata": {}
+      },
+      {
+       "element": "O",
+       "frac_coords": [
+        0.09423067,
+        0.25,
+        0.74478656
+       ],
+       "metadata": {}
+      },
+      {
+       "element": "O",
+       "frac_coords": [
+        0.83415452,
+        0.54555803,
+        0.71373534
+       ],
+       "metadata": {}
+      },
+      {
+       "element": "O",
+       "frac_coords": [
+        0.83415452,
+        0.95444297,
+        0.71373534
+       ],
+       "metadata": {}
+      },
+      {
+       "element": "O",
+       "frac_coords": [
+        0.90577033,
+        0.75,
+        0.25521444
+       ],
+       "metadata": {}
+      },
+      {
+       "element": "O",
+       "frac_coords": [
+        0.04430856,
+        0.75,
+        0.70986445
+       ],
+       "metadata": {}
+      },
+      {
+       "element": "O",
+       "frac_coords": [
+        0.40576933,
+        0.75,
+        0.24478556
+       ],
+       "metadata": {}
+      },
+      {
+       "element": "O",
+       "frac_coords": [
+        0.16584548,
+        0.04555803,
+        0.28626566
+       ],
+       "metadata": {}
+      },
+      {
+       "element": "O",
+       "frac_coords": [
+        0.66584548,
+        0.45444197,
+        0.21373434
+       ],
+       "metadata": {}
+      },
+      {
+       "element": "O",
+       "frac_coords": [
+        0.33415452,
+        0.54555803,
+        0.78626566
+       ],
+       "metadata": {}
+      },
+      {
+       "element": "O",
+       "frac_coords": [
+        0.33415452,
+        0.95444297,
+        0.78626566
+       ],
+       "metadata": {}
+      },
+      {
+       "element": "O",
+       "frac_coords": [
+        0.95569144,
+        0.25,
+        0.29013655
+       ],
+       "metadata": {}
+      },
+      {
+       "element": "O",
+       "frac_coords": [
+        0.45569144,
+        0.25,
+        0.20986345
+       ],
+       "metadata": {}
+      },
+      {
+       "element": "O",
+       "frac_coords": [
+        0.54430856,
+        0.75,
+        0.79013755
+       ],
+       "metadata": {}
+      },
+      {
+       "element": "O",
+       "frac_coords": [
+        0.59423067,
+        0.25,
+        0.75521544
+       ],
+       "metadata": {}
+      },
+      {
+       "element": "O",
+       "frac_coords": [
+        0.66584548,
+        0.04555803,
+        0.21373434
+       ],
+       "metadata": {}
+      },
+      {
+       "element": "O",
+       "frac_coords": [
+        0.16584548,
+        0.45444197,
+        0.28626566
+       ],
+       "metadata": {}
+      }
+     ]
     }
    },
    "hamiltonian": {
@@ -765,7 +1115,7 @@
     "tier1",
     "LiFePO4"
    ],
-   "schema_version": "0.1"
+   "schema_version": "0.2"
   }
  },
  {
@@ -808,8 +1158,8 @@
   "functional": "PBE",
   "ecut_ev": 520.0,
   "num_plane_waves": 1211,
-  "hash": "6e0801483495b05ab4459435931a65c7a74f8fac2a3151e2e1fd2002ec6b5c45",
-  "retrieved_at": "2026-10-06T15:25:33+00:00",
+  "hash": "40fe4bd34fc11b6e99ad83dd1b1311350274e370e219ee27013cb9e1975aa6ab",
+  "retrieved_at": "2026-10-06T15:46:53+00:00",
   "entry": {
    "reference": {
     "provenance": {
@@ -824,7 +1174,7 @@
      "pseudopotential": "PAW_PBE",
      "code": "VASP",
      "code_version": null,
-     "retrieved_at": "2026-10-06T15:25:33+00:00",
+     "retrieved_at": "2026-10-06T15:46:53+00:00",
      "metadata": {
       "endpoint": "https://api.materialsproject.org",
       "task_id": "aaafaqvs",
@@ -858,7 +1208,27 @@
       "metadata": {}
      },
      "is_periodic": true,
-     "metadata": {}
+     "metadata": {},
+     "sites": [
+      {
+       "element": "Na",
+       "frac_coords": [
+        0.0,
+        0.0,
+        0.0
+       ],
+       "metadata": {}
+      },
+      {
+       "element": "Cl",
+       "frac_coords": [
+        0.5,
+        0.5,
+        0.5
+       ],
+       "metadata": {}
+      }
+     ]
     }
    },
    "hamiltonian": {
@@ -886,7 +1256,7 @@
     "tier1",
     "NaCl"
    ],
-   "schema_version": "0.1"
+   "schema_version": "0.2"
   }
  },
  {
@@ -953,8 +1323,8 @@
   "functional": "PBE",
   "ecut_ev": 520.0,
   "num_plane_waves": 1791,
-  "hash": "186c3c6f7613e4663f1ce19d9f1b72088e7040ed1e5f751ee42811282101a650",
-  "retrieved_at": "2026-10-06T15:25:35+00:00",
+  "hash": "e001145373ad75662f17ba045705bfc108bef0ad36bbcb436659c0881be01271",
+  "retrieved_at": "2026-10-06T15:46:54+00:00",
   "entry": {
    "reference": {
     "provenance": {
@@ -969,7 +1339,7 @@
      "pseudopotential": "PAW_PBE",
      "code": "VASP",
      "code_version": null,
-     "retrieved_at": "2026-10-06T15:25:35+00:00",
+     "retrieved_at": "2026-10-06T15:46:54+00:00",
      "metadata": {
       "endpoint": "https://api.materialsproject.org",
       "task_id": "aaafavyw",
@@ -1010,7 +1380,54 @@
       "metadata": {}
      },
      "is_periodic": true,
-     "metadata": {}
+     "metadata": {},
+     "sites": [
+      {
+       "element": "Ba",
+       "frac_coords": [
+        0.99985396,
+        0.99985396,
+        0.99985396
+       ],
+       "metadata": {}
+      },
+      {
+       "element": "Ti",
+       "frac_coords": [
+        0.48666229,
+        0.48666229,
+        0.48666229
+       ],
+       "metadata": {}
+      },
+      {
+       "element": "O",
+       "frac_coords": [
+        0.02028337,
+        0.51104969,
+        0.51104969
+       ],
+       "metadata": {}
+      },
+      {
+       "element": "O",
+       "frac_coords": [
+        0.51104969,
+        0.51104969,
+        0.02028337
+       ],
+       "metadata": {}
+      },
+      {
+       "element": "O",
+       "frac_coords": [
+        0.51104969,
+        0.02028337,
+        0.51104969
+       ],
+       "metadata": {}
+      }
+     ]
     }
    },
    "hamiltonian": {
@@ -1038,7 +1455,7 @@
     "tier1",
     "BaTiO3"
    ],
-   "schema_version": "0.1"
+   "schema_version": "0.2"
   }
  }
 ]

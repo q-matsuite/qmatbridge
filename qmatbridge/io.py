@@ -48,7 +48,7 @@ __all__ = [
 ]
 
 #: ``schema_version`` values this library can read.
-SUPPORTED_SCHEMA_VERSIONS: tuple[str, ...] = ("0.1",)
+SUPPORTED_SCHEMA_VERSIONS: tuple[str, ...] = ("0.1", "0.2")
 
 T = TypeVar("T")
 

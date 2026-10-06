@@ -125,4 +125,4 @@ Verified in the browser pane before the PR is marked ready:
 - Everything is derived from `website/data/examples.json`; with no data the sections fall back to the
   plain list and the examples/fingerprint/illustration sections hide.
 - Claims on the page must stay checkable: no invented numbers, and the hash is described as covering
-  eleven setup fields and **not** the geometry.
+  eleven setup fields, plus the geometry when the entry records positions (never claim more).

@@ -27,13 +27,16 @@ from __future__ import annotations
 
 import hashlib
 import json
+import math
 from dataclasses import asdict, dataclass, field
+from decimal import ROUND_HALF_UP, Decimal, localcontext
 from typing import Any
 
 __all__ = [
     "ExternalIdentifier",
     "SourceProvenance",
     "LatticeMetadata",
+    "SiteMetadata",
     "StructureMetadata",
     "BasisMetadata",
     "TermMetadata",
@@ -147,6 +150,24 @@ class LatticeMetadata:
 
 
 @dataclass
+class SiteMetadata:
+    """One atom in the cell: its element and fractional coordinates.
+
+    Attributes:
+        element:     Element symbol, e.g. ``"Si"``.
+        frac_coords: Fractional coordinates ``(x, y, z)`` with respect to the
+                     lattice vectors of the entry's :class:`LatticeMetadata`.
+                     Values outside [0, 1) are equivalent to their wrapped
+                     counterparts for hashing.
+        metadata:    Extra per-site fields (e.g. magnetic moment).
+    """
+
+    element: str
+    frac_coords: tuple[float, float, float]
+    metadata: dict[str, Any] = field(default_factory=dict)
+
+
+@dataclass
 class StructureMetadata:
     """Chemical and geometric identity of the crystal structure.
 
@@ -160,6 +181,11 @@ class StructureMetadata:
         is_periodic:        Whether the structure is treated as periodic.
                             ``False`` for molecules or clusters.
         metadata:           Extra structure-level fields.
+        sites:              Atomic positions, one :class:`SiteMetadata` per
+                            site, in the same order as ``species``.  Empty when
+                            positions are not recorded.  When present, the
+                            lattice parameters and positions are part of
+                            :meth:`QMatEntry.canonical_hash` (schema 0.2).
     """
 
     formula_reduced: str
@@ -169,6 +195,7 @@ class StructureMetadata:
     lattice: LatticeMetadata
     is_periodic: bool = True
     metadata: dict[str, Any] = field(default_factory=dict)
+    sites: list[SiteMetadata] = field(default_factory=list)
 
 
 # ---------------------------------------------------------------------------
@@ -421,6 +448,49 @@ class HamiltonianMetadata:
 # ---------------------------------------------------------------------------
 
 
+def _fixed6(value: float) -> str:
+    """Fixed 6-decimal text for a finite number; never an exponent, never ``-0``.
+
+    Rounds the *exact* binary value, with ties away from zero.  That is what
+    JavaScript's ``Number.toFixed(6)`` does, and it differs from ``format(x,
+    ".6f")`` (ties to even) for exact ties such as ``1/128``, so the website's
+    in-browser hash agrees with this one for every input.
+    """
+    if not math.isfinite(value):
+        raise ValueError(f"cannot hash a non-finite value: {value!r}")
+    with localcontext() as ctx:
+        ctx.prec = 400  # exact for any finite double
+        text = format(Decimal(value).quantize(Decimal("0.000001"), ROUND_HALF_UP), "f")
+    return "0.000000" if text == "-0.000000" else text
+
+
+def _frac6(value: float) -> str:
+    """Fixed 6-decimal text of a fractional coordinate wrapped into [0, 1)."""
+    if not math.isfinite(value):
+        raise ValueError(f"cannot hash a non-finite coordinate: {value!r}")
+    text = _fixed6(value % 1.0)
+    return "0.000000" if text == "1.000000" else text
+
+
+def _geometry_core(struct: StructureMetadata) -> dict[str, Any]:
+    """Canonical geometry: lattice parameters and sorted fractional positions.
+
+    Numbers are fixed 6-decimal strings so the result is identical in Python and
+    JavaScript; coordinates are wrapped into [0, 1) and sites are sorted, so site
+    order and sub-micro-unit noise do not change the hash.
+    """
+    lat = struct.lattice
+    return {
+        "lattice": [
+            _fixed6(v) for v in (lat.a, lat.b, lat.c, lat.alpha, lat.beta, lat.gamma)
+        ],
+        "sites": sorted(
+            [site.element, [_frac6(x) for x in site.frac_coords]]
+            for site in struct.sites
+        ),
+    }
+
+
 @dataclass
 class QMatEntry:
     """Top-level neutral intermediate representation.
@@ -442,7 +512,7 @@ class QMatEntry:
     hamiltonian: HamiltonianMetadata
     exports: list[ExportMetadata] = field(default_factory=list)
     tags: list[str] = field(default_factory=list)
-    schema_version: str = "0.1"
+    schema_version: str = "0.2"
 
     # ------------------------------------------------------------------
     # Serialization
@@ -459,16 +529,25 @@ class QMatEntry:
     def canonical_hash(self) -> str:
         """SHA-256 digest identifying the calculation setup recorded in this entry.
 
-        The hash covers exactly eleven fields: upstream source and identifier,
+        The hash always covers eleven fields: upstream source and identifier,
         functional, reduced formula, spacegroup number, electron count, spin
         polarization, basis type, cutoff energy, number of bands, and oracle
         eta.  It is stable across ``metadata`` dict changes, tag edits, export
         record additions and a different retrieval time, and it changes when any
         of the eleven fields changes.
 
-        It does **not** cover the lattice parameters, atomic positions, species
-        list, pseudopotential family or plane-wave count, so an identical hash
-        shows the same source record and settings, not identical coordinates.
+        **Geometry is covered only when the entry carries positions.**  If
+        ``structure.sites`` is non-empty, the lattice parameters and the atomic
+        positions are hashed too (fixed 6-decimal strings; coordinates wrapped
+        into [0, 1); sites sorted, so their order does not matter).  Entries
+        without ``sites`` keep exactly the hash they had before schema 0.2.
+        The hash is not invariant to a different choice of cell or origin.
+
+        It does not cover the pseudopotential family or the plane-wave count.
+
+        Raises:
+            ValueError: If a lattice parameter or coordinate that would be
+                hashed is NaN or infinite.
         """
         prov = self.reference.provenance
         struct = self.reference.structure
@@ -487,6 +566,8 @@ class QMatEntry:
             "num_bands": ham.num_bands,
             "oracle_eta": ham.oracle.eta if ham.oracle is not None else None,
         }
+        if struct.sites:
+            core["geometry"] = _geometry_core(struct)
         blob = json.dumps(core, sort_keys=True).encode()
         return hashlib.sha256(blob).hexdigest()
 

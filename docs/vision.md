@@ -42,7 +42,8 @@ or a downstream package can import the schema without dragging in gigabytes of l
 ### Reproducibility by Default
 
 Every `QMatEntry` can compute a canonical hash over eleven setup fields (source record,
-functional, electrons, basis and so on; geometry is not hashed yet).
+functional, electrons, basis and so on), plus the lattice and atomic positions when the entry
+records them.
 Benchmark papers can cite the hash; anyone with QMatBridge can regenerate the entry.
 
 ---

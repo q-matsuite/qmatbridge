@@ -40,6 +40,7 @@ from qmatbridge.schema import (
     MaterialReference,
     OracleMetadata,
     QMatEntry,
+    SiteMetadata,
     SourceProvenance,
     StructureMetadata,
 )
@@ -74,6 +75,20 @@ metadata = st.dictionaries(
 )
 
 
+sites = st.builds(
+    SiteMetadata,
+    element=st.sampled_from(["H", "Li", "O", "Si", "Fe"]),
+    frac_coords=st.tuples(finite, finite, finite),
+    metadata=st.just({}),
+)
+# coordinates on a 1e-3 grid: far from any 6-decimal rounding boundary
+grid_sites = st.builds(
+    SiteMetadata,
+    element=st.sampled_from(["H", "Li", "O", "Si", "Fe"]),
+    frac_coords=st.tuples(*[st.integers(0, 999).map(lambda n: n / 1000)] * 3),
+)
+
+
 @st.composite
 def entries(draw: Any) -> QMatEntry:
     lattice = LatticeMetadata(
@@ -93,6 +108,7 @@ def entries(draw: Any) -> QMatEntry:
             structure=StructureMetadata(
                 draw(text), draw(text), draw(st.integers(0, 10**6)),
                 draw(st.lists(text, max_size=5)), lattice, metadata=draw(metadata),
+                sites=draw(st.lists(sites, max_size=4)),
             ),
         ),
         hamiltonian=HamiltonianMetadata(
@@ -371,3 +387,67 @@ def _brute_force(lat: LatticeMetadata, ecut: float) -> int:
         g3 = [recip[k][0] * p + recip[k][1] * q + recip[k][2] * r for k in range(3)]
         n += g3[0] ** 2 + g3[1] ** 2 + g3[2] ** 2 <= kc2
     return n
+
+
+# ================================================================== geometry
+
+
+def _with_sites(entry: QMatEntry, new: list[SiteMetadata]) -> QMatEntry:
+    other = copy.deepcopy(entry)
+    other.reference.structure.sites = new
+    return other
+
+
+@SETTINGS
+@given(entries(), st.lists(grid_sites, min_size=1, max_size=6), st.randoms(use_true_random=False))
+def test_hash_does_not_depend_on_site_order(
+    entry: QMatEntry, new: list[SiteMetadata], rnd: Any
+) -> None:
+    shuffled = list(new)
+    rnd.shuffle(shuffled)
+    assert _with_sites(entry, new).canonical_hash() == _with_sites(entry, shuffled).canonical_hash()
+
+
+@SETTINGS
+@given(entries(), st.lists(grid_sites, min_size=1, max_size=6), st.integers(-4, 4), st.integers(-4, 4), st.integers(-4, 4))
+def test_hash_is_invariant_to_whole_cell_translations_of_coordinates(
+    entry: QMatEntry, new: list[SiteMetadata], i: int, j: int, k: int
+) -> None:
+    moved = [SiteMetadata(s.element, (s.frac_coords[0] + i, s.frac_coords[1] + j, s.frac_coords[2] + k)) for s in new]
+    assert _with_sites(entry, new).canonical_hash() == _with_sites(entry, moved).canonical_hash()
+
+
+@SETTINGS
+@given(entries(), st.lists(grid_sites, min_size=1, max_size=6), st.data())
+def test_moving_one_atom_by_a_resolvable_amount_changes_the_hash(
+    entry: QMatEntry, new: list[SiteMetadata], data: Any
+) -> None:
+    index = data.draw(st.integers(0, len(new) - 1))
+    axis = data.draw(st.integers(0, 2))
+    shift = data.draw(st.sampled_from([0.001, 0.01, 0.1, 0.3]))
+    coords = list(new[index].frac_coords)
+    coords[axis] = (coords[axis] + shift) % 1.0
+    moved = list(new)
+    moved[index] = SiteMetadata(new[index].element, (coords[0], coords[1], coords[2]))
+    if sorted(map(repr, moved)) == sorted(map(repr, new)):
+        return  # the move produced an identical multiset of sites
+    assert _with_sites(entry, new).canonical_hash() != _with_sites(entry, moved).canonical_hash()
+
+
+@SETTINGS
+@given(entries())
+def test_clearing_the_sites_restores_the_eleven_field_hash(entry: QMatEntry) -> None:
+    """Entries without positions hash only the original eleven fields (option B)."""
+    bare = _with_sites(entry, [])
+    import hashlib
+
+    prov, struct, ham = bare.reference.provenance, bare.reference.structure, bare.hamiltonian
+    core = {
+        "source": prov.primary.source, "identifier": prov.primary.identifier,
+        "functional": prov.functional, "formula_reduced": struct.formula_reduced,
+        "spacegroup_number": struct.lattice.spacegroup_number, "num_electrons": ham.num_electrons,
+        "spin_polarized": ham.spin_polarized, "basis_type": ham.basis.type,
+        "cutoff_energy_ev": ham.basis.cutoff_energy_ev, "num_bands": ham.num_bands,
+        "oracle_eta": ham.oracle.eta if ham.oracle is not None else None,
+    }
+    assert bare.canonical_hash() == hashlib.sha256(json.dumps(core, sort_keys=True).encode()).hexdigest()
