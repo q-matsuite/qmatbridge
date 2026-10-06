@@ -10,7 +10,7 @@ repository, its CI, or its website contains one.
 | --- | --- | --- |
 | Materials Project | **Yes** (free) | Create an account and copy your key from the [API page](https://next-gen.materialsproject.org/api) |
 | OQMD | Not for the public REST API, to my knowledge | Adapter is a stub today; check OQMD's current terms |
-| OPTIMADE providers | Provider-specific | Planned adapter (v0.3); many are open |
+| OPTIMADE providers | Provider-specific | Planned adapter (v0.4); many are open |
 
 Check each provider's own terms before relying on this table; they can change.
 
