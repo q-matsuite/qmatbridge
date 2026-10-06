@@ -47,8 +47,9 @@ write_entry_json(entry, "silicon.json")
 ```python
 from qmatbridge.io import read_entry_json
 
-entry = read_entry_json("silicon.json")
-assert entry.canonical_hash() == original.canonical_hash()
+back = read_entry_json("silicon.json")
+assert back == entry                                   # the entry from the example above
+assert back.canonical_hash() == entry.canonical_hash()
 ```
 
 Reading is strict: unknown fields, missing required fields, wrongly typed values and an
@@ -84,7 +85,16 @@ n = num_plane_waves_from_ecut(entry.reference.structure.lattice, 520.0)
 `method="exact"` (default) enumerates the reciprocal lattice at Γ;
 `method="estimate"` uses the continuum formula `V·k_c³ / 6π²`.
 
-## Hash semantics
+## What the hash covers
 
-`QMatEntry.canonical_hash()` is a SHA-256 over the physically meaningful fields, so
-two groups reporting results for "silicon" can check they used the same Hamiltonian.
+`QMatEntry.canonical_hash()` is a SHA-256 over **eleven fields**: the source and identifier,
+the functional, the reduced formula, the space-group number, the electron count, spin
+polarization, the basis type, the cutoff energy, the number of bands and the oracle η.
+Changing any of them changes the hash; nothing else does (tags, exports, retrieval time and
+free-form metadata are ignored).
+
+It identifies the **calculation setup recorded in the entry**. The lattice parameters, atomic
+positions, species list, pseudopotential family and plane-wave count are *not* hashed, so two
+groups can check that they used the same source record and settings, but an identical hash does
+not by itself prove identical coordinates. Whether to include positions is an open design
+question: see [Discussion #24](https://github.com/q-matsuite/qmatbridge/discussions/24).

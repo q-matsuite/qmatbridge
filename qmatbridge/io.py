@@ -23,10 +23,15 @@ Only the Python standard library is used.  No optional extras required.
 
 from __future__ import annotations
 
+import contextlib
 import dataclasses
+import functools
 import json
+import math
+import os
 import types
 import typing
+import uuid
 from pathlib import Path
 from typing import Any, TypeVar
 
@@ -105,7 +110,9 @@ def write_entry_json(
     """Serialize a QMatEntry (or any dataclass) to a JSON file.
 
     Parent directories are created automatically if they do not exist.
-    The output file is UTF-8 encoded and ends with a trailing newline.
+    The output file is UTF-8 encoded and ends with a trailing newline.  The write
+    is atomic: the data is serialised first and written through a temporary file,
+    so a failure never truncates or corrupts an existing file.
 
     Args:
         entry:  Any dataclass instance (typically a ``QMatEntry``).
@@ -116,7 +123,9 @@ def write_entry_json(
         The resolved absolute ``Path`` of the written file.
 
     Raises:
-        TypeError: If ``entry`` is not a dataclass instance.
+        TypeError: If ``entry`` is not a dataclass instance, or holds a value
+            that is not JSON-serialisable.
+        ValueError: If the entry contains NaN or Infinity (not valid JSON).
 
     Example::
 
@@ -130,15 +139,35 @@ def write_entry_json(
             f"got {type(entry).__name__!r}"
         )
 
-    dest = Path(path)
+    # Serialise first: if this fails, the destination has not been touched.
+    try:
+        text = json.dumps(
+            to_dict(entry), indent=indent, ensure_ascii=False, allow_nan=False
+        )
+        text += "\n"
+    except ValueError as exc:  # NaN / Infinity
+        raise ValueError(
+            f"cannot write {type(entry).__name__} as JSON: {exc}. NaN and Infinity "
+            "are not valid JSON; replace them (or use None)."
+        ) from exc
+
+    # Write a sibling temp file, then atomically replace the destination, so an
+    # interrupted or failed write can never leave a truncated or half-written file
+    # where a good one used to be.  A symlinked destination is written through.
+    dest = Path(os.path.realpath(path))
     dest.parent.mkdir(parents=True, exist_ok=True)
-
-    data = to_dict(entry)
-    with dest.open("w", encoding="utf-8") as fh:
-        json.dump(data, fh, indent=indent, ensure_ascii=False)
-        fh.write("\n")
-
-    return dest.resolve()
+    tmp = dest.with_name(f".{dest.name}.{uuid.uuid4().hex}.tmp")
+    try:
+        with tmp.open("x", encoding="utf-8") as fh:  # default (umask) permissions
+            fh.write(text)
+            fh.flush()
+            os.fsync(fh.fileno())
+        os.replace(tmp, dest)
+    except BaseException:
+        with contextlib.suppress(OSError):
+            tmp.unlink()
+        raise
+    return dest
 
 
 # ---------------------------------------------------------------------------
@@ -148,6 +177,31 @@ def write_entry_json(
 _NONE_TYPE = type(None)
 
 
+@functools.lru_cache(maxsize=None)
+def _schema_of(cls: Any) -> tuple[dict[str, Any], dict[str, dataclasses.Field[Any]]]:
+    """Type hints and fields of a dataclass, computed once per class.
+
+    ``typing.get_type_hints`` re-evaluates the annotations on every call, which
+    made decoding large entries (many nested objects) dramatically slow.
+    """
+    return typing.get_type_hints(cls), {f.name: f for f in dataclasses.fields(cls)}
+
+
+def _check_finite(value: Any, path: str) -> None:
+    """Reject NaN/Infinity anywhere inside free-form data (iteratively)."""
+    stack = [(value, path)]
+    while stack:
+        v, p = stack.pop()
+        if isinstance(v, float) and not math.isfinite(v):
+            raise EntryFormatError(
+                f"{p}: NaN and Infinity are not valid JSON values, got {v!r}"
+            )
+        if isinstance(v, dict):
+            stack.extend((x, f"{p}.{k}") for k, x in v.items())
+        elif isinstance(v, (list, tuple)):
+            stack.extend((x, f"{p}[{i}]") for i, x in enumerate(v))
+
+
 def _bad(path: str, expected: str, value: Any) -> EntryFormatError:
     return EntryFormatError(f"{path}: expected {expected}, got {type(value).__name__}")
 
@@ -155,6 +209,7 @@ def _bad(path: str, expected: str, value: Any) -> EntryFormatError:
 def _decode(tp: Any, value: Any, path: str) -> Any:
     """Decode *value* as type annotation *tp*; *path* is used in errors."""
     if tp is Any:
+        _check_finite(value, path)
         return value
 
     origin = typing.get_origin(tp)
@@ -187,7 +242,13 @@ def _decode(tp: Any, value: Any, path: str) -> Any:
     if tp is float:
         if isinstance(value, bool) or not isinstance(value, (int, float)):
             raise _bad(path, "a number", value)
-        return float(value)  # JSON may write 520 for 520.0
+        try:
+            number = float(value)  # JSON may write 520 for 520.0
+        except OverflowError:
+            raise EntryFormatError(f"{path}: number is too large") from None
+        if not math.isfinite(number):
+            raise EntryFormatError(f"{path}: expected a finite number, got {value!r}")
+        return number
     if tp is str:
         if not isinstance(value, str):
             raise _bad(path, "a string", value)
@@ -245,8 +306,7 @@ def from_dict(cls: type[T], data: Any, *, _path: str = "") -> T:
     if not isinstance(data, dict):
         raise _bad(here, "an object", data)
 
-    hints = typing.get_type_hints(cls)
-    fields = {f.name: f for f in dataclasses.fields(cls)}  # type: ignore[arg-type]
+    hints, fields = _schema_of(typing.cast(Any, cls))
 
     unknown = sorted(set(data) - set(fields))
     if unknown:
@@ -280,7 +340,14 @@ def entry_from_dict(data: Any) -> QMatEntry:
                 f"QMatBridge (it reads: {', '.join(SUPPORTED_SCHEMA_VERSIONS)}). "
                 "Upgrade QMatBridge or migrate the file."
             )
-    return from_dict(QMatEntry, data)
+    try:
+        return from_dict(QMatEntry, data)
+    except RecursionError:
+        raise EntryFormatError("data is nested too deeply") from None
+
+
+def _reject_constant(name: str) -> Any:
+    raise ValueError(f"{name} is not valid JSON (NaN and Infinity are not allowed)")
 
 
 def read_entry_json(path: str | Path) -> QMatEntry:
@@ -291,14 +358,22 @@ def read_entry_json(path: str | Path) -> QMatEntry:
     ``canonical_hash()``.
 
     Raises:
-        FileNotFoundError: If *path* does not exist.
-        EntryFormatError: If the file is not valid JSON, or does not match the
+        FileNotFoundError: If *path* does not exist (other ``OSError`` subclasses
+            propagate, e.g. when *path* is a directory).
+        EntryFormatError: If the file is not UTF-8 text, is not standard JSON
+            (NaN/Infinity, over-deep nesting and so on), or does not match the
             schema (the message names the file and the offending field).
     """
     src = Path(path)
     try:
-        data = json.loads(src.read_text(encoding="utf-8"))
-    except json.JSONDecodeError as exc:
+        text = src.read_bytes().decode("utf-8-sig")  # tolerate a UTF-8 BOM
+    except UnicodeDecodeError as exc:
+        raise EntryFormatError(f"{src}: not valid UTF-8 text ({exc.reason})") from exc
+    try:
+        data = json.loads(text, parse_constant=_reject_constant)
+    except RecursionError:
+        raise EntryFormatError(f"{src}: JSON is nested too deeply") from None
+    except ValueError as exc:  # bad syntax, NaN/Infinity, over-long integers
         raise EntryFormatError(f"{src}: not valid JSON ({exc})") from exc
     try:
         return entry_from_dict(data)

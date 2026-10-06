@@ -60,9 +60,10 @@ A `QMatEntry` records:
 - **where it has been exported** (`ExportMetadata` — framework, format, status,
   artifact path)
 
-Every entry carries a deterministic `canonical_hash()` over its physically
-meaningful fields so that benchmark results can be traced to a specific
-Hamiltonian without re-deriving it.
+Every entry carries a deterministic `canonical_hash()` over eleven setup fields
+(source record, functional, electrons, basis cutoff and a few more) so that benchmark
+results can be traced to a specific recorded calculation setup. Geometry is not hashed
+yet; see [what the hash covers](docs/getting-started.md#what-the-hash-covers).
 
 ---
 
