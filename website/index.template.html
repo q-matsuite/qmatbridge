@@ -456,7 +456,7 @@ footer.site p { margin: 0 0 6px; }
     <div class="section-head reveal">
       <span class="eyebrow"><i>02</i> Fingerprint</span>
       <h2 id="h-fp">Change one field, watch the fingerprint</h2>
-      <p>Every entry has a <code>canonical_hash()</code>: a SHA-256 over eleven fields that identify the calculation setup: the source record, functional, electron count, basis cutoff and a few more. (Lattice and atom positions are not hashed yet.) Edit the selected material below. Metadata that does not change the Hamiltonian, such as tags, leaves the fingerprint alone. The hash is recomputed here in your browser with the same rules as the Python library.</p>
+      <p>Every entry has a <code>canonical_hash()</code>: a SHA-256 over eleven fields that identify the calculation setup (the source record, functional, electron count, basis cutoff and a few more), plus the lattice and atomic positions when an entry records them, as these do. Edit the selected material below. Metadata that does not change the Hamiltonian, such as tags, leaves the fingerprint alone. The hash is recomputed here in your browser with the same rules as the Python library.</p>
     </div>
     <div class="demo reveal">
       <div class="panel">
@@ -470,7 +470,7 @@ footer.site p { margin: 0 0 6px; }
           <div><h4>With your edits</h4><div class="id"><span id="fp-id1"></span><div class="hex" id="fp-hex1"></div></div></div>
         </div>
         <div class="canon">
-          <h4>The eleven hashed fields</h4>
+          <h4>The hashed fields</h4>
           <pre id="fp-canon" tabindex="0"></pre>
           <p class="selfcheck" id="fp-self"></p>
         </div>
@@ -520,7 +520,7 @@ footer.site p { margin: 0 0 6px; }
       <li><b>basis</b><span><strong>How it is discretised.</strong> Plane-wave cutoff and the resulting number of plane waves.</span></li>
       <li><b>oracle</b><span><strong>What access costs.</strong> LCU 1-norm, per-term breakdown, SELECT/PREPARE parameters and complexity annotations.</span></li>
       <li><b>exports</b><span><strong>Where it went.</strong> Downstream framework, format, status and artifact path.</span></li>
-      <li><b>hash</b><span><strong>A stable fingerprint.</strong> <code>canonical_hash()</code> is a SHA-256 over eleven setup fields (source record, functional, electrons, basis and more), so a result can be traced to one recorded calculation setup. Geometry is not hashed yet.</span></li>
+      <li><b>hash</b><span><strong>A stable fingerprint.</strong> <code>canonical_hash()</code> is a SHA-256 over eleven setup fields (source record, functional, electrons, basis and more), plus the lattice and atomic positions when the entry records them, so a result can be traced to one recorded calculation.</span></li>
     </ul>
   </div>
 </section>
@@ -601,16 +601,16 @@ python -c "from qmatbridge.adapters.materials_project import fetch_entry_from_mp
     <ol class="roadmap reveal">
       <li class="done"><h3>v0.1 <span class="pill ok">done</span></h3><p>Schema, JSON I/O, canonical hash, adapter stubs, CI.</p><span class="when">June 2026</span></li>
       <li class="done"><h3>v0.2 <span class="pill ok">released</span></h3><p>Materials Project adapter validated against the live API, plane-wave utility, entry reader, plugin registry, Tier-1 fixtures with nightly drift checks, docs.</p><span class="when">0.2.0 · October 2026</span></li>
-      <li class="next"><h3>v0.3 <span class="pill acc">next</span></h3><p>OPTIMADE, OQMD and Alexandria adapters; cross-database deduplication.</p></li>
+      <li class="next"><h3>v0.3 <span class="pill acc">next</span></h3><p>Atomic positions in the schema (hashed when present), OPTIMADE, OQMD and Alexandria adapters; cross-database deduplication.</p></li>
       <li><h3>v0.4 <span class="pill">planned</span></h3><p>Exporters: OpenFermion, raw plane-wave arrays, LCU coefficients for qualtran / pyLIQTR.</p></li>
       <li><h3>v0.5 <span class="pill">planned</span></h3><p>T-count, Toffoli and qubit estimation hooks.</p></li>
     </ol>
     <div class="focus-card reveal">
       <div>
-        <h3>Open question: should atomic positions be part of the fingerprint?</h3>
-        <p>Today the hash covers eleven setup fields but not the lattice or atom positions. Exporters need positions in the entry, so the schema, and what the hash covers, is being decided in public.</p>
+        <h3>Decided in the open: positions are hashed when an entry records them</h3>
+        <p>Entries that carry atomic positions now include the lattice and positions in their fingerprint; entries without positions keep exactly the hash they had. Per-species valence charges, which exporters will need, are still an open question.</p>
       </div>
-      <a class="btn primary" href="https://github.com/q-matsuite/qmatbridge/discussions/24" rel="noopener">Join the discussion</a>
+      <a class="btn primary" href="https://github.com/q-matsuite/qmatbridge/discussions/24" rel="noopener">Read the decision</a>
     </div>
   </div>
 </section>
@@ -837,14 +837,32 @@ python -c "from qmatbridge.adapters.materials_project import fetch_entry_from_mp
   }
 
   /* ---------- canonical_hash rules, mirrored from the Python library ---------- */
-  // Mirrors python: json.dumps(core, sort_keys=True) with default ", " and ": " separators.
+  // Mirrors python: json.dumps(core, sort_keys=True) with default ", " and ": " separators,
+  // recursively (the geometry block is a nested object of strings and arrays).
   const pyVal = (k, v) => v === null || v === undefined ? "null" : typeof v === "boolean" ? (v ? "true" : "false")
-    : typeof v === "number" ? (k === "cutoff_energy_ev" && Number.isInteger(v) ? v.toFixed(1) : String(v)) : JSON.stringify(v);
-  const blob = c => "{" + Object.keys(c).sort().map(k => JSON.stringify(k) + ": " + pyVal(k, c[k])).join(", ") + "}";
+    : typeof v === "number" ? (k === "cutoff_energy_ev" && Number.isInteger(v) ? v.toFixed(1) : String(v))
+    : Array.isArray(v) ? "[" + v.map(x => pyVal(k, x)).join(", ") + "]"
+    : typeof v === "object" ? "{" + Object.keys(v).sort().map(kk => JSON.stringify(kk) + ": " + pyVal(kk, v[kk])).join(", ") + "}"
+    : JSON.stringify(v);
+  const blob = c => pyVal("", c);
+  // Geometry (schema 0.2): fixed 6-decimal strings, coordinates wrapped into [0, 1), sites sorted.
+  const fixed6 = x => { const t = x.toFixed(6); return t === "-0.000000" ? "0.000000" : t; };
+  // Python's float modulo: fmod, then add 1 only for a negative remainder (adding 1 to a positive one would round).
+  const frac6 = x => { const m = x % 1, t = fixed6(m < 0 ? m + 1 : m); return t === "1.000000" ? "0.000000" : t; };
+  const geometryOf = s => ({
+    lattice: ["a", "b", "c", "alpha", "beta", "gamma"].map(k => fixed6(s.lattice[k])),
+    sites: (s.sites || []).map(t => [t.element, t.frac_coords.map(frac6)]).sort((u, v) => {
+      if (u[0] !== v[0]) return u[0] < v[0] ? -1 : 1;
+      for (let i = 0; i < 3; i++) if (u[1][i] !== v[1][i]) return u[1][i] < v[1][i] ? -1 : 1;
+      return 0;
+    }),
+  });
   const coreOf = ex => { const e = ex.entry, p = e.reference.provenance, s = e.reference.structure, h = e.hamiltonian;
-    return { source: p.primary.source, identifier: p.primary.identifier, functional: p.functional, formula_reduced: s.formula_reduced,
+    const core = { source: p.primary.source, identifier: p.primary.identifier, functional: p.functional, formula_reduced: s.formula_reduced,
       spacegroup_number: s.lattice.spacegroup_number, num_electrons: h.num_electrons, spin_polarized: h.spin_polarized,
-      basis_type: h.basis.type, cutoff_energy_ev: h.basis.cutoff_energy_ev, num_bands: h.num_bands ?? null, oracle_eta: h.oracle ? h.oracle.eta : null }; };
+      basis_type: h.basis.type, cutoff_energy_ev: h.basis.cutoff_energy_ev, num_bands: h.num_bands ?? null, oracle_eta: h.oracle ? h.oracle.eta : null };
+    if (s.sites && s.sites.length) core.geometry = geometryOf(s);
+    return core; };
 
   /* ---------- crystal viewer ---------- */
   function lattice(L) {
@@ -1046,7 +1064,8 @@ entry.canonical_hash()                   # ${ex.hash.slice(0, 16)}...`;
       $("#fp-title").textContent = same ? "Same Hamiltonian, same fingerprint" : "Different Hamiltonian, different fingerprint";
       $("#fp-meta").textContent = same ? "64 of 64 characters match" : `${n} of 64 characters changed`;
       const keys = Object.keys(st).sort();
-      $("#fp-canon").innerHTML = "{\n" + keys.map(k => { const ch = st[k] !== base[k]; const v = pyVal(k, st[k]); return `  "${k}": ${ch ? `<mark>${esc(v)}</mark>` : esc(v)}`; }).join(",\n") + "\n}";
+      const show = (k, v) => k === "geometry" ? `<${v.lattice.length} lattice values, ${v.sites.length} sites>` : pyVal(k, v);
+      $("#fp-canon").innerHTML = "{\n" + keys.map(k => { const ch = typeof st[k] === "object" ? false : st[k] !== base[k]; const v = show(k, st[k]); return `  "${k}": ${ch ? `<mark>${esc(v)}</mark>` : esc(v)}`; }).join(",\n") + "\n}";
       const sc = $("#fp-self"), ok = h0 === ref.hash;
       sc.className = "selfcheck " + (ok ? "ok" : "bad");
       sc.textContent = ok ? "✓ Recomputed in your browser from the fetched fields: matches QMatEntry.canonical_hash() from the Python library." : "Recomputed hash differs from the library's value for this entry; the in-browser rules may be out of date.";
@@ -1086,11 +1105,12 @@ entry.canonical_hash()                   # ${ex.hash.slice(0, 16)}...`;
       provenance: ["Where it came from", "Database and identifier, functional, pseudopotential family, DFT code and version, retrieval time.", e => { const p = e.reference.provenance; return [
         ["source", p.primary.source, 1], ["identifier", p.primary.identifier, 1], ["functional", p.functional, 1],
         ["pseudopotential", p.pseudopotential], ["code", p.code], ["retrieved_at", p.retrieved_at && p.retrieved_at.slice(0, 10)]]; }],
-      structure: ["What it is", "Reduced and unit-cell formula, species per site, lattice parameters, space group.", e => { const s = e.reference.structure, l = s.lattice; return [
+      structure: ["What it is", "Reduced and unit-cell formula, species per site, lattice parameters, atomic positions, space group.", e => { const s = e.reference.structure, l = s.lattice, geo = !!(s.sites && s.sites.length); return [
         ["formula_reduced", s.formula_reduced, 1], ["formula_unit_cell", s.formula_unit_cell], ["num_sites", s.num_sites],
         ["species", s.species.length > 8 ? `${s.species.slice(0, 8).join(" ")} … (${s.species.length})` : s.species],
         ["spacegroup_number", l.spacegroup_number, 1], ["spacegroup_symbol", l.spacegroup_symbol], ["crystal_system", l.crystal_system],
-        ["a, b, c (Å)", [l.a, l.b, l.c].map(x => x.toFixed(3)).join("  ")], ["α, β, γ (°)", [l.alpha, l.beta, l.gamma].map(x => x.toFixed(2)).join("  ")]]; }],
+        ["a, b, c (Å)", [l.a, l.b, l.c].map(x => x.toFixed(3)).join("  "), geo], ["α, β, γ (°)", [l.alpha, l.beta, l.gamma].map(x => x.toFixed(2)).join("  "), geo],
+        ["sites (fractional positions)", geo ? `${s.sites.length} positions` : null, geo]]; }],
       hamiltonian: ["How many electrons, and how they are treated", "The electron count and spin treatment of the calculation.", e => { const h = e.hamiltonian; return [
         ["num_electrons", h.num_electrons, 1], ["spin_polarized", h.spin_polarized, 1], ["num_bands", h.num_bands ?? null, 1]]; }],
       basis: ["How it is discretised", "Plane-wave cutoff and the resulting number of plane waves.", e => { const b = e.hamiltonian.basis; return [
@@ -1104,9 +1124,9 @@ entry.canonical_hash()                   # ${ex.hash.slice(0, 16)}...`;
       if (current === "hash") {
         const h = ex.hash;
         detail.innerHTML = `
-          <header><h3>hash</h3><p>A stable fingerprint: <code>canonical_hash()</code> is a SHA-256 over eleven setup fields.</p></header>
+          <header><h3>hash</h3><p>A stable fingerprint: <code>canonical_hash()</code> is a SHA-256 over eleven setup fields, plus the geometry when the entry records positions.</p></header>
           <div class="a-hashbox">${ident(h, 64, true)}<code>${h}</code></div>
-          <div class="a-note"><strong style="color:var(--text);font-weight:500">Covered:</strong> source, identifier, functional, reduced formula, space-group number, electrons, spin, basis type, cutoff, bands, oracle η.<br><br><strong style="color:var(--text);font-weight:500">Not covered yet:</strong> lattice parameters, atom positions, species list, pseudopotential and plane-wave count. An identical hash therefore shows the same source record and settings, not identical coordinates.</div>`;
+          <div class="a-note"><strong style="color:var(--text);font-weight:500">Always covered:</strong> source, identifier, functional, reduced formula, space-group number, electrons, spin, basis type, cutoff, bands, oracle η.<br><br><strong style="color:var(--text);font-weight:500">Covered when the entry records positions</strong> (these do): the lattice parameters and the fractional position of every atom. Site order does not matter.<br><br><strong style="color:var(--text);font-weight:500">Not covered:</strong> the pseudopotential family and the plane-wave count. Entries without positions keep the original eleven-field hash.</div>`;
         return;
       }
       const [title, lead, rows] = PARTS[current];

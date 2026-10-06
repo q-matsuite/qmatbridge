@@ -31,8 +31,6 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 from benchmarks.tier1 import TIER1, BenchmarkSpec
 from qmatbridge.adapters.materials_project import (
     MPAdapterConfig,
-    _open_client,
-    _summary_doc,
     fetch_entry_from_mp,
 )
 from qmatbridge.io import to_dict, write_entry_json
@@ -88,8 +86,13 @@ def check_entry(spec: BenchmarkSpec, entry: QMatEntry) -> list[str]:
     return problems
 
 
-def site_record(spec: BenchmarkSpec, entry: QMatEntry, sites: list[dict]) -> dict:
-    """Assemble the per-material record consumed by the landing page."""
+def site_record(spec: BenchmarkSpec, entry: QMatEntry) -> dict:
+    """Assemble the per-material record consumed by the landing page.
+
+    Atomic positions come from the entry itself (``structure.sites``).
+    """
+    if not entry.reference.structure.sites:
+        raise ValueError(f"{spec.key}: entry has no atomic positions (structure.sites)")
     lat = entry.reference.structure.lattice
     h = entry.hamiltonian
     return {
@@ -105,7 +108,8 @@ def site_record(spec: BenchmarkSpec, entry: QMatEntry, sites: list[dict]) -> dic
             k: getattr(lat, k) for k in ("a", "b", "c", "alpha", "beta", "gamma")
         },
         "sites": [
-            {"el": s["species"][0]["element"], "frac": s["abc"]} for s in sites
+            {"el": s.element, "frac": list(s.frac_coords)}
+            for s in entry.reference.structure.sites
         ],
         "electrons": h.num_electrons,
         "spin_polarized": h.spin_polarized,
@@ -149,9 +153,7 @@ def main(argv: list[str] | None = None) -> int:
         path = write_entry_json(entry, args.out / spec.fixture_name)
         print(f"[ ok ] {spec.key} ({spec.mp_id}) -> {path}")
         if args.site:
-            with _open_client(None, MPAdapterConfig()) as mpr:
-                sites = _summary_doc(mpr, spec.mp_id, None)["structure"]["sites"]
-            records.append(site_record(spec, entry, sites))
+            records.append(site_record(spec, entry))
     if args.site and records and not failures:
         args.site.parent.mkdir(parents=True, exist_ok=True)
         args.site.write_text(json.dumps(records, indent=1) + "\n", encoding="utf-8")

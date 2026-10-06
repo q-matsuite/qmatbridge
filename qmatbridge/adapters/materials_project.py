@@ -47,6 +47,7 @@ from qmatbridge.schema import (
     LatticeMetadata,
     MaterialReference,
     QMatEntry,
+    SiteMetadata,
     SourceProvenance,
     StructureMetadata,
 )
@@ -284,6 +285,11 @@ def structure_from_mp_doc(doc: Mapping[str, Any]) -> StructureMetadata:
     ``species`` list) and, optionally, ``symmetry`` with ``number``,
     ``symbol`` and ``crystal_system``.  Disordered sites are rejected.
 
+    Fractional coordinates (``abc`` on each site) are recorded as
+    ``StructureMetadata.sites`` when present on every site, so the entry's
+    ``canonical_hash()`` covers the geometry; documents without them still
+    convert, with ``sites`` empty.
+
     Every malformed input raises ``ValueError``: wrong shapes or types, missing
     keys, non-finite or non-positive lattice parameters, and invalid cells.
 
@@ -312,17 +318,30 @@ def structure_from_mp_doc(doc: Mapping[str, Any]) -> StructureMetadata:
     if not isinstance(sites, (list, tuple)):
         raise ValueError(f"structure.sites must be a list, got {type(sites).__name__}")
     species: list[str] = []
+    positions: list[tuple[float, float, float]] = []
     for i, site in enumerate(sites):
         where = f"structure.sites[{i}]"
-        occ = _mapping(site, where).get("species")
+        site_m = _mapping(site, where)
+        occ = site_m.get("species")
         if not isinstance(occ, (list, tuple)) or not occ:
             raise ValueError(f"{where}.species must be a non-empty list")
         first = _mapping(occ[0], f"{where}.species[0]")
         if len(occ) != 1 or _number(first.get("occu", 1.0), f"{where}.occu") != 1.0:
             raise ValueError("disordered / partially occupied sites are not supported")
         species.append(_text(first.get("element"), f"{where}.species[0].element"))
+        abc = site_m.get("abc")
+        if abc is not None:
+            if not isinstance(abc, (list, tuple)) or len(abc) != 3:
+                raise ValueError(f"{where}.abc must be three fractional coordinates")
+            x, y, z = (_number(c, f"{where}.abc[{k}]") for k, c in enumerate(abc))
+            positions.append((x, y, z))
     if not species:
         raise ValueError("MP structure has no sites")
+    if positions and len(positions) != len(species):
+        raise ValueError(
+            "structure.sites: fractional coordinates (abc) are present for only "
+            f"{len(positions)} of {len(species)} sites"
+        )
 
     sym_raw = doc_m.get("symmetry")
     sym = {} if sym_raw is None else _mapping(sym_raw, "symmetry")
@@ -351,6 +370,7 @@ def structure_from_mp_doc(doc: Mapping[str, Any]) -> StructureMetadata:
         species=species,
         lattice=lattice,
         is_periodic=True,
+        sites=[SiteMetadata(el, pos) for el, pos in zip(species, positions)],
     )
 
 

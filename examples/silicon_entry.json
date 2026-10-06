@@ -56,7 +56,8 @@
           "8a"
         ],
         "point_group": "m-3m"
-      }
+      },
+      "sites": []
     }
   },
   "hamiltonian": {
@@ -171,5 +172,5 @@
     "benchmark",
     "lcu"
   ],
-  "schema_version": "0.1"
+  "schema_version": "0.2"
 }

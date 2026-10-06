@@ -87,14 +87,19 @@ n = num_plane_waves_from_ecut(entry.reference.structure.lattice, 520.0)
 
 ## What the hash covers
 
-`QMatEntry.canonical_hash()` is a SHA-256 over **eleven fields**: the source and identifier,
-the functional, the reduced formula, the space-group number, the electron count, spin
-polarization, the basis type, the cutoff energy, the number of bands and the oracle η.
-Changing any of them changes the hash; nothing else does (tags, exports, retrieval time and
-free-form metadata are ignored).
+`QMatEntry.canonical_hash()` is a SHA-256 over **eleven setup fields**: the source and
+identifier, the functional, the reduced formula, the space-group number, the electron count,
+spin polarization, the basis type, the cutoff energy, the number of bands and the oracle η.
 
-It identifies the **calculation setup recorded in the entry**. The lattice parameters, atomic
-positions, species list, pseudopotential family and plane-wave count are *not* hashed, so two
-groups can check that they used the same source record and settings, but an identical hash does
-not by itself prove identical coordinates. Whether to include positions is an open design
-question: see [Discussion #24](https://github.com/q-matsuite/qmatbridge/discussions/24).
+**Geometry is hashed when the entry records it.** If `structure.sites` is non-empty (schema
+0.2; the Materials Project adapter fills it), the lattice parameters and the fractional
+position of every atom are hashed too. They are written as fixed 6-decimal strings with
+coordinates wrapped into [0, 1) and the sites sorted, so site order and numerical noise below
+10⁻⁶ do not matter. An entry **without** `sites` hashes only the eleven fields, exactly as in
+0.2.0, so entries stored before this change keep their hash.
+
+Changing any hashed field changes the hash; nothing else does (tags, exports, retrieval time
+and free-form metadata are ignored). The pseudopotential family and the plane-wave count are
+not hashed, and the hash is not invariant to a different choice of cell or origin: the same
+crystal described with a shifted origin is a different entry. The policy was decided in
+[Discussion #24](https://github.com/q-matsuite/qmatbridge/discussions/24).

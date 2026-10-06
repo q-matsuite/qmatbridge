@@ -12,7 +12,7 @@
       "pseudopotential": "PAW_PBE",
       "code": "VASP",
       "code_version": null,
-      "retrieved_at": "2026-10-06T15:25:28+00:00",
+      "retrieved_at": "2026-10-06T15:46:50+00:00",
       "metadata": {
         "endpoint": "https://api.materialsproject.org",
         "task_id": "aaadyasv",
@@ -50,7 +50,45 @@
         "metadata": {}
       },
       "is_periodic": true,
-      "metadata": {}
+      "metadata": {},
+      "sites": [
+        {
+          "element": "Ga",
+          "frac_coords": [
+            0.666667,
+            0.333333,
+            0.49908371
+          ],
+          "metadata": {}
+        },
+        {
+          "element": "Ga",
+          "frac_coords": [
+            0.333333,
+            0.666667,
+            0.99908371
+          ],
+          "metadata": {}
+        },
+        {
+          "element": "N",
+          "frac_coords": [
+            0.666667,
+            0.333333,
+            0.87591629
+          ],
+          "metadata": {}
+        },
+        {
+          "element": "N",
+          "frac_coords": [
+            0.333333,
+            0.666667,
+            0.37591629
+          ],
+          "metadata": {}
+        }
+      ]
     }
   },
   "hamiltonian": {
@@ -78,5 +116,5 @@
     "tier1",
     "GaN"
   ],
-  "schema_version": "0.1"
+  "schema_version": "0.2"
 }

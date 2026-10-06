@@ -18,6 +18,7 @@ from qmatbridge.schema import (
     LatticeMetadata,
     MaterialReference,
     QMatEntry,
+    SiteMetadata,
     SourceProvenance,
     StructureMetadata,
 )
@@ -46,7 +47,11 @@ def _entry_for(spec: BenchmarkSpec) -> QMatEntry:
                 retrieved_at="2026-01-01T00:00:00+00:00",
             ),
             structure=StructureMetadata(
-                "X", "X", len(species), species, lat
+                "X", "X", len(species), species, lat,
+                sites=[
+                    SiteMetadata(el, (0.1 * i, 0.0, 0.0))
+                    for i, el in enumerate(species)
+                ],
             ),
         ),
         hamiltonian=HamiltonianMetadata(
@@ -61,30 +66,10 @@ def _entry_for(spec: BenchmarkSpec) -> QMatEntry:
 def fake_mp(monkeypatch: pytest.MonkeyPatch) -> None:
     specs = {s.mp_id: s for s in TIER1}
 
-    class Client:
-        def __enter__(self) -> Client:
-            return self
-
-        def __exit__(self, *a: object) -> None:
-            return None
-
-    # main() refuses to start without a key; the fake client never uses it.
+    # main() refuses to start without a key; the fake adapter never uses it.
     monkeypatch.setenv("MP_API_KEY", "test-key-not-used")
-    monkeypatch.setattr(b, "_open_client", lambda key, cfg: Client())
     monkeypatch.setattr(
         b, "fetch_entry_from_mp", lambda mp_id, **kw: _entry_for(specs[mp_id])
-    )
-    monkeypatch.setattr(
-        b,
-        "_summary_doc",
-        lambda mpr, mp_id, ms: {
-            "structure": {
-                "sites": [
-                    {"species": [{"element": el, "occu": 1}], "abc": [0.0, 0.0, 0.0]}
-                    for el in specs[mp_id].cell_species
-                ]
-            }
-        },
     )
 
 

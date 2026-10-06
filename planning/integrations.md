@@ -45,7 +45,7 @@ Generate and commit the Tier-1 fixtures (Si, GaN, LiCoO₂), run the integration
 live API reveals, merge the site, bump to 0.2.0, publish to PyPI with trusted publishing, add a Zenodo DOI.
 *Acceptance:* `pip install qmatbridge[mp]` works from PyPI; `fetch_entry_from_mp("mp-149")` runs in CI nightly.
 
-### M2 — Schema v0.2 *(decision)*
+### M2 — Schema v0.2 *(positions and hash policy done; valence charges open)*
 Additive, non-breaking where possible:
 - `SiteMetadata` (element, fractional coordinates) and `StructureMetadata.sites`, default empty.
 - Per-species valence charges, in `HamiltonianMetadata` or in the pseudopotential record.

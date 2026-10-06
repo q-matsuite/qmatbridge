@@ -61,9 +61,10 @@ A `QMatEntry` records:
   artifact path)
 
 Every entry carries a deterministic `canonical_hash()` over eleven setup fields
-(source record, functional, electrons, basis cutoff and a few more) so that benchmark
-results can be traced to a specific recorded calculation setup. Geometry is not hashed
-yet; see [what the hash covers](docs/getting-started.md#what-the-hash-covers).
+(source record, functional, electrons, basis cutoff and a few more), plus the lattice and
+atomic positions when the entry records them, so that benchmark results can be traced to a
+specific recorded calculation. See
+[what the hash covers](docs/getting-started.md#what-the-hash-covers).
 
 ---
 

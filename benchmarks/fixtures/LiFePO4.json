@@ -12,7 +12,7 @@
       "pseudopotential": "PAW_PBE",
       "code": "VASP",
       "code_version": null,
-      "retrieved_at": "2026-10-06T15:25:31+00:00",
+      "retrieved_at": "2026-10-06T15:46:52+00:00",
       "metadata": {
         "endpoint": "https://api.materialsproject.org",
         "task_id": "aaadwvyp",
@@ -79,7 +79,261 @@
         "metadata": {}
       },
       "is_periodic": true,
-      "metadata": {}
+      "metadata": {},
+      "sites": [
+        {
+          "element": "Li",
+          "frac_coords": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "metadata": {}
+        },
+        {
+          "element": "Li",
+          "frac_coords": [
+            0.5,
+            0.5,
+            0.5
+          ],
+          "metadata": {}
+        },
+        {
+          "element": "Li",
+          "frac_coords": [
+            0.5,
+            0.0,
+            0.5
+          ],
+          "metadata": {}
+        },
+        {
+          "element": "Li",
+          "frac_coords": [
+            0.0,
+            0.5,
+            0.0
+          ],
+          "metadata": {}
+        },
+        {
+          "element": "Fe",
+          "frac_coords": [
+            0.78115127,
+            0.25,
+            0.52986573
+          ],
+          "metadata": {}
+        },
+        {
+          "element": "Fe",
+          "frac_coords": [
+            0.71884873,
+            0.75,
+            0.02986773
+          ],
+          "metadata": {}
+        },
+        {
+          "element": "Fe",
+          "frac_coords": [
+            0.28115127,
+            0.25,
+            0.97013327
+          ],
+          "metadata": {}
+        },
+        {
+          "element": "Fe",
+          "frac_coords": [
+            0.21884873,
+            0.75,
+            0.47013327
+          ],
+          "metadata": {}
+        },
+        {
+          "element": "P",
+          "frac_coords": [
+            0.0938663,
+            0.25,
+            0.41862257
+          ],
+          "metadata": {}
+        },
+        {
+          "element": "P",
+          "frac_coords": [
+            0.4061337,
+            0.75,
+            0.91862357
+          ],
+          "metadata": {}
+        },
+        {
+          "element": "P",
+          "frac_coords": [
+            0.5938663,
+            0.25,
+            0.08137543
+          ],
+          "metadata": {}
+        },
+        {
+          "element": "P",
+          "frac_coords": [
+            0.9061337,
+            0.75,
+            0.58137643
+          ],
+          "metadata": {}
+        },
+        {
+          "element": "O",
+          "frac_coords": [
+            0.09423067,
+            0.25,
+            0.74478656
+          ],
+          "metadata": {}
+        },
+        {
+          "element": "O",
+          "frac_coords": [
+            0.83415452,
+            0.54555803,
+            0.71373534
+          ],
+          "metadata": {}
+        },
+        {
+          "element": "O",
+          "frac_coords": [
+            0.83415452,
+            0.95444297,
+            0.71373534
+          ],
+          "metadata": {}
+        },
+        {
+          "element": "O",
+          "frac_coords": [
+            0.90577033,
+            0.75,
+            0.25521444
+          ],
+          "metadata": {}
+        },
+        {
+          "element": "O",
+          "frac_coords": [
+            0.04430856,
+            0.75,
+            0.70986445
+          ],
+          "metadata": {}
+        },
+        {
+          "element": "O",
+          "frac_coords": [
+            0.40576933,
+            0.75,
+            0.24478556
+          ],
+          "metadata": {}
+        },
+        {
+          "element": "O",
+          "frac_coords": [
+            0.16584548,
+            0.04555803,
+            0.28626566
+          ],
+          "metadata": {}
+        },
+        {
+          "element": "O",
+          "frac_coords": [
+            0.66584548,
+            0.45444197,
+            0.21373434
+          ],
+          "metadata": {}
+        },
+        {
+          "element": "O",
+          "frac_coords": [
+            0.33415452,
+            0.54555803,
+            0.78626566
+          ],
+          "metadata": {}
+        },
+        {
+          "element": "O",
+          "frac_coords": [
+            0.33415452,
+            0.95444297,
+            0.78626566
+          ],
+          "metadata": {}
+        },
+        {
+          "element": "O",
+          "frac_coords": [
+            0.95569144,
+            0.25,
+            0.29013655
+          ],
+          "metadata": {}
+        },
+        {
+          "element": "O",
+          "frac_coords": [
+            0.45569144,
+            0.25,
+            0.20986345
+          ],
+          "metadata": {}
+        },
+        {
+          "element": "O",
+          "frac_coords": [
+            0.54430856,
+            0.75,
+            0.79013755
+          ],
+          "metadata": {}
+        },
+        {
+          "element": "O",
+          "frac_coords": [
+            0.59423067,
+            0.25,
+            0.75521544
+          ],
+          "metadata": {}
+        },
+        {
+          "element": "O",
+          "frac_coords": [
+            0.66584548,
+            0.04555803,
+            0.21373434
+          ],
+          "metadata": {}
+        },
+        {
+          "element": "O",
+          "frac_coords": [
+            0.16584548,
+            0.45444197,
+            0.28626566
+          ],
+          "metadata": {}
+        }
+      ]
     }
   },
   "hamiltonian": {
@@ -107,5 +361,5 @@
     "tier1",
     "LiFePO4"
   ],
-  "schema_version": "0.1"
+  "schema_version": "0.2"
 }
