@@ -45,5 +45,8 @@ def test_clear_error_outside_a_checkout(
 
 
 def test_scripts_are_not_run_via_cwd_relative_paths() -> None:
-    gen = _code_cells()[1]
-    assert '"examples/' not in gen and "cwd=repo_root" in gen
+    # The cell that regenerates the example outputs by running the example scripts.
+    runners = [c for c in _code_cells() if "subprocess.run" in c]
+    assert runners, "no notebook cell runs the example scripts"
+    for cell in runners:
+        assert '"examples/' not in cell and "cwd=repo_root" in cell
