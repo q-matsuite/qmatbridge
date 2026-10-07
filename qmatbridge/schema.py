@@ -1,4 +1,4 @@
-"""QMatBridge canonical schema — v0.1.
+"""QMatBridge canonical schema — v0.3.
 
 Neutral intermediate representation (NIR) connecting classical materials
 databases to first-quantized Hamiltonians for quantum simulation research.
@@ -432,6 +432,11 @@ class HamiltonianMetadata:
                         algorithms; see :class:`OracleMetadata`.
                         ``None`` until an oracle decomposition is computed.
         metadata:       Extra Hamiltonian-level fields.
+        valence_charges: Valence electrons per atom contributed by the
+                        pseudopotential, keyed by element symbol (e.g.
+                        ``{"Li": 3.0, "Co": 17.0}``).  Exporters need these as
+                        the ionic charges Z_a.  Empty when the source does not
+                        say.  Not part of ``canonical_hash()``.
     """
 
     num_electrons: int
@@ -441,6 +446,7 @@ class HamiltonianMetadata:
     terms: list[TermMetadata] = field(default_factory=list)
     oracle: OracleMetadata | None = None
     metadata: dict[str, Any] = field(default_factory=dict)
+    valence_charges: dict[str, float] = field(default_factory=dict)
 
 
 # ---------------------------------------------------------------------------
@@ -512,7 +518,7 @@ class QMatEntry:
     hamiltonian: HamiltonianMetadata
     exports: list[ExportMetadata] = field(default_factory=list)
     tags: list[str] = field(default_factory=list)
-    schema_version: str = "0.2"
+    schema_version: str = "0.3"
 
     # ------------------------------------------------------------------
     # Serialization
@@ -570,6 +576,39 @@ class QMatEntry:
             core["geometry"] = _geometry_core(struct)
         blob = json.dumps(core, sort_keys=True).encode()
         return hashlib.sha256(blob).hexdigest()
+
+    def valence_electron_total(self) -> float | None:
+        """Sum of the per-atom valence charges over ``structure.sites``.
+
+        Returns ``None`` when the entry has no ``sites`` or no
+        ``hamiltonian.valence_charges``.  For a consistent entry this equals
+        ``hamiltonian.num_electrons``; :meth:`check_electron_count` tests that.
+
+        Raises:
+            KeyError: If a site's element has no valence charge.
+        """
+        charges = self.hamiltonian.valence_charges
+        sites = self.reference.structure.sites
+        if not charges or not sites:
+            return None
+        missing = sorted({s.element for s in sites} - set(charges))
+        if missing:
+            raise KeyError(f"no valence charge for element(s): {', '.join(missing)}")
+        return sum(charges[s.element] for s in sites)
+
+    def check_electron_count(self) -> None:
+        """Raise ``ValueError`` if the valence charges disagree with ``num_electrons``.
+
+        Does nothing when the entry carries no charges or no sites.
+        """
+        total = self.valence_electron_total()
+        if total is not None and not math.isclose(
+            total, self.hamiltonian.num_electrons, abs_tol=1e-6
+        ):
+            raise ValueError(
+                f"valence charges sum to {total:g} over the sites but "
+                f"num_electrons is {self.hamiltonian.num_electrons}"
+            )
 
     def __repr__(self) -> str:
         prov = self.reference.provenance.primary

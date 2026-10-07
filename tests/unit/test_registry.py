@@ -112,8 +112,9 @@ def test_get_builtin_adapter_satisfies_protocol() -> None:
     assert adapter.name == "materials_project"
 
 
-def test_no_builtin_exporters_yet() -> None:
-    assert all(not p.builtin for p in list_exporters())
+def test_builtin_exporters_and_adapters() -> None:
+    assert {p.name for p in list_exporters() if p.builtin} == {"numpy_planewave"}
+    assert {p.name for p in list_adapters() if p.builtin} == {"materials_project", "oqmd"}
 
 
 def test_mp_adapter_passes_arguments_through(monkeypatch: pytest.MonkeyPatch) -> None:
@@ -158,7 +159,7 @@ def test_third_party_plugins_are_discovered_via_entry_points(plugin_dir: Path) -
     assert not adapters["fake_source"].builtin
     assert adapters["fake_source"].target == "thirdparty_mod:FakeAdapter"
     assert "materials_project" in adapters  # built-ins still present
-    assert [p.name for p in list_exporters()] == ["fake_target"]
+    assert [p.name for p in list_exporters()] == ["fake_target", "numpy_planewave"]
     # Listing is lazy: the plugin module has not been imported.
     assert "thirdparty_mod" not in sys.modules
 

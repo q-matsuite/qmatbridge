@@ -117,8 +117,13 @@ _BUILTIN: dict[str, dict[str, str]] = {
         "materials_project": (
             "qmatbridge.adapters.materials_project:MaterialsProjectAdapter"
         ),
+        "oqmd": "qmatbridge.adapters.oqmd:OQMDAdapter",
     },
-    EXPORTER_GROUP: {},
+    EXPORTER_GROUP: {
+        "numpy_planewave": (
+            "qmatbridge.exporters.numpy_planewave:NumpyPlaneWaveExporter"
+        ),
+    },
 }
 
 

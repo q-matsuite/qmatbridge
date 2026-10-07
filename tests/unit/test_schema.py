@@ -119,7 +119,7 @@ class TestExportMetadata:
 class TestQMatEntry:
     def test_defaults(self, minimal_entry: QMatEntry) -> None:
         assert minimal_entry.exports == []
-        assert minimal_entry.schema_version == "0.2"
+        assert minimal_entry.schema_version == "0.3"
 
     def test_tags_stored(self, minimal_entry: QMatEntry) -> None:
         assert "silicon" in minimal_entry.tags
@@ -207,4 +207,4 @@ class TestToDict:
         assert d["reference"]["structure"]["formula_reduced"] == "Si"
 
     def test_schema_version_in_dict(self, minimal_entry: QMatEntry) -> None:
-        assert minimal_entry.to_dict()["schema_version"] == "0.2"
+        assert minimal_entry.to_dict()["schema_version"] == "0.3"

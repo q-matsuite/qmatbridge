@@ -99,8 +99,8 @@ reimplementing them. Estimates are labelled with the method, assumptions and the
 
 ## Open questions
 
-- Hash policy for positions (M2).
-- Where valence charges live (M2).
+- ~~Hash policy for positions (M2).~~ Decided: hashed when present (Discussion #24).
+- ~~Where valence charges live (M2).~~ Decided: `HamiltonianMetadata.valence_charges`, outside the hash (#13).
 - Whether OPTIMADE entries can carry enough calculation metadata to build a Hamiltonian at all (M4).
 - Which first-quantized formulation the exporters target first (M5).
 

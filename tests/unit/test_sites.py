@@ -171,13 +171,13 @@ def test_fixed_decimal_rounding(value: float, fixed: str, frac: str) -> None:
 
 def test_new_entries_use_schema_0_2_and_readers_accept_both_versions(tmp_path: Path) -> None:
     e = si()
-    assert QMatEntry.__dataclass_fields__["schema_version"].default == "0.2"
-    assert SUPPORTED_SCHEMA_VERSIONS == ("0.1", "0.2")
+    assert QMatEntry.__dataclass_fields__["schema_version"].default == "0.3"
+    assert SUPPORTED_SCHEMA_VERSIONS == ("0.1", "0.2", "0.3")
     d = to_dict(e)
-    for version in ("0.1", "0.2"):
+    for version in ("0.1", "0.2", "0.3"):
         d["schema_version"] = version
         assert entry_from_dict(d).schema_version == version
-    d["schema_version"] = "0.3"
+    d["schema_version"] = "0.4"
     with pytest.raises(EntryFormatError, match="schema_version"):
         entry_from_dict(d)
 

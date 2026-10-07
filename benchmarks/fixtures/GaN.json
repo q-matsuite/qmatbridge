@@ -108,7 +108,8 @@
     "oracle": null,
     "metadata": {
       "source_task_id": "aaadyasv"
-    }
+    },
+    "valence_charges": {}
   },
   "exports": [],
   "tags": [
@@ -116,5 +117,5 @@
     "tier1",
     "GaN"
   ],
-  "schema_version": "0.2"
+  "schema_version": "0.3"
 }

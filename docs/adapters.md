@@ -149,38 +149,36 @@ dependence in Hamiltonian norms.
 
 | | |
 | --- | --- |
-| **Status** | Stub available — full implementation planned for v0.4 |
+| **Status** | Live fetch implemented (registry name `oqmd`); tested against recorded responses |
 | **Module** | `qmatbridge.adapters.oqmd` |
-| **Optional extra** | `pip install qmatbridge[oqmd]` (adds `qmpy-rester`) |
+| **Dependencies** | none: standard-library HTTP, no API key |
 | **Database** | [oqmd.org](https://oqmd.org) |
-| **Coverage** | ~1 M inorganic structures, DFT (PBE / VASP), no API key required |
+| **Coverage** | ~1 M inorganic structures, DFT (PBE / VASP) |
 
-[OQMD](https://oqmd.org) provides systematic coverage of binary and ternary
-phase diagrams at a scale roughly an order of magnitude larger than the
-Materials Project.  Its public REST API (``https://oqmd.org/oqmdapi/``) is
-open without authentication, making it straightforward to batch-fetch
-Hamiltonian parameters for statistical benchmarking across chemistries.
+```python
+from qmatbridge.registry import get_adapter
 
-Entry IDs are integers.  QMatBridge stores them in canonical prefixed form:
-``"oqmd-1214579"``.
+entry = get_adapter("oqmd").fetch_entry("oqmd-1214579")   # or 1214579
+```
 
-### Why OQMD matters for QMatBridge
+Entry IDs are integers; QMatBridge stores them as `"oqmd-1214579"`.
 
-- **Scale for statistics**: ~1 M entries enables distribution studies of LCU
-  norms (λ) and plane-wave counts across the periodic table.
-- **Phase-diagram coverage**: systematic enumeration of binary/ternary phases
-  fills gaps in MP for resource-estimation trend analysis.
-- **No API key**: zero friction for CI pipelines and automated benchmark runs.
-- **Comparable DFT settings**: VASP + PBE + PAW_PBE, same functional family as
-  MP, so λ values are directly comparable across databases.
+### What is fetched and what is assumed
 
-### Planned v0.4 scope
+The OQMD REST API returns the relaxed cell, the atomic sites and the spacegroup
+*symbol*. It does **not** return the calculation settings. QMatBridge therefore
+records, under `hamiltonian.metadata["assumed"]`, three things that come from
+configuration rather than from the database:
 
-- `fetch_structure_metadata_from_oqmd` — lattice, sites, spacegroup via
-  the public REST endpoint ``/oqmdapi/entry/<id>``
-- `fetch_hamiltonian_metadata_from_oqmd` — VASP ENCUT and k-point density
-  from the calculation sub-record
-- Shared `num_plane_waves_from_ecut` utility with the MP adapter
+| Field | Default | Override |
+| --- | --- | --- |
+| `cutoff_energy_ev` | 520 eV (OQMD's published protocol) | `OQMDAdapterConfig(encut_ev=...)` |
+| `spin_polarized` | `True` | `OQMDAdapterConfig(spin_polarized=...)` |
+| `valence_charges` | built-in table for H, He, C, N, O, F, Ne, Si, P, S, Cl, Ar | `OQMDAdapterConfig(valence_charges={"Na": 7})` |
+
+Elements outside the table have several PAW potentials with different valence
+counts, so the adapter **refuses** rather than guesses; pass the charge of the
+potential you mean. The spacegroup *number* is not in the API and stays unset.
 
 ### Configuration
 
@@ -188,25 +186,24 @@ Entry IDs are integers.  QMatBridge stores them in canonical prefixed form:
 from qmatbridge.adapters.oqmd import OQMDAdapterConfig
 
 config = OQMDAdapterConfig(
-    max_sites=20,       # skip large supercells
+    max_sites=20,                       # refuse large supercells
     timeout_s=60.0,
+    retries=3,                          # transient 5xx / network errors, doubling backoff
+    valence_charges={"Li": 3, "Co": 17},
 )
 ```
 
-### Stub usage (OQMD — no API key needed)
+The OQMD server returns an HTML error page when overloaded; the adapter treats
+that as transient and retries. `http_get=` replaces the transport, which is how
+the unit tests replay recorded responses.
+
+### Provenance-only reference (no network)
 
 ```python
 from qmatbridge.adapters.oqmd import build_material_reference_from_oqmd
 
-ref = build_material_reference_from_oqmd(
-    1214579,            # bare int, "1214579", or "oqmd-1214579" all accepted
-    formula="Si",
-    spacegroup_number=227,
-    spacegroup_symbol="Fd-3m",
-    crystal_system="cubic",
-)
+ref = build_material_reference_from_oqmd(1214579, formula="Si")
 print(ref.provenance.primary.identifier)  # "oqmd-1214579"
-print(ref.provenance.primary.url)         # "https://oqmd.org/materials/entry/1214579"
 ```
 
 ---

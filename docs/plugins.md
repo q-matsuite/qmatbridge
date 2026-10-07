@@ -77,7 +77,7 @@ entry.exports.append(meta)
   `PluginError` with the plugin name and target. An unknown name raises `UnknownPluginError`
   (also a `LookupError`) listing what is available.
 - **Built-ins** are defined in `qmatbridge.registry` and work from a source checkout without
-  re-installing; currently `materials_project`.
+  re-installing; currently the adapters `materials_project` and `oqmd`, and the exporter `numpy_planewave`.
 
 ## Testing a plugin
 

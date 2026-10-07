@@ -86,7 +86,8 @@
     "oracle": null,
     "metadata": {
       "source_task_id": "aaafaqvs"
-    }
+    },
+    "valence_charges": {}
   },
   "exports": [],
   "tags": [
@@ -94,5 +95,5 @@
     "tier1",
     "NaCl"
   ],
-  "schema_version": "0.2"
+  "schema_version": "0.3"
 }

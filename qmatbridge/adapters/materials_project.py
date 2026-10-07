@@ -423,7 +423,42 @@ def hamiltonian_from_mp_task_doc(
         spin_polarized=ispin == 2.0,
         basis=basis,
         metadata={"source_task_id": task_m.get("task_id")},
+        valence_charges=valence_charges_from_mp_task_doc(task_m),
     )
+
+
+def valence_charges_from_mp_task_doc(task: Mapping[str, Any]) -> dict[str, float]:
+    """Per-element valence charges from a VASP task's POTCAR specification.
+
+    Pairs ``input.potcar_spec[*].titel`` (e.g. ``"PAW_PBE Li_sv 23Jan2001"``)
+    with ``input.parameters.ZVAL``, which VASP lists in POTCAR order.  Returns
+    an empty dict, never an error, when either is absent, the lengths differ,
+    a title cannot be parsed, or one element appears with two different
+    charges: a missing charge is better than a guessed one.
+    """
+    inp = task.get("input")
+    if not isinstance(inp, Mapping):
+        return {}
+    spec, params = inp.get("potcar_spec"), inp.get("parameters")
+    zval = params.get("ZVAL") if isinstance(params, Mapping) else None
+    if not (isinstance(spec, list) and isinstance(zval, list)):
+        return {}
+    if len(spec) != len(zval):
+        return {}
+    charges: dict[str, float] = {}
+    for item, z in zip(spec, zval):
+        titel = item.get("titel") if isinstance(item, Mapping) else None
+        if not isinstance(titel, str) or isinstance(z, bool):
+            return {}
+        if not isinstance(z, (int, float)):
+            return {}
+        words = titel.split()
+        if len(words) < 2 or not math.isfinite(z) or z <= 0:
+            return {}
+        element = words[1].split("_")[0]
+        if not element.isalpha() or charges.setdefault(element, float(z)) != float(z):
+            return {}
+    return charges
 
 
 def functional_from_mp_task_doc(task: Mapping[str, Any]) -> str:
@@ -638,6 +673,11 @@ def fetch_entry_from_mp(
         config=cfg,
     )
     ref.structure = structure
+    if hamiltonian.valence_charges:
+        try:
+            QMatEntry(ref, hamiltonian).check_electron_count()
+        except (KeyError, ValueError):
+            hamiltonian.valence_charges = {}  # inconsistent with NELECT: keep none
     ref.provenance.metadata["task_id"] = task.get("task_id")
     ref.provenance.metadata["candidate_task_ids"] = task.get("_candidates", [])
     return QMatEntry(reference=ref, hamiltonian=hamiltonian, tags=list(tags or []))
