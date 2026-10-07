@@ -38,6 +38,7 @@ dependencies = []
 [project.optional-dependencies]
 dev = [
     "hypothesis>=6.100",
+    "numpy>=1.24",
     "pytest>=7.4",
     "pytest-cov>=4.1",
     "ruff>=0.4",
@@ -58,8 +59,8 @@ mp = [
 ase = [
     "ase>=3.22",
 ]
-oqmd = [
-    "qmpy-rester>=0.3",
+numpy = [
+    "numpy>=1.24",
 ]
 openfermion = [
     "openfermion>=1.6",

@@ -97,7 +97,8 @@ QMatBridge is intentionally narrow: it is a bridge, not a database.
 - First-quantized Hamiltonian representation (T + U + V in reciprocal space)
 - LCU / qubitization oracle metadata
 - JSON serialization with canonical entry hashes
-- Materials Project adapter (structure + plane-wave Hamiltonian metadata); OQMD stub
+- Materials Project adapter (structure + plane-wave Hamiltonian metadata); OQMD adapter (live fetch, recorded-response tested)
+- Raw plane-wave NumPy exporter
 - Zero required dependencies in the core schema
 
 **Out of scope (for now):**
@@ -105,8 +106,8 @@ QMatBridge is intentionally narrow: it is a bridge, not a database.
 - Gaussian / LCAO / real-space basis sets
 - Molecular (non-periodic) systems
 - Excited-state or TDDFT Hamiltonians
-- Live OQMD / OPTIMADE calls (planned v0.4)
-- Exporter implementations (planned v0.5)
+- OPTIMADE and Alexandria adapters (planned v0.4)
+- OpenFermion and qualtran / pyLIQTR exporters (planned v0.5)
 
 ---
 
@@ -150,10 +151,10 @@ pip install qmatbridge             # from PyPI; the core has no required depende
 pip install "qmatbridge[mp]"       # + Materials Project adapter (mp-api, pymatgen); use Python 3.11+
 ```
 
-Optional extras (the `oqmd` adapter is still a stub; `openfermion` is for a planned exporter):
+Optional extras (`openfermion` is for a planned exporter):
 
 ```bash
-pip install "qmatbridge[oqmd]"         # OQMD adapter (qmpy-rester)
+pip install "qmatbridge[numpy]"        # raw plane-wave NumPy exporter
 pip install "qmatbridge[openfermion]"  # OpenFermion exporter
 ```
 
@@ -236,9 +237,11 @@ qmatbridge/
 │   ├── schema.py                  # Neutral intermediate representation (NIR)
 │   ├── io.py                      # JSON serialization utilities
 │   ├── basis.py                   # Plane-wave counting utilities
-│   └── adapters/
-│       ├── materials_project.py   # Materials Project adapter
-│       └── oqmd.py                # OQMD adapter stub (v0.4 target)
+│   ├── adapters/
+│   │   ├── materials_project.py   # Materials Project adapter
+│   │   └── oqmd.py                # OQMD adapter
+│   └── exporters/
+│       └── numpy_planewave.py     # Raw plane-wave arrays (.npz)
 ├── docs/
 │   ├── vision.md                  # Design rationale and architectural constraints
 │   ├── adapters.md                # Upstream adapter documentation
@@ -289,19 +292,19 @@ qmatbridge/
       without positions keep their old hash
 - [x] Python and website JavaScript produce identical hashes (tested under Node)
 - [x] Tier-1 fixtures and the website carry atomic positions
-- [ ] Per-species valence charges (still open, issue #13)
+- [x] Per-species valence charges: `HamiltonianMetadata.valence_charges`, schema 0.3 (merged, ships next release; issue #13)
 
 ### v0.4 — OPTIMADE, OQMD, and Alexandria adapters
 
 - [ ] Generic OPTIMADE adapter (AFLOW, JARVIS, NOMAD, MC3D)
-- [ ] OQMD live fetch
+- [x] OQMD live fetch (merged, unreleased; recorded-response tested, live check owed)
 - [ ] Alexandria adapter (PBEsol / HSE06 / r²SCAN, ~4.5 M structures)
 - [ ] Cross-database deduplication via shared ICSD numbers
 
 ### v0.5 — Hamiltonian exporters
 
 - [ ] OpenFermion `InteractionOperator` exporter
-- [ ] First-quantized plane-wave Hamiltonian (raw NumPy arrays)
+- [x] Raw plane-wave arrays exporter (NumPy `.npz`; merged, unreleased)
 - [ ] LCU coefficient export for `qualtran` / `pyLIQTR`
 
 ### v0.6 — Resource estimation hooks

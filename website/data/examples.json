@@ -131,7 +131,8 @@
     "oracle": null,
     "metadata": {
      "source_task_id": "aaafajdk"
-    }
+    },
+    "valence_charges": {}
    },
    "exports": [],
    "tags": [
@@ -139,7 +140,7 @@
     "tier1",
     "Si"
    ],
-   "schema_version": "0.2"
+   "schema_version": "0.3"
   }
  },
  {
@@ -310,7 +311,8 @@
     "oracle": null,
     "metadata": {
      "source_task_id": "aaadyasv"
-    }
+    },
+    "valence_charges": {}
    },
    "exports": [],
    "tags": [
@@ -318,7 +320,7 @@
     "tier1",
     "GaN"
    ],
-   "schema_version": "0.2"
+   "schema_version": "0.3"
   }
  },
  {
@@ -491,7 +493,8 @@
     "oracle": null,
     "metadata": {
      "source_task_id": "aaaeyhqn"
-    }
+    },
+    "valence_charges": {}
    },
    "exports": [],
    "tags": [
@@ -499,7 +502,7 @@
     "tier1",
     "LiCoO2"
    ],
-   "schema_version": "0.2"
+   "schema_version": "0.3"
   }
  },
  {
@@ -1107,7 +1110,8 @@
     "oracle": null,
     "metadata": {
      "source_task_id": "aaadwvyp"
-    }
+    },
+    "valence_charges": {}
    },
    "exports": [],
    "tags": [
@@ -1115,7 +1119,7 @@
     "tier1",
     "LiFePO4"
    ],
-   "schema_version": "0.2"
+   "schema_version": "0.3"
   }
  },
  {
@@ -1248,7 +1252,8 @@
     "oracle": null,
     "metadata": {
      "source_task_id": "aaafaqvs"
-    }
+    },
+    "valence_charges": {}
    },
    "exports": [],
    "tags": [
@@ -1256,7 +1261,7 @@
     "tier1",
     "NaCl"
    ],
-   "schema_version": "0.2"
+   "schema_version": "0.3"
   }
  },
  {
@@ -1447,7 +1452,8 @@
     "oracle": null,
     "metadata": {
      "source_task_id": "aaafavyw"
-    }
+    },
+    "valence_charges": {}
    },
    "exports": [],
    "tags": [
@@ -1455,7 +1461,7 @@
     "tier1",
     "BaTiO3"
    ],
-   "schema_version": "0.2"
+   "schema_version": "0.3"
   }
  }
 ]

@@ -163,7 +163,8 @@
     "metadata": {
       "total_energy_ev": -10.843,
       "bandgap_ev": 0.61
-    }
+    },
+    "valence_charges": {}
   },
   "exports": [],
   "tags": [
@@ -172,5 +173,5 @@
     "benchmark",
     "lcu"
   ],
-  "schema_version": "0.2"
+  "schema_version": "0.3"
 }

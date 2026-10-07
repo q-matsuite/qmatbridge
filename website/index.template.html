@@ -414,7 +414,7 @@ footer.site p { margin: 0 0 6px; }
         <h3>Sources</h3>
         <ul>
           <li>Materials Project <span class="pill ok">available</span></li>
-          <li>OQMD <span class="pill warn">stub</span></li>
+          <li>OQMD <span class="pill acc">in main</span></li>
           <li>OPTIMADE <span class="pill">planned</span></li>
         </ul>
       </div>
@@ -428,6 +428,7 @@ footer.site p { margin: 0 0 6px; }
       <div class="node">
         <h3>Exporters</h3>
         <ul>
+          <li>Plane-wave arrays (NumPy) <span class="pill acc">in main</span></li>
           <li>OpenFermion <span class="pill">planned</span></li>
           <li>qualtran / pyLIQTR <span class="pill">planned</span></li>
           <li>Qiskit <span class="pill">planned</span></li>
@@ -601,17 +602,17 @@ python -c "from qmatbridge.adapters.materials_project import fetch_entry_from_mp
     <ol class="roadmap reveal">
       <li class="done"><h3>v0.1 <span class="pill ok">done</span></h3><p>Schema, JSON I/O, canonical hash, adapter stubs, CI.</p><span class="when">June 2026</span></li>
       <li class="done"><h3>v0.2 <span class="pill ok">released</span></h3><p>Materials Project adapter validated against the live API, plane-wave utility, entry reader, plugin registry, Tier-1 fixtures with nightly drift checks, docs.</p><span class="when">0.2.0 · October 2026</span></li>
-      <li class="done"><h3>v0.3 <span class="pill ok">released</span></h3><p>Atomic positions in the schema (schema 0.2), hashed when an entry records them; the website recomputes the same fingerprint in your browser.</p><span class="when">0.3.0 · October 2026</span></li>
-      <li class="next"><h3>v0.4 <span class="pill acc">next</span></h3><p>OPTIMADE, OQMD and Alexandria adapters; cross-database deduplication.</p></li>
-      <li><h3>v0.5 <span class="pill">planned</span></h3><p>Exporters: OpenFermion, raw plane-wave arrays, LCU coefficients for qualtran / pyLIQTR.</p></li>
+      <li class="done"><h3>v0.3 <span class="pill ok">released</span></h3><p>Atomic positions in the schema (schema 0.2), hashed when an entry records them; the website recomputes the same fingerprint in your browser. Per-species valence charges (schema 0.3) are merged and ship with the next release.</p><span class="when">0.3.0 · October 2026</span></li>
+      <li class="next"><h3>v0.4 <span class="pill acc">next</span></h3><p>OQMD live fetch is merged (recorded-response tested; the OQMD server was down when it was written, so a live check is still owed). Next: OPTIMADE, Alexandria and cross-database deduplication.</p></li>
+      <li><h3>v0.5 <span class="pill">planned</span></h3><p>Exporters: the raw plane-wave NumPy exporter is merged; OpenFermion and LCU coefficients for qualtran / pyLIQTR follow.</p></li>
       <li><h3>v0.6 <span class="pill">planned</span></h3><p>T-count, Toffoli and qubit estimation hooks.</p></li>
     </ol>
     <div class="focus-card reveal">
       <div>
-        <h3>Decided in the open: positions are hashed when an entry records them</h3>
-        <p>Entries that carry atomic positions now include the lattice and positions in their fingerprint; entries without positions keep exactly the hash they had. Per-species valence charges, which exporters will need, are still an open question.</p>
+        <h3>Decided: valence charges live in the Hamiltonian record</h3>
+        <p>Exporters need the ionic charge of each element, so <code>hamiltonian.valence_charges</code> records the valence electrons the pseudopotential contributes. It is deliberately not part of the fingerprint, so no existing hash changes. Earlier, positions were decided the same way: hashed when an entry records them.</p>
       </div>
-      <a class="btn primary" href="https://github.com/q-matsuite/qmatbridge/discussions/24" rel="noopener">Read the decision</a>
+      <a class="btn primary" href="https://github.com/q-matsuite/qmatbridge/discussions/24" rel="noopener">Read the position decision</a>
     </div>
   </div>
 </section>

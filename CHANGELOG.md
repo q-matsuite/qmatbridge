@@ -11,6 +11,37 @@ Breaking changes to `QMatEntry` or its nested schema classes are marked
 
 ## [Unreleased]
 
+Schema 0.3 (per-species valence charges), the OQMD adapter, and the first exporter. Nothing here
+changes any `canonical_hash()` value.
+
+### Added
+- **Schema 0.3: `HamiltonianMetadata.valence_charges`** (element → valence electrons contributed
+  by the pseudopotential; default empty), decided in #13. `schema_version` defaults to `"0.3"`;
+  readers accept `"0.1"`, `"0.2"` and `"0.3"`. Not part of `canonical_hash()`. New
+  `QMatEntry.valence_electron_total()` and `check_electron_count()` verify the charges against
+  `num_electrons` over the recorded sites.
+- The Materials Project adapter reads charges from the task's `potcar_spec` and `ZVAL`; it leaves
+  them empty rather than guess when they are absent, mismatched or inconsistent with `NELECT`.
+- **OQMD adapter** (registry name `oqmd`): `fetch_entry_from_oqmd`, `fetch_structure_metadata_from_oqmd`,
+  `fetch_hamiltonian_metadata_from_oqmd`, plus the pure converters `structure_from_oqmd_doc` and
+  `hamiltonian_from_oqmd`. Standard-library HTTP with retries; no dependency. OQMD does not publish
+  cutoff, spin treatment or electron count, so those are configured and listed under
+  `hamiltonian.metadata["assumed"]`; elements without an unambiguous PAW valence count must be
+  supplied (#17). Tested against recorded-shape responses only: the OQMD server returned HTTP 502
+  during development, so a live check is still owed.
+- **`numpy_planewave` exporter** (registry name; `pip install qmatbridge[numpy]`): writes G-vectors,
+  Miller indices, kinetic energies, ion positions and charges and the ionic structure factor to an
+  `.npz`. The plane-wave set matches `BasisMetadata.num_plane_waves` exactly. Refuses entries
+  without positions or consistent valence charges (#18).
+- `docs/stack.md`: which parts of the stack are open and where a private extension plugs in.
+
+### Removed
+- The empty-in-practice `oqmd` extra (`qmpy-rester`): the adapter needs no dependency.
+
+### Changed
+- Entries written by this version carry `schema_version: "0.3"`, which 0.3.x readers reject with a
+  clear error. The committed fixtures and the website data were rewritten at 0.3 with empty charges.
+
 ---
 
 ## [0.3.0] — 2026-10-06
