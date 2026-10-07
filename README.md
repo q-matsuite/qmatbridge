@@ -292,19 +292,19 @@ qmatbridge/
       without positions keep their old hash
 - [x] Python and website JavaScript produce identical hashes (tested under Node)
 - [x] Tier-1 fixtures and the website carry atomic positions
-- [x] Per-species valence charges: `HamiltonianMetadata.valence_charges`, schema 0.3 (merged, ships next release; issue #13)
+- [x] Per-species valence charges: `HamiltonianMetadata.valence_charges`, schema 0.3 (released in 0.4.0; issue #13)
 
 ### v0.4 — OPTIMADE, OQMD, and Alexandria adapters
 
 - [ ] Generic OPTIMADE adapter (AFLOW, JARVIS, NOMAD, MC3D)
-- [x] OQMD live fetch (merged, unreleased; recorded-response tested, live check owed)
+- [x] OQMD live fetch (released in 0.4.0; recorded-response tested, live check owed)
 - [ ] Alexandria adapter (PBEsol / HSE06 / r²SCAN, ~4.5 M structures)
 - [ ] Cross-database deduplication via shared ICSD numbers
 
 ### v0.5 — Hamiltonian exporters
 
 - [ ] OpenFermion `InteractionOperator` exporter
-- [x] Raw plane-wave arrays exporter (NumPy `.npz`; merged, unreleased)
+- [x] Raw plane-wave arrays exporter (NumPy `.npz`; released in 0.4.0)
 - [ ] LCU coefficient export for `qualtran` / `pyLIQTR`
 
 ### v0.6 — Resource estimation hooks
@@ -351,7 +351,7 @@ academic work, please cite the repository directly:
   title   = {{QMatBridge}: A bridge from classical materials databases to
              first-quantized Hamiltonians for quantum simulation},
   url     = {https://github.com/q-matsuite/qmatbridge},
-    version = {0.3.0},
+    version = {0.4.0},
     doi     = {10.5281/zenodo.23192772},
   year    = {2026},
 }

@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "qmatbridge"
-version = "0.3.0"
+version = "0.4.0"
 description = "Bridge from classical materials databases to first-quantized Hamiltonians for quantum simulation"
 readme = "README.md"
 license = { file = "LICENSE" }
