@@ -34,6 +34,9 @@ The OpenFermion exporter. Nothing here changes the schema or any `canonical_hash
 The generic OPTIMADE adapter. Nothing here changes any `canonical_hash()` value or the schema.
 
 ### Added
+- `examples/notebooks/qmatbridge_tour.ipynb`: a second, offline notebook that exercises the registry, atomic positions, valence charges, the OPTIMADE and OQMD adapters and the `numpy_planewave` exporter, with figures; executed by `tests/unit/test_tour_notebook.py`.
+
+### Added
 - **Generic OPTIMADE adapter** (registry name `optimade`): `fetch_entry_from_optimade`,
   `fetch_structure_metadata_from_optimade`, `fetch_hamiltonian_metadata_from_optimade`, plus the pure
   converters `structure_from_optimade_doc` and `hamiltonian_from_optimade`. Reads the standard
