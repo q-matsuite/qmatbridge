@@ -415,7 +415,7 @@ footer.site p { margin: 0 0 6px; }
         <ul>
           <li>Materials Project <span class="pill ok">available</span></li>
           <li>OQMD <span class="pill ok">0.4.0</span></li>
-          <li>OPTIMADE <span class="pill">planned</span></li>
+          <li>OPTIMADE <span class="pill ok">0.5.0</span></li>
         </ul>
       </div>
       <div class="arrow" aria-hidden="true"></div>
@@ -603,7 +603,7 @@ python -c "from qmatbridge.adapters.materials_project import fetch_entry_from_mp
       <li class="done"><h3>v0.1 <span class="pill ok">done</span></h3><p>Schema, JSON I/O, canonical hash, adapter stubs, CI.</p><span class="when">June 2026</span></li>
       <li class="done"><h3>v0.2 <span class="pill ok">released</span></h3><p>Materials Project adapter validated against the live API, plane-wave utility, entry reader, plugin registry, Tier-1 fixtures with nightly drift checks, docs.</p><span class="when">0.2.0 · October 2026</span></li>
       <li class="done"><h3>v0.3 <span class="pill ok">released</span></h3><p>Atomic positions in the schema (schema 0.2), hashed when an entry records them; the website recomputes the same fingerprint in your browser. Per-species valence charges followed in 0.4.0 (schema 0.3).</p><span class="when">0.3.0 · October 2026</span></li>
-      <li class="next"><h3>v0.4 <span class="pill acc">next</span></h3><p>OQMD live fetch shipped in 0.4.0 (recorded-response tested; the OQMD server was down when it was written, so a live check is still owed). Next: OPTIMADE, Alexandria and cross-database deduplication.</p></li>
+      <li class="next"><h3>v0.4 <span class="pill acc">next</span></h3><p>OQMD live fetch shipped in 0.4.0 (recorded-response tested; the OQMD server was down when it was written, so a live check is still owed). The generic OPTIMADE adapter shipped in 0.5.0 (Materials Project and Alexandria PBE/PBEsol checked live). Next: the remaining Alexandria sets and cross-database deduplication.</p></li>
       <li><h3>v0.5 <span class="pill">planned</span></h3><p>Exporters: the raw plane-wave NumPy exporter shipped in 0.4.0; OpenFermion and LCU coefficients for qualtran / pyLIQTR follow.</p></li>
       <li><h3>v0.6 <span class="pill">planned</span></h3><p>T-count, Toffoli and qubit estimation hooks.</p></li>
     </ol>
@@ -646,7 +646,7 @@ python -c "from qmatbridge.adapters.materials_project import fetch_entry_from_mp
             databases to first-quantized Hamiltonians for
             quantum simulation},
   url    = {https://github.com/q-matsuite/qmatbridge},
-  version = {0.4.0},
+  version = {0.5.0},
   year   = {2026},
 }</code></pre><button class="copy" type="button">Copy</button></div>
   </div>
