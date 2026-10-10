@@ -296,9 +296,9 @@ qmatbridge/
 
 ### v0.4 — OPTIMADE, OQMD, and Alexandria adapters
 
-- [ ] Generic OPTIMADE adapter (AFLOW, JARVIS, NOMAD, MC3D)
+- [x] Generic OPTIMADE adapter (AFLOW, JARVIS, NOMAD, MC3D, ...); checked live on MP and Alexandria
 - [x] OQMD live fetch (released in 0.4.0; recorded-response tested, live check owed)
-- [ ] Alexandria adapter (PBEsol / HSE06 / r²SCAN, ~4.5 M structures)
+- [ ] Alexandria: PBE and PBEsol are reachable through the OPTIMADE adapter; HSE06 / r²SCAN and the full ~4.5 M set remain
 - [ ] Cross-database deduplication via shared ICSD numbers
 
 ### v0.5 — Hamiltonian exporters
