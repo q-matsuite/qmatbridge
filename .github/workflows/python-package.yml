@@ -70,10 +70,10 @@ jobs:
           cache: "pip"
 
       - name: Install package + OpenFermion
-        run: pip install -e ".[dev,openfermion]"
+        run: pip install -e ".[dev,openfermion]" cirq-core
 
       - name: Cross-check against OpenFermion's plane-wave Hamiltonian
-        run: pytest tests/unit/test_openfermion_export.py -v
+        run: pytest tests/unit/test_openfermion_export.py tests/unit/test_lcu_export.py -v
 
   docs:
     name: Docs build

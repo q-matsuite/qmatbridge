@@ -114,6 +114,7 @@ def test_get_builtin_adapter_satisfies_protocol() -> None:
 
 def test_builtin_exporters_and_adapters() -> None:
     assert {p.name for p in list_exporters() if p.builtin} == {
+        "lcu",
         "numpy_planewave",
         "openfermion",
     }
@@ -168,6 +169,7 @@ def test_third_party_plugins_are_discovered_via_entry_points(plugin_dir: Path) -
     assert "materials_project" in adapters  # built-ins still present
     assert [p.name for p in list_exporters()] == [
         "fake_target",
+        "lcu",
         "numpy_planewave",
         "openfermion",
     ]

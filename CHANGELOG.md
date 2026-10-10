@@ -11,6 +11,26 @@ Breaking changes to `QMatEntry` or its nested schema classes are marked
 
 ## [Unreleased]
 
+Cross-database deduplication and the LCU coefficient exporter. Nothing here changes the schema or
+any `canonical_hash()` value.
+
+### Added
+- **`qmatbridge.dedup`**: `find_duplicates`, `deduplicate`, `structures_match`, `external_identifiers`.
+  Entries are grouped as one material when they share an external identifier (for example an ICSD
+  number in `additional_ids`; an OPTIMADE `mp:` entry also counts as the Materials Project record) or
+  when their atomic environments agree. The geometry test does not depend on the cell choice
+  (primitive or conventional), origin, orientation or atom order, and takes a relative distance
+  tolerance (default 3 %, so a PBE and a PBEsol relaxation still match). Each group records its
+  evidence, and identifier links whose geometries disagree are listed as `conflicts`. It is a
+  fingerprint comparison, not a full symmetry analysis.
+- **`lcu` exporter** (registry name; needs the `openfermion` extra; Cirq optional): writes the
+  plane-wave Hamiltonian as a Jordan-Wigner Pauli LCU, `H = c0 + sum alpha_l P_l`, with the Pauli
+  strings, real coefficients, signs, `lambda = sum |alpha_l|` and the normalised magnitudes a
+  PREPARE oracle loads (`lcu_arrays`, `load_lcu`, `to_cirq_pauli_sum`, `lcu_oracle_metadata`). The
+  decomposition reproduces the fermionic matrix exactly (tested against OpenFermion's sparse operator
+  and Cirq). It is the second-quantized model of the OpenFermion exporter, not the first-quantized
+  decomposition of Babbush et al.; default limit 12 plane waves.
+
 ---
 
 ## [0.6.0] — 2026-10-10
