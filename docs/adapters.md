@@ -88,28 +88,51 @@ print(ref.provenance.primary.identifier)   # "mp-149"
 
 | | |
 | --- | --- |
-| **Status** | Planned — v0.4 target |
-| **Module** | `qmatbridge.adapters.optimade` (planned) |
-| **Optional extra** | `pip install qmatbridge[optimade]` |
+| **Status** | Live fetch implemented (registry name `optimade`); tested against recorded responses and live on Materials Project and Alexandria |
+| **Module** | `qmatbridge.adapters.optimade` |
+| **Dependencies** | none: standard-library HTTP |
 | **Spec** | https://www.optimade.org |
 
 [OPTIMADE](https://www.optimade.org) is a REST API standard adopted by many
-materials databases, including AFLOW, JARVIS, NOMAD, and MC3D.  A single
-adapter targeting the OPTIMADE spec covers all compliant sources.
+materials databases (Alexandria, AFLOW, JARVIS, NOMAD, MC3D, OQMD, the Materials
+Project, COD, ...). One adapter reads the standard `/v1/structures/{id}` endpoint
+and so covers every compliant source. The providers are listed at
+[providers.optimade.org](https://providers.optimade.org).
 
-### Planned scope
+```python
+from qmatbridge.adapters.optimade import OptimadeAdapterConfig
+from qmatbridge.registry import get_adapter
 
-- Generic `OptimadeAdapterConfig` with `base_url` and optional `api_key`
-- `fetch_structure_metadata_from_optimade(entry_id, base_url)` using only
-  the standard OPTIMADE `/structures/{id}` endpoint
-- Pre-configured convenience wrappers for common providers:
+adapter = get_adapter("optimade", config=OptimadeAdapterConfig(encut_ev=520.0))
+entry = adapter.fetch_entry("mp:mp-149")                       # known provider prefix
 
-| Provider | Base URL |
-| --- | --- |
-| AFLOW | `https://aflow.org/API/optimade/` |
-| JARVIS | `https://jarvis.nist.gov/optimade` |
-| NOMAD | `https://nomad-lab.eu/prod/v1/api/optimade` |
-| MC3D | `https://mc3d.materialscloud.org/optimade/v1` |
+other = OptimadeAdapterConfig(base_url="https://example.org/optimade", encut_ev=520.0)
+entry = get_adapter("optimade", config=other).fetch_entry("some-id")  # any server
+```
+
+Built-in provider prefixes are `mp`, `alexandria-pbe` and `alexandria-pbesol`
+(`qmatbridge.adapters.optimade.KNOWN_PROVIDERS`); anything else goes through
+`base_url`. Entries are stored with source `optimade:<provider or host>` and
+identifier `<provider or host>:<id>`.
+
+### What is fetched and what is assumed
+
+OPTIMADE returns the lattice vectors, the Cartesian site positions and the
+species, so the structure is fetched (positions are converted to fractional
+coordinates wrapped into [0, 1)). It returns no calculation settings, so these
+come from configuration and are listed under `hamiltonian.metadata["assumed"]`:
+
+| Field | Default | Set with |
+| --- | --- | --- |
+| `cutoff_energy_ev` | **none: required** | `OptimadeAdapterConfig(encut_ev=...)` |
+| `spin_polarized` | `False` | `OptimadeAdapterConfig(spin_polarized=...)` |
+| `valence_charges` | built-in table for H, He, C, N, O, F, Ne, Si, P, S, Cl, Ar | `OptimadeAdapterConfig(valence_charges={"Na": 7})` |
+
+As with OQMD, elements outside the table have several PAW potentials, so the
+adapter refuses rather than guesses. `functional`, `pseudopotential` and `code`
+are recorded in the provenance only if you pass them; OPTIMADE does not define
+them. Disordered sites, vacancies and structures that are not periodic in all
+three directions raise `ValueError`.
 
 ---
 
@@ -117,9 +140,7 @@ adapter targeting the OPTIMADE spec covers all compliant sources.
 
 | | |
 | --- | --- |
-| **Status** | Planned — v0.4 target |
-| **Module** | `qmatbridge.adapters.alexandria` (planned) |
-| **Optional extra** | `pip install qmatbridge[alexandria]` |
+| **Status** | Reachable today through the `optimade` adapter (`alexandria-pbe:<id>`, `alexandria-pbesol:<id>`); a dedicated adapter is still planned |
 | **Database** | https://alexandria.icams.rub.de |
 
 The [Alexandria library](https://alexandria.icams.rub.de) provides ~4.5 M
@@ -133,8 +154,9 @@ dependence in Hamiltonian norms.
   cross-functional benchmarks of LCU norms (λ) and plane-wave counts.
 - **Scale**: order-of-magnitude more entries than MP enables statistical
   studies of resource-estimation trends across chemistry.
-- **OPTIMADE compliance**: Alexandria exposes an OPTIMADE endpoint, so the
-  OPTIMADE adapter may cover it automatically once that adapter is complete.
+- **OPTIMADE compliance**: Alexandria exposes an OPTIMADE endpoint, which the
+  OPTIMADE adapter above already reads. The HSE06 and r²SCAN sets are not served
+  at the endpoints tried so far, so those still need a dedicated adapter.
 
 ### Planned scope
 

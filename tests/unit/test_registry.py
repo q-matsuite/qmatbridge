@@ -114,7 +114,11 @@ def test_get_builtin_adapter_satisfies_protocol() -> None:
 
 def test_builtin_exporters_and_adapters() -> None:
     assert {p.name for p in list_exporters() if p.builtin} == {"numpy_planewave"}
-    assert {p.name for p in list_adapters() if p.builtin} == {"materials_project", "oqmd"}
+    assert {p.name for p in list_adapters() if p.builtin} == {
+        "materials_project",
+        "optimade",
+        "oqmd",
+    }
 
 
 def test_mp_adapter_passes_arguments_through(monkeypatch: pytest.MonkeyPatch) -> None:

@@ -11,6 +11,17 @@ Breaking changes to `QMatEntry` or its nested schema classes are marked
 
 ## [Unreleased]
 
+### Added
+- **Generic OPTIMADE adapter** (registry name `optimade`): `fetch_entry_from_optimade`,
+  `fetch_structure_metadata_from_optimade`, `fetch_hamiltonian_metadata_from_optimade`, plus the pure
+  converters `structure_from_optimade_doc` and `hamiltonian_from_optimade`. Reads the standard
+  `/v1/structures/{id}` endpoint, so it covers Alexandria, the Materials Project and other OPTIMADE
+  servers (`KNOWN_PROVIDERS`, or any `base_url`). OPTIMADE returns no calculation settings, so the
+  cutoff (required), spin treatment and valence charges are configured and listed under
+  `hamiltonian.metadata["assumed"]`. Disordered, vacancy-bearing and non-periodic structures are
+  refused. Standard-library HTTP; no dependency. Checked live against the Materials Project and
+  Alexandria; the OQMD server still returned HTTP 502, so its live check remains owed.
+
 ---
 
 ## [0.4.0] — 2026-10-07
