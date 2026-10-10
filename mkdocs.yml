@@ -47,6 +47,7 @@ nav:
       - Vision: vision.md
       - Oracle model: oracle-model.md
       - Adapters: adapters.md
+      - Exporters: exporters.md
       - Open core and private extensions: stack.md
   - How the workflows work: workflows.md
   - Releasing: releasing.md

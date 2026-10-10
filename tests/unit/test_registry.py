@@ -113,7 +113,10 @@ def test_get_builtin_adapter_satisfies_protocol() -> None:
 
 
 def test_builtin_exporters_and_adapters() -> None:
-    assert {p.name for p in list_exporters() if p.builtin} == {"numpy_planewave"}
+    assert {p.name for p in list_exporters() if p.builtin} == {
+        "numpy_planewave",
+        "openfermion",
+    }
     assert {p.name for p in list_adapters() if p.builtin} == {
         "materials_project",
         "optimade",
@@ -163,7 +166,11 @@ def test_third_party_plugins_are_discovered_via_entry_points(plugin_dir: Path) -
     assert not adapters["fake_source"].builtin
     assert adapters["fake_source"].target == "thirdparty_mod:FakeAdapter"
     assert "materials_project" in adapters  # built-ins still present
-    assert [p.name for p in list_exporters()] == ["fake_target", "numpy_planewave"]
+    assert [p.name for p in list_exporters()] == [
+        "fake_target",
+        "numpy_planewave",
+        "openfermion",
+    ]
     # Listing is lazy: the plugin module has not been imported.
     assert "thirdparty_mod" not in sys.modules
 

@@ -11,6 +11,16 @@ Breaking changes to `QMatEntry` or its nested schema classes are marked
 
 ## [Unreleased]
 
+### Added
+- **`openfermion` exporter** (registry name; `pip install qmatbridge[openfermion]`): writes the
+  second-quantized plane-wave Hamiltonian of an entry as an OpenFermion `InteractionOperator`
+  (`interaction_operator`, `load_interaction_operator`, `ewald_energy`). Hartree atomic units; the
+  one- and two-body terms agree term by term with OpenFermion's own `plane_wave_hamiltonian`, and the
+  Ewald constant reproduces the simple-cubic Wigner-crystal energy. It is a point-ion Coulomb model
+  (ion charge = the entry's valence charge, no pseudopotential form factor), not the DFT Hamiltonian,
+  and it refuses bases above `max_plane_waves` (default 32) because the two-body tensor grows as `N^4`.
+- `docs/exporters.md`.
+
 ---
 
 ## [0.5.0] — 2026-10-09
