@@ -296,7 +296,7 @@ qmatbridge/
 
 ### v0.4 — OPTIMADE, OQMD, and Alexandria adapters
 
-- [x] Generic OPTIMADE adapter (AFLOW, JARVIS, NOMAD, MC3D, ...); checked live on MP and Alexandria
+- [x] Generic OPTIMADE adapter (AFLOW, JARVIS, NOMAD, MC3D, ...; released in 0.5.0, checked live on MP and Alexandria)
 - [x] OQMD live fetch (released in 0.4.0; recorded-response tested, live check owed)
 - [ ] Alexandria: PBE and PBEsol are reachable through the OPTIMADE adapter; HSE06 / r²SCAN and the full ~4.5 M set remain
 - [ ] Cross-database deduplication via shared ICSD numbers
@@ -351,7 +351,7 @@ academic work, please cite the repository directly:
   title   = {{QMatBridge}: A bridge from classical materials databases to
              first-quantized Hamiltonians for quantum simulation},
   url     = {https://github.com/q-matsuite/qmatbridge},
-    version = {0.4.0},
+    version = {0.5.0},
     doi     = {10.5281/zenodo.23192772},
   year    = {2026},
 }

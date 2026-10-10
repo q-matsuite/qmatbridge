@@ -11,6 +11,12 @@ Breaking changes to `QMatEntry` or its nested schema classes are marked
 
 ## [Unreleased]
 
+---
+
+## [0.5.0] — 2026-10-09
+
+The generic OPTIMADE adapter. Nothing here changes any `canonical_hash()` value or the schema.
+
 ### Added
 - **Generic OPTIMADE adapter** (registry name `optimade`): `fetch_entry_from_optimade`,
   `fetch_structure_metadata_from_optimade`, `fetch_hamiltonian_metadata_from_optimade`, plus the pure
@@ -299,7 +305,8 @@ Initial repository scaffold and schema definition.  First release prepared for P
 **Planning**
 - `planning/initial_issues.md` — ten scoped GitHub issues for v0.1–v0.4
 
-[Unreleased]: https://github.com/q-matsuite/qmatbridge/compare/v0.4.0...HEAD
+[Unreleased]: https://github.com/q-matsuite/qmatbridge/compare/v0.5.0...HEAD
+[0.5.0]: https://github.com/q-matsuite/qmatbridge/compare/v0.4.0...v0.5.0
 [0.4.0]: https://github.com/q-matsuite/qmatbridge/compare/v0.3.0...v0.4.0
 [0.3.0]: https://github.com/q-matsuite/qmatbridge/compare/v0.2.1...v0.3.0
 [0.2.1]: https://github.com/q-matsuite/qmatbridge/compare/v0.2.0...v0.2.1
