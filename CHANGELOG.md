@@ -11,6 +11,12 @@ Breaking changes to `QMatEntry` or its nested schema classes are marked
 
 ## [Unreleased]
 
+---
+
+## [0.6.0] — 2026-10-10
+
+The OpenFermion exporter. Nothing here changes the schema or any `canonical_hash()` value.
+
 ### Added
 - **`openfermion` exporter** (registry name; `pip install qmatbridge[openfermion]`): writes the
   second-quantized plane-wave Hamiltonian of an entry as an OpenFermion `InteractionOperator`
@@ -315,7 +321,8 @@ Initial repository scaffold and schema definition.  First release prepared for P
 **Planning**
 - `planning/initial_issues.md` — ten scoped GitHub issues for v0.1–v0.4
 
-[Unreleased]: https://github.com/q-matsuite/qmatbridge/compare/v0.5.0...HEAD
+[Unreleased]: https://github.com/q-matsuite/qmatbridge/compare/v0.6.0...HEAD
+[0.6.0]: https://github.com/q-matsuite/qmatbridge/compare/v0.5.0...v0.6.0
 [0.5.0]: https://github.com/q-matsuite/qmatbridge/compare/v0.4.0...v0.5.0
 [0.4.0]: https://github.com/q-matsuite/qmatbridge/compare/v0.3.0...v0.4.0
 [0.3.0]: https://github.com/q-matsuite/qmatbridge/compare/v0.2.1...v0.3.0
