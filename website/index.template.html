@@ -556,13 +556,14 @@ footer.site p { margin: 0 0 6px; }
     <div>
       <span class="eyebrow"><i>06</i> Install</span>
       <h2 id="h-install">One line from PyPI</h2>
-      <p class="lede" style="margin-top:14px">Python 3.10+; the core schema has no required dependencies. Fetching from the Materials Project needs the <code>mp</code> extra and <em>your own</em> free API key (<a href="docs/api-keys/">details</a>); QMatBridge ships none.</p>
+      <p class="lede" style="margin-top:14px">Python 3.10+; the core schema has no required dependencies. Fetching from the Materials Project needs the <code>mp</code> extra and <em>your own</em> free API key (<a href="docs/api-keys/">details</a>); QMatBridge ships none. No key at all is needed for the OPTIMADE adapter, which reads any compliant server. Two notebooks, a <a href="https://github.com/q-matsuite/qmatbridge/blob/main/examples/notebooks/qmatbridge_quickstart.ipynb" rel="noopener">quickstart</a> and a <a href="https://github.com/q-matsuite/qmatbridge/blob/main/examples/notebooks/qmatbridge_tour.ipynb" rel="noopener">tour with figures</a>, run offline from a checkout.</p>
     </div>
     <div>
       <div class="cmd"><div class="label">Install</div><pre><code>pip install qmatbridge            # core
 pip install "qmatbridge[mp]"      # + Materials Project adapter (Python 3.11+)</code></pre><button class="copy" type="button">Copy</button></div>
       <div class="cmd"><div class="label">Fetch an entry</div><pre><code>export MP_API_KEY=...   # your own key; QMatBridge ships none
 python -c "from qmatbridge.adapters.materials_project import fetch_entry_from_mp as f; print(f('mp-149').canonical_hash())"</code></pre><button class="copy" type="button">Copy</button></div>
+      <div class="cmd"><div class="label">Or, without a key: OPTIMADE</div><pre><code>python -c "from qmatbridge.registry import get_adapter as g; from qmatbridge.adapters.optimade import OptimadeAdapterConfig as C; print(g('optimade', config=C(encut_ev=520.0)).fetch_entry('mp:mp-149').canonical_hash())"</code></pre><button class="copy" type="button">Copy</button></div>
     </div>
   </div>
 </section>
