@@ -58,6 +58,23 @@ jobs:
           name: coverage-report
           path: htmlcov/
 
+  openfermion:
+    name: OpenFermion exporter
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/setup-python@v7
+        with:
+          python-version: "3.12"
+          cache: "pip"
+
+      - name: Install package + OpenFermion
+        run: pip install -e ".[dev,openfermion]"
+
+      - name: Cross-check against OpenFermion's plane-wave Hamiltonian
+        run: pytest tests/unit/test_openfermion_export.py -v
+
   docs:
     name: Docs build
     runs-on: ubuntu-latest

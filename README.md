@@ -98,7 +98,7 @@ QMatBridge is intentionally narrow: it is a bridge, not a database.
 - LCU / qubitization oracle metadata
 - JSON serialization with canonical entry hashes
 - Materials Project adapter (structure + plane-wave Hamiltonian metadata); OQMD adapter (live fetch, recorded-response tested)
-- Raw plane-wave NumPy exporter
+- Raw plane-wave NumPy exporter; OpenFermion `InteractionOperator` exporter (a small point-ion plane-wave model)
 - Zero required dependencies in the core schema
 
 **Out of scope (for now):**
@@ -106,8 +106,8 @@ QMatBridge is intentionally narrow: it is a bridge, not a database.
 - Gaussian / LCAO / real-space basis sets
 - Molecular (non-periodic) systems
 - Excited-state or TDDFT Hamiltonians
-- OPTIMADE and Alexandria adapters (planned v0.4)
-- OpenFermion and qualtran / pyLIQTR exporters (planned v0.5)
+- Alexandria HSE06 / r²SCAN adapter (planned v0.4)
+- qualtran / pyLIQTR exporters (planned v0.5)
 
 ---
 
@@ -151,7 +151,7 @@ pip install qmatbridge             # from PyPI; the core has no required depende
 pip install "qmatbridge[mp]"       # + Materials Project adapter (mp-api, pymatgen); use Python 3.11+
 ```
 
-Optional extras (`openfermion` is for a planned exporter):
+Optional extras:
 
 ```bash
 pip install "qmatbridge[numpy]"        # raw plane-wave NumPy exporter
@@ -241,7 +241,8 @@ qmatbridge/
 │   │   ├── materials_project.py   # Materials Project adapter
 │   │   └── oqmd.py                # OQMD adapter
 │   └── exporters/
-│       └── numpy_planewave.py     # Raw plane-wave arrays (.npz)
+│       ├── numpy_planewave.py     # Raw plane-wave arrays (.npz)
+│       └── openfermion_pw.py      # OpenFermion InteractionOperator
 ├── docs/
 │   ├── vision.md                  # Design rationale and architectural constraints
 │   ├── adapters.md                # Upstream adapter documentation
@@ -303,7 +304,7 @@ qmatbridge/
 
 ### v0.5 — Hamiltonian exporters
 
-- [ ] OpenFermion `InteractionOperator` exporter
+- [x] OpenFermion `InteractionOperator` exporter (point-ion plane-wave model; merged, unreleased)
 - [x] Raw plane-wave arrays exporter (NumPy `.npz`; released in 0.4.0)
 - [ ] LCU coefficient export for `qualtran` / `pyLIQTR`
 
