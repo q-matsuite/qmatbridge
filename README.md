@@ -304,7 +304,7 @@ qmatbridge/
 
 ### v0.5 — Hamiltonian exporters
 
-- [x] OpenFermion `InteractionOperator` exporter (point-ion plane-wave model; merged, unreleased)
+- [x] OpenFermion `InteractionOperator` exporter (point-ion plane-wave model; released in 0.6.0)
 - [x] Raw plane-wave arrays exporter (NumPy `.npz`; released in 0.4.0)
 - [ ] LCU coefficient export for `qualtran` / `pyLIQTR`
 
@@ -352,7 +352,7 @@ academic work, please cite the repository directly:
   title   = {{QMatBridge}: A bridge from classical materials databases to
              first-quantized Hamiltonians for quantum simulation},
   url     = {https://github.com/q-matsuite/qmatbridge},
-    version = {0.5.0},
+    version = {0.6.0},
     doi     = {10.5281/zenodo.23192772},
   year    = {2026},
 }
