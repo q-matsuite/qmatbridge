@@ -122,6 +122,7 @@ _BUILTIN: dict[str, dict[str, str]] = {
     },
     EXPORTER_GROUP: {
         "openfermion": "qmatbridge.exporters.openfermion_pw:OpenFermionExporter",
+        "lcu": "qmatbridge.exporters.lcu:LCUExporter",
         "numpy_planewave": (
             "qmatbridge.exporters.numpy_planewave:NumpyPlaneWaveExporter"
         ),

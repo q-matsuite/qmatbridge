@@ -64,3 +64,47 @@ The two-body tensor has `(2N)^4` entries for `N` plane waves (`N^4` with
 waves with kinetic energy up to `ecut_ev` (default and maximum: the entry's cutoff),
 and **refuses** more than `max_plane_waves` (default 32) instead of allocating
 gigabytes. Spin orbital `2i + s` is plane wave `i` with spin `s`.
+
+---
+
+## Pauli LCU (qualtran / pyLIQTR / Cirq)
+
+| | |
+| --- | --- |
+| **Install** | `pip install "qmatbridge[openfermion]"` (and `cirq-core` for `to_cirq_pauli_sum`) |
+| **Module** | `qmatbridge.exporters.lcu` |
+| **Output** | `.npz` with Pauli strings, real coefficients, signs, λ and the PREPARE probabilities |
+
+```python
+from qmatbridge.exporters.lcu import lcu_arrays, lcu_oracle_metadata, to_cirq_pauli_sum
+
+arrays = lcu_arrays(entry, ecut_ev=20.0, spinless=True)
+arrays["lambda_total"], arrays["num_terms"], arrays["num_qubits"]
+
+meta = get_exporter("lcu").export(entry, path="si_lcu.npz", ecut_ev=20.0)
+hamiltonian = to_cirq_pauli_sum(meta.artifact_path)        # a cirq.PauliSum
+entry.hamiltonian.oracle = lcu_oracle_metadata(arrays)     # record λ and term count
+```
+
+The Hamiltonian of the OpenFermion exporter is mapped with Jordan-Wigner to
+`H = c0 + Σ αℓ Pℓ` with real `αℓ`. The 1-norm `λ = Σ|αℓ|` leaves out the identity
+term `c0`, which only shifts the energy. Character `i` of a Pauli string acts on qubit
+`i`; qubit `2k + s` is plane wave `k` with spin `s` (qubit `k` if `spinless`).
+
+What the frameworks take from the file:
+
+- **PREPARE** loads `prepare_probabilities = |α|/λ`, for example
+  `StatePreparationAliasSampling.from_probabilities(probabilities, precision=...)` in qualtran.
+- **SELECT** applies `signs[l] · Pauli(pauli_strings[l])` controlled on the index `l`.
+
+The decomposition is checked in the test suite against OpenFermion's sparse operator
+(the matrix rebuilt from the exported strings equals the fermionic matrix) and, through
+`to_cirq_pauli_sum`, against Cirq. The qualtran and pyLIQTR calls above are not run in
+CI.
+
+This is the second-quantized decomposition of the same **point-ion model**; it is not
+the first-quantized plane-wave oracle of Babbush et al. (2019) and Su et al. (2021),
+whose λ is analytic and much smaller for large bases. The number of Pauli terms grows
+as the fourth power of the number of qubits, so the exporter refuses more than
+`max_plane_waves` (default 12). A single Γ point plane wave has nothing to decompose and
+raises.

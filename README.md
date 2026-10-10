@@ -98,7 +98,7 @@ QMatBridge is intentionally narrow: it is a bridge, not a database.
 - LCU / qubitization oracle metadata
 - JSON serialization with canonical entry hashes
 - Materials Project adapter (structure + plane-wave Hamiltonian metadata); OQMD adapter (live fetch, recorded-response tested)
-- Raw plane-wave NumPy exporter; OpenFermion `InteractionOperator` exporter (a small point-ion plane-wave model)
+- Raw plane-wave NumPy exporter; OpenFermion `InteractionOperator` and Pauli-LCU exporters (a small point-ion plane-wave model); cross-database deduplication
 - Zero required dependencies in the core schema
 
 **Out of scope (for now):**
@@ -242,7 +242,8 @@ qmatbridge/
 │   │   └── oqmd.py                # OQMD adapter
 │   └── exporters/
 │       ├── numpy_planewave.py     # Raw plane-wave arrays (.npz)
-│       └── openfermion_pw.py      # OpenFermion InteractionOperator
+│       ├── openfermion_pw.py      # OpenFermion InteractionOperator
+│       └── lcu.py                 # Pauli-LCU coefficients (qualtran / pyLIQTR / Cirq)
 ├── docs/
 │   ├── vision.md                  # Design rationale and architectural constraints
 │   ├── adapters.md                # Upstream adapter documentation
@@ -300,13 +301,13 @@ qmatbridge/
 - [x] Generic OPTIMADE adapter (AFLOW, JARVIS, NOMAD, MC3D, ...; released in 0.5.0, checked live on MP and Alexandria)
 - [x] OQMD live fetch (released in 0.4.0; recorded-response tested, live check owed)
 - [ ] Alexandria: PBE and PBEsol are reachable through the OPTIMADE adapter; HSE06 / r²SCAN and the full ~4.5 M set remain
-- [ ] Cross-database deduplication via shared ICSD numbers
+- [x] Cross-database deduplication (shared identifiers such as ICSD numbers, or matching atomic environments; `qmatbridge.dedup`)
 
 ### v0.5 — Hamiltonian exporters
 
 - [x] OpenFermion `InteractionOperator` exporter (point-ion plane-wave model; released in 0.6.0)
 - [x] Raw plane-wave arrays exporter (NumPy `.npz`; released in 0.4.0)
-- [ ] LCU coefficient export for `qualtran` / `pyLIQTR`
+- [x] LCU coefficient export (Jordan-Wigner Pauli LCU with λ and PREPARE probabilities, for `qualtran` / `pyLIQTR` / Cirq)
 
 ### v0.6 — Resource estimation hooks
 

@@ -78,7 +78,7 @@ entry.exports.append(meta)
   (also a `LookupError`) listing what is available.
 - **Built-ins** are defined in `qmatbridge.registry` and work from a source checkout without
   re-installing; currently the adapters `materials_project`, `oqmd` and `optimade`, and the exporters
-  `numpy_planewave` and `openfermion`.
+  `numpy_planewave`, `openfermion` and `lcu`.
 
 ## Testing a plugin
 
