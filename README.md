@@ -264,6 +264,28 @@ qmatbridge/
 
 ---
 
+## How it relates to other tools
+
+QMatBridge is not a replacement for any of these; it sits between them.
+
+| Tool | What it is | Relation to QMatBridge |
+| --- | --- | --- |
+| [HamLib](https://doi.org/10.22331/q-2024-12-11-1559) | A curated, peer-reviewed library of qubit Hamiltonians (2 to 1000 qubits: molecular electronic structure, Fermi-Hubbard, Heisenberg and other models, combinatorial problems) for benchmarking algorithms and hardware | **Complementary, and not something we beat.** HamLib is a dataset of finished, validated Hamiltonians at a scale QMatBridge does not approach. QMatBridge works one step earlier: it keeps the representation *before* a qubit mapping, records which database record and calculation a Hamiltonian came from, and builds entries on demand from materials databases. The instance families HamLib lists (molecules, lattice models, combinatorial problems) do not include records from crystal databases such as the Materials Project; that gap is what QMatBridge fills. |
+| [OpenFermion](https://quantumai.google/openfermion) | Fermionic and qubit operator toolkit | An export target (`openfermion`, `lcu`). The exporter is checked term by term against OpenFermion's own plane-wave Hamiltonian. |
+| [pymatgen](https://pymatgen.org), [ASE](https://wiki.fysik.dtu.dk/ase/) | Crystal structures and analysis | Read structures; neither describes a Hamiltonian or its simulation oracle. |
+| [OPTIMADE](https://www.optimade.org) | Standard query API for materials databases | Read through the generic `optimade` adapter; it returns structures, not simulation inputs. |
+| [Qualtran](https://github.com/quantumlib/Qualtran), [pyLIQTR](https://github.com/isi-usc-edu/pyLIQTR) | Algorithm implementations and resource estimation | Consumers of the LCU data QMatBridge exports. |
+
+**Where HamLib is ahead:** scale, curation, peer review, a fixed file format with benchmark
+instances anyone can cite, and Hamiltonians that come from real computed models. **Where
+QMatBridge differs:** provenance from a materials database, a canonical hash that makes
+"the same Hamiltonian" checkable, plane-wave and oracle metadata, cross-database
+deduplication. **Where QMatBridge is limited:** the Hamiltonians it exports are a small
+point-ion plane-wave *model*, not the DFT Hamiltonian of the source calculation, and only
+small bases are practical. A HamLib-format (HDF5) exporter would be a natural addition.
+
+---
+
 ## Roadmap
 
 ### v0.1 — Schema and scaffold *(released)*
@@ -343,8 +365,10 @@ before opening a large pull request.
 
 ## Citation
 
-QMatBridge does not yet have a formal publication.  If you use it in
-academic work, please cite the repository directly:
+QMatBridge does not yet have a journal publication.  Each release is archived on
+Zenodo (concept DOI [10.5281/zenodo.23192772](https://doi.org/10.5281/zenodo.23192772),
+which always resolves to the latest version), so the software itself is citable.
+If you use it in academic work, please cite it:
 
 ```bibtex
 @software{qmatbridge,
@@ -359,8 +383,9 @@ academic work, please cite the repository directly:
 }
 ```
 
-A citable release and, if the project grows, a JOSS submission are planned
-once the v0.2 Materials Project adapter is complete and the API is stable.
+A [JOSS](https://joss.theoj.org) submission is planned once the API has settled and the
+project has research uses to point to; a draft paper, including the comparison with HamLib
+and related tools, is in [`joss/`](joss/). It has not been submitted.
 
 ---
 
