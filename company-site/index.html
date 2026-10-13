@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>q-matsuite</title>
-<meta name="description" content="q-matsuite builds open-source software that connects materials data to fault-tolerant quantum simulation. First project: QMatBridge.">
+<meta name="description" content="q-matsuite builds open-source software that connects materials data to fault-tolerant quantum simulation. Projects: QMatBridge (materials data) and Crystal_QS (fault-tolerant resource estimation, coming soon).">
 <meta name="author" content="Roberto dos Reis (@rmsreis)">
 <meta name="color-scheme" content="dark">
 <link rel="canonical" href="https://q-matsuite.com/">
@@ -48,6 +48,10 @@ h2 { font: 400 1.6rem/1.2 var(--serif); margin: 64px 0 18px; }
 .pill { font: 500 0.68rem/1 var(--mono); padding: 4px 8px; border-radius: 99px; border: 1px solid color-mix(in oklch, var(--warn) 45%, transparent); color: var(--warn); }
 .btn { display: inline-block; padding: 11px 20px; border-radius: 9px; background: var(--accent); color: var(--accent-ink); font-weight: 600; text-decoration: none; white-space: nowrap; }
 .btn:hover { background: color-mix(in oklch, var(--accent) 88%, white); color: var(--accent-ink); }
+.product + .product { margin-top: 20px; }
+.muted { color: var(--muted); }
+.btn.off { background: transparent; color: var(--muted); border: 1px solid var(--border); cursor: default; }
+.btn.off:hover { background: transparent; color: var(--muted); }
 .links { display: flex; gap: 20px; flex-wrap: wrap; margin-top: 18px; font-size: 0.95rem; }
 @media (max-width: 640px) { .product { grid-template-columns: minmax(0, 1fr); } }
 .principles { list-style: none; margin: 0; padding: 0; }
@@ -90,10 +94,22 @@ footer strong { color: var(--text); font-weight: 500; }
       <a class="btn" href="qmatbridge/">Explore QMatBridge</a>
     </div>
 
+    <div class="product soon">
+      <div>
+        <h3>Crystal_QS <span class="pill">coming soon</span></h3>
+        <p>Fault-tolerant resource estimation for first-quantized simulation of crystals. It takes the Hamiltonian descriptions QMatBridge produces and reports what a quantum computer would need to simulate them: gate counts, qubits, and where the cost sits. Not yet released; it will be published together with the accompanying paper.</p>
+        <div class="links">
+          <span class="muted">Source and documentation: to be announced</span>
+        </div>
+      </div>
+      <span class="btn off" aria-disabled="true">Not yet public</span>
+    </div>
+
     <h2>How we work</h2>
     <ul class="principles">
       <li><b>open</b><span>Code under the MIT license; schemas change through public discussion.</span></li>
       <li><b>provenance</b><span>Every record says where it came from, so results can be compared and reproduced.</span></li>
+      <li><b>pipeline</b><span>Materials database, then Hamiltonian description (QMatBridge), then fault-tolerant cost (Crystal_QS), with the same provenance record carried through.</span></li>
       <li><b>narrow</b><span>Each tool does one job well and interoperates with the ecosystem rather than replacing it.</span></li>
     </ul>
   </div>
